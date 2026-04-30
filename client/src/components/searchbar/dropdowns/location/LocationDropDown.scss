@@ -1,0 +1,48 @@
+.location-dropdown {
+  background: var(--off-white);
+  border-radius: var(--radius-lg);
+  padding: 8px 0;
+  min-width: 260px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(37, 99, 235, 0.05);
+    }
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+    }
+
+    span {
+      font-size: 0.78rem;
+      color: var(--gray-dark);
+    }
+  }
+}

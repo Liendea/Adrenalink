@@ -1,0 +1,47 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ----- Schema för användare ----- // 
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  
+  // Personuppgifter
+  firstName    String
+  lastName     String
+  passportNo   String   @unique
+  
+  // Adress
+  address      String
+  zipCode      String
+  city         String
+  country      String
+  
+  // Kontakt
+  phoneCode    String   // t.ex. "+46"
+  phoneNumber  String   // t.ex. "701234567"
+  
+  // System
+  role         Role     @default(STUDENT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}

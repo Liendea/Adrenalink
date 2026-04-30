@@ -1,0 +1,55 @@
+.landing {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1800&q=80");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.72);
+    z-index: 0;
+    animation: zoomIn 18s ease-out forwards;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 20, 40, 0.25) 0%,
+      rgba(5, 10, 25, 0.45) 100%
+    );
+    z-index: 1;
+  }
+
+  @keyframes zoomIn {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
