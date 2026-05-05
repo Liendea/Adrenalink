@@ -1,0 +1,131 @@
+// ─── Card ─────────────────────────────────────────────────────────────────────
+// Generisk kortkomponent som används för lektioner, skolor och uthyrning.
+
+.card {
+  width: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--color-card-shadow);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(15, 17, 23, 0.12);
+
+    .card__image {
+      transform: scale(1.04);
+    }
+  }
+
+  .divider {
+    border: none;
+    height: 1px;
+    background-color: var(--gray-light);
+    margin: 4px 0;
+  }
+  // ── Image area ──────────────────────────────────────────────────────────────
+
+  &__image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  // Favourite button
+  &__fav {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  // ── Body ────────────────────────────────────────────────────────────────────
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+
+    padding: 1rem;
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+  }
+
+  &__description {
+    margin-top: 8px;
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+
+    overflow: hidden;
+  }
+
+  // Category / type badge overlaid on the image
+  &__badge {
+    background: var(--main-blue);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 50px;
+    pointer-events: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // ── Meta chips ───────────────────────────────────────────────────────────────
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  .card__meta.desc {
+    display: flex;
+    justify-content: space-between;
+  }
+}

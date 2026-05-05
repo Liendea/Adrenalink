@@ -1,4 +1,4 @@
-import Calendar from "@/components/searchbar/dropdowns/calendar/Calendar";
+import Calendar from "@/components/searchbars/landingSearch/dropdowns/calendar/Calendar";
 import LocationDropdown from "@/components/searchbar/dropdowns/location/LocationDropDown";
 import "./Dropdowns.scss";
 

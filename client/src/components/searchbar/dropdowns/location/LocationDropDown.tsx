@@ -3,9 +3,18 @@ import LocationIcon from "@/assets/icons/locationIcon.svg";
 import SportIcon from "@/assets/icons/SportIcon.svg";
 import SchoolIcon from "@/assets/icons/SchoolIcon.svg";
 import "./LocationDropDown.scss";
+import type { SelectedItem } from "@/components/searchbar/Searchbar";
 
+type LocationDropDownProps = {
+  setActiveItem: (item: SelectedItem) => void;
+};
 // ─── Location Dropdown ────────────────────────────────────────────────────────
-export default function LocationDropdown() {
+export default function LocationDropdown({
+  setActiveItem,
+}: LocationDropDownProps) {
+  const handleClick = (label: string, sub: string) => {
+    setActiveItem({ label, sub });
+  };
   return (
     <div className="location-dropdown">
       {[
@@ -28,7 +37,11 @@ export default function LocationDropdown() {
           sub: "Search by school",
         },
       ].map((item) => (
-        <div className="location-dropdown__item" key={item.label}>
+        <div
+          className="location-dropdown__item"
+          key={item.label}
+          onClick={() => handleClick(item.label, item.sub)}
+        >
           <div
             className={`location-dropdown__icon location-dropdown__icon--${item.cls}`}
           >

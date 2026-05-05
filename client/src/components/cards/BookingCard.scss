@@ -1,0 +1,323 @@
+// ─── BookingCard ──────────────────────────────────────────────────────────────
+// Detaljvy / bokningskort som visas när användaren klickar på ett listkortet.
+
+.booking-card {
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(15, 17, 23, 0.1);
+  max-width: 480px; // Mobilbredd – på desktop centrera i modal/panel
+  width: 100%;
+
+  // ── Image ────────────────────────────────────────────────────────────────────
+
+  &__image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__fav {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(6px);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-light);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      background: #fff;
+      color: #ef4444;
+      transform: scale(1.06);
+    }
+
+    &--active {
+      color: #ef4444;
+      background: #fff;
+    }
+  }
+
+  // ── Body ─────────────────────────────────────────────────────────────────────
+
+  &__body {
+    padding: 20px 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  // ── Title row ────────────────────────────────────────────────────────────────
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark-blue);
+    letter-spacing: -0.4px;
+    line-height: 1.15;
+  }
+
+  &__price-badge {
+    flex-shrink: 0;
+    background: var(--main-blue);
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+  }
+
+  // ── Description ──────────────────────────────────────────────────────────────
+
+  &__description {
+    font-size: 13.5px;
+    color: var(--dark-blue);
+    line-height: 1.65;
+  }
+
+  // ── Details table ─────────────────────────────────────────────────────────────
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--gray-light);
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  &__detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 13.5px;
+
+    & + & {
+      border-top: 1px solid var(--gray-light);
+    }
+  }
+
+  &__detail-label {
+    color: var(--dark-blue);
+    font-weight: 400;
+  }
+
+  &__detail-value {
+    color: var(--dark-blue);
+    font-weight: 500;
+  }
+
+  // ── School ───────────────────────────────────────────────────────────────────
+
+  &__school {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__school-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-blue);
+  }
+
+  &__school-location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: varvar(--dark-blue);
+
+    svg {
+      color: var(--gray-light);
+      flex-shrink: 0;
+    }
+  }
+
+  // ── Divider ───────────────────────────────────────────────────────────────────
+
+  &__divider {
+    border: none;
+    border-top: 1px solid var(--gray-light);
+    margin: 0;
+  }
+
+  // ── Section title ─────────────────────────────────────────────────────────────
+
+  &__section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark-blue);
+    letter-spacing: -0.5px;
+  }
+
+  // ── Date picker ───────────────────────────────────────────────────────────────
+
+  &__datepicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__month {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dark-blue);
+  }
+
+  &__days {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  &__day-nav {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--gray-light);
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition:
+      background 0.12s,
+      color 0.12s;
+
+    &:hover {
+      background: var(--light-blue);
+      color: var(--dark-blue);
+    }
+  }
+
+  &__day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 8px 8px;
+    border-radius: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    min-width: 38px;
+    position: relative;
+    transition: background 0.12s;
+
+    &:hover {
+      background: var(--main-blue);
+      color: var(---white);
+    }
+
+    &--active {
+      background: var(--dark-blue);
+
+      .booking-card__day-short {
+        color: var(--gray-light);
+      }
+
+      .booking-card__day-num {
+        color: #ffffff;
+      }
+    }
+  }
+
+  &__day-short {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--black);
+    letter-spacing: 0.2px;
+    line-height: 1;
+  }
+
+  &__day-num {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  &__day-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--dark-blue);
+    position: absolute;
+    bottom: 3px;
+  }
+
+  // ── Time slots ────────────────────────────────────────────────────────────────
+
+  &__slots-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-blue);
+  }
+
+  &__slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  &__slot {
+    padding: 13px 8px;
+    border-radius: var(--radius-md);
+    background: var(--gray-light);
+    color: var(--dark-blue);
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      transform 0.1s ease;
+
+    &:hover {
+      background: #d1d5db;
+      transform: translateY(-1px);
+    }
+
+    &--active {
+      background: var(--gray-light);
+      color: var(--dark-blue);
+
+      &:hover {
+        background: var(--main-blue);
+        color: var(--white);
+      }
+    }
+  }
+}

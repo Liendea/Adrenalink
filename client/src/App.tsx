@@ -7,23 +7,39 @@ import LandingPage from "./pages/landingpage/Landingpage";
 import Login from "./pages/login/Login";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import BookingPage from "./pages/booking/BookingPage";
+import ExplorePage from "./pages/explore/ExplorePage";
+import Navigation from "./components/navigation/Navigation";
+import SchoolDetailPage from "./pages/school/SchoolDetailPage";
+import RentalDetailPage from "./pages/rental/RentalDetailPage";
 
 function App() {
   return (
     <>
       <main>
+        <Navigation />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+
+          {/* Sök/Utforska-sidan där allt listas från början */}
+          <Route path="/explore" element={<ExplorePage />} />
+
+          {/* 1. Direkta bokningssidan för en specifik TID (Lektionskortet) */}
           <Route
-            path="/booking"
+            path="/booking/:slotId"
             element={
               <ProtectedRoute>
                 <BookingPage />
               </ProtectedRoute>
             }
           />
+
+          {/* 2. Infosidan för en specifik skola */}
+          <Route path="/schools/:schoolId" element={<SchoolDetailPage />} />
+
+          {/* 3. Infosidan för ett uthyrningsställe */}
+          <Route path="/rentals/:rentalId" element={<RentalDetailPage />} />
         </Routes>
       </main>
     </>

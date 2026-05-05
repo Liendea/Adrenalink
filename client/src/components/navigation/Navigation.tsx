@@ -1,21 +1,31 @@
 import Icon from "@/components/Icon";
 import AdrenalinkLogo from "@/assets/icons/AdrenalinkLogo.svg";
+import AdrenalinkLogo_Dark from "@/assets/icons/AdrenalinkLogo_dark.svg";
 import SigninIcon from "@/assets/icons/SigninIcon.svg";
 import ExitIcon from "@/assets/icons/ExitIcon.svg";
 import MoreIcon from "@/assets/icons/moreIcon.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import "./Navigation.scss";
+import Searchbar from "../searchbar/Searchbar";
 
 export default function Navigation() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { isAuthenticated, logout, user } = useAuth();
 
   return (
     <nav className="landing__nav">
       <a className="landing__logo" href="#">
-        <Icon src={AdrenalinkLogo} width={200} height={100} />
+        <Icon
+          src={location.pathname !== "/" ? AdrenalinkLogo_Dark : AdrenalinkLogo}
+          width={200}
+          height={100}
+        />
       </a>
+      {/* Om vi INTE är på startsidan, visa Searchbar */}
+      {location.pathname !== "/" && <Searchbar />}
       <div className="landing__nav-actions">
         {!isAuthenticated ? (
           // VISA DETTA OM UTLOGGAD
