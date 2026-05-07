@@ -12,7 +12,7 @@
   .landing__nav-actions {
     display: flex;
     align-items: center;
-    flex-direction: row-reverse;
+    flex-direction: row;
     justify-content: space-between;
     gap: 12px;
   }
@@ -64,6 +64,7 @@
 
       .user-welcome {
         color: var(--off-white);
+        font-size: 1rem;
       }
       div {
         display: flex;

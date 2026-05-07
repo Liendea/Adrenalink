@@ -29,10 +29,8 @@ export default function useActivitySearch({
 
         if (locationLabel && locationLabel !== "Where?") {
           if (locationType === "nearby") {
-            // Nearby hanteras av backend separat (geolocation-logik senare)
             queryParams.append("location", "Nearby");
           } else {
-            // "Spain", "Portugal" etc – filtrerar på school.country i backend
             queryParams.append("country", locationLabel);
           }
         }

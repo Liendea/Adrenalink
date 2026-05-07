@@ -15,6 +15,7 @@ export default function useSchoolSearch({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log("useSchoolSearch triggered:", { enabled, country });
     if (!enabled) return;
 
     const fetchSchools = async () => {

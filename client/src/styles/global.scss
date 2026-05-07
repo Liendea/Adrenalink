@@ -20,9 +20,9 @@
   --success: #5e7e5d;
   --warning: #dec488;
   --danger: #de7b70;
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
+  --radius-lg: 50px;
+  --radius-md: 20px;
+  --radius-sm: 10px;
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.18);
   --font-display: "Rubik", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -37,5 +37,9 @@ body,
 
 main {
   background-color: var(--off-white);
-  border: 1px solid red;
+}
+
+section {
+  padding-left: 100px;
+  padding-right: 100px;
 }

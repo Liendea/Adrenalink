@@ -4,6 +4,7 @@ import useActivitySearch from "@/hooks/useActivitySearch";
 import useSchoolSearch from "@/hooks/useSchoolSearch";
 import ExploreNav from "@/components/navigation/ExploreNav";
 import Card from "@/components/cards/Card";
+import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./ExplorePage.scss";
 
 type ExploreTab = "activities" | "schools" | "rentals";
@@ -12,11 +13,11 @@ export default function ExplorePage() {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<ExploreTab>("activities");
 
-  const countryParam = searchParams.get("country");
+  const rawCountry = searchParams.get("country");
+  const countryParam = rawCountry === "Where?" ? null : rawCountry;
   const startDate = searchParams.get("startDate");
   const endDate = searchParams.get("endDate");
 
-  // Activities – alltid hämtad (initial)
   const {
     activities,
     loading: activitiesLoading,
@@ -28,7 +29,6 @@ export default function ExplorePage() {
     selectedDates: { startDate, endDate },
   });
 
-  // Schools – lazy, hämtas bara när tabben aktiveras
   const {
     schools,
     loading: schoolsLoading,
@@ -38,8 +38,7 @@ export default function ExplorePage() {
     enabled: activeTab === "schools",
   });
 
-  // visa aktiviteter
-  const renderContent = () => {
+  const renderCards = () => {
     if (activeTab === "activities") {
       if (activitiesLoading) return <p>Laddar aktiviteter...</p>;
       if (activitiesError) return <p>Ett fel uppstod: {activitiesError}</p>;
@@ -56,7 +55,6 @@ export default function ExplorePage() {
       );
     }
 
-    // visa skolor
     if (activeTab === "schools") {
       if (schoolsLoading) return <p>Laddar skolor...</p>;
       if (schoolsError) return <p>Ett fel uppstod: {schoolsError}</p>;
@@ -78,7 +76,26 @@ export default function ExplorePage() {
     }
   };
 
-  // antal resultat som visas
+  const renderMap = () => {
+    if (activeTab === "activities") {
+      // Deduplicera – samma lektion kan förekomma flera gånger via olika slots
+      const lessonsMap = new Map(
+        activities.map((slot) => [slot.lesson.id, slot.lesson]),
+      );
+      const lessons = Array.from(lessonsMap.values());
+      return <DiscoveryMap variant="activities" items={lessons} />;
+    }
+    if (activeTab === "schools") {
+      return <DiscoveryMap variant="schools" items={schools} />;
+    }
+
+    return (
+      <div className="explore__map-placeholder">
+        <p>Map coming soon</p>
+      </div>
+    );
+  };
+
   const resultCount =
     activeTab === "activities"
       ? activities.length
@@ -90,7 +107,12 @@ export default function ExplorePage() {
     <section className="explore">
       <ExploreNav activeTab={activeTab} onTabChange={setActiveTab} />
       <h2 className="explore__title">{resultCount} results found</h2>
-      {renderContent()}
+
+      <div className="explore__split">
+        <div className="explore__cards">{renderCards()}</div>
+
+        <div className="explore__map">{renderMap()}</div>
+      </div>
     </section>
   );
 }

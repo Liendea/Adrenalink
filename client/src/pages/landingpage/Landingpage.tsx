@@ -15,10 +15,10 @@ export default function LandingPage() {
       <div className="landing__overlay" />
 
       {/* Hero */}
-      <section className="hero-section">
+      <div className="hero-section">
         <Hero />
         <Searchbar />
-      </section>
+      </div>
     </div>
   );
 }

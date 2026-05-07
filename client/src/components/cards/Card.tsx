@@ -5,22 +5,24 @@ import Location from "@/assets/icons/Location.svg";
 import Clock from "@/assets/icons/Clock.svg";
 import CreditCard from "@/assets/icons/CreditCard.svg";
 import FavoriteButton from "../buttons/FavoriteButton";
-import { useState } from "react";
+
 import "./Card.scss";
 import { Link } from "react-router-dom";
 import StarRating from "../rating/StarRating";
+import { useFavorites } from "@/hooks/useFavorites";
 
 type CardProps =
   | { variant: "lesson"; data: Lesson }
   | { variant: "school"; data: School };
 
 export default function Card(props: CardProps) {
-  const [favorited, setFavorited] = useState<boolean>(false);
+  const { isFavorited, toggleFavorite } = useFavorites();
+  const id = props.data.id;
 
-  const toggleFavorite = (e: React.MouseEvent) => {
+  const handleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setFavorited((prev) => !prev);
+    toggleFavorite(id);
   };
 
   const href =
@@ -37,23 +39,16 @@ export default function Card(props: CardProps) {
           className="card__image"
           loading="lazy"
         />
-        <div
+
+        <button
           className="card__fav"
-          onClick={toggleFavorite}
+          onClick={handleFavorite}
           aria-label={
-            favorited ? "Ta bort från favoriter" : "Lägg till i favoriter"
+            isFavorited(id) ? "Ta bort från favoriter" : "Lägg till i favoriter"
           }
         >
-          <button
-            className="card__fav"
-            onClick={toggleFavorite}
-            aria-label={
-              favorited ? "Ta bort från favoriter" : "Lägg till i favoriter"
-            }
-          >
-            <FavoriteButton favorited={favorited} />
-          </button>
-        </div>
+          <FavoriteButton favorited={isFavorited(id)} />
+        </button>
       </div>
 
       <div className="card__body">
@@ -74,14 +69,11 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
   const pricePerHour = lesson.priceEuro / lesson.durationHours;
 
   return (
-    <>
+    <div className="card__content">
       <div className="card__title-row">
         <h2>
           {lesson.lessonType} {lesson.sportType} lesson
         </h2>
-        <span className="card__badge">
-          <p>{lesson.priceEuro}€</p>
-        </span>
       </div>
       <div className="card__description">
         <p>{lesson.description}</p>
@@ -106,7 +98,10 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
         <Icon src={CreditCard} width={20} height={20} />
         <span>Price per hour:</span> <span>{pricePerHour.toFixed(2)}€</span>
       </div>
-    </>
+      <div className="card__badge">
+        <p>{lesson.priceEuro}€</p>
+      </div>
+    </div>
   );
 };
 
@@ -121,7 +116,6 @@ const SchoolCardBody = ({ school }: SchoolCardBodyProps) => {
     <>
       <div className="card__title-row">
         <h2>{school.name}</h2>
-        <StarRating average={school.averageRating} count={school.ratingCount} />
       </div>
       <div className="card__description">
         <p className="card__school-description">
@@ -133,6 +127,7 @@ const SchoolCardBody = ({ school }: SchoolCardBodyProps) => {
         <Icon src={Location} width={20} height={20} />
         <span>Address:</span> <span>{school.address}</span>
       </div>
+      <StarRating average={school.averageRating} count={school.ratingCount} />
     </>
   );
 };

@@ -1,8 +1,37 @@
+@use "@/styles/breakpoints" as *;
+
 .booking-page {
-  width: 100%;
-  min-height: 100vh;
-  align-items: center;
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  margin-bottom: 10rem;
+  border: 1px solid rgb(64, 0, 255);
+  width: 100%;
+
+  &__card {
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    flex: 1;
+  }
+
+  &__map {
+    flex: 1;
+    position: sticky;
+    top: 24px;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid red;
+  }
+
+  &__map-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #f3f4f6;
+    border-radius: 16px;
+    color: rgba(0, 0, 0, 0.4);
+  }
 }

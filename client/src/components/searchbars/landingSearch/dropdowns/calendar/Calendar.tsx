@@ -97,7 +97,7 @@ export default function Calendar({ onClose, setSelectedDates }: CalendarProps) {
       </div>
 
       <div className="calendar-dropdown__days">
-        {cells.map((cell, i) => (
+        {cells.map((cell, i: number) => (
           <button
             key={i}
             className={[

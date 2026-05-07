@@ -8,6 +8,8 @@ export type School = {
   lessons: Lesson[];
   averageRating: number;
   ratingCount: number;
+  lng: number;
+  lat: number;
 };
 
 export type Lesson = {
@@ -23,6 +25,12 @@ export type Lesson = {
   school: School; // Inkluderas via Prismas join
   imageUrl?: string;
   description: string;
+  lng: number;
+  lat: number;
+};
+
+export type LessonWithSlots = Lesson & {
+  availableTimes: AvailableTimeSlot[];
 };
 
 export type AvailableTimeSlot = {
@@ -39,7 +47,6 @@ export type SearchParams = {
 };
 
 // SEARCH BAR TYPES
-
 export type ActiveDropdown = "location" | "calendar" | null;
 
 export type DateRange = {

@@ -1,8 +1,9 @@
 .star-rating {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-end;
+  gap: 0.5rem;
+  justify-self: flex-end;
 
   &__stars {
     display: flex;
@@ -10,11 +11,11 @@
   }
 
   &__star {
-    font-size: 16px;
-    color: #d1d5db; // grå
+    font-size: 1.5rem;
+    color: var(--gray-light);
 
     &--filled {
-      color: #f59e0b; // gul
+      color: var(---warning);
     }
 
     &--interactive {

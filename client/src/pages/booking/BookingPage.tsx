@@ -1,31 +1,27 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import type { AvailableTimeSlot } from "@/types/types";
-import BookingCard from "@/components/cards/BookingCard";
+import { useState, useEffect } from "react";
+import type { LessonWithSlots } from "@/types/types";
+import BookingCard from "@/components/cards/booking-card/BookingCard";
+import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./BookingPage.scss";
 
 export default function BookingPage() {
-  const { slotId } = useParams<{ slotId: string }>();
-  const [slot, setSlot] = useState<AvailableTimeSlot | null>(null);
-  const [allSlots, setAllSlots] = useState<AvailableTimeSlot[]>([]);
+  const { lessonId } = useParams<{ lessonId: string }>();
+  const [lesson, setLesson] = useState<LessonWithSlots | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Hämta den specifika sloten först
-        const slotRes = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/slots/${slotId}`,
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/slots/lesson/${lessonId}`,
         );
-        const slotData: AvailableTimeSlot = await slotRes.json();
-        setSlot(slotData);
-
-        // Hämta sedan alla slots för samma lektion
-        const allSlotsRes = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/slots?lessonId=${slotData.lesson.id}`,
-        );
-        const allSlotsData = await allSlotsRes.json();
-        setAllSlots(allSlotsData);
+        if (!res.ok) {
+          console.error("Fetch misslyckades:", res.status);
+          return;
+        }
+        const data = await res.json();
+        setLesson(data);
       } catch (error) {
         console.error("Kunde inte hämta bokningsinfo:", error);
       } finally {
@@ -33,15 +29,26 @@ export default function BookingPage() {
       }
     };
 
-    if (slotId) fetchData();
-  }, [slotId]);
+    if (lessonId) fetchData();
+  }, [lessonId]);
 
   if (loading) return <div>Laddar bokningssida...</div>;
-  if (!slot) return <div>Kunde inte hitta den sökta aktiviteten.</div>;
+  if (!lesson) return <div>Kunde inte hitta lektionen.</div>;
 
   return (
     <div className="booking-page">
-      <BookingCard slot={slot} allSlots={allSlots} />
+      <div className="booking-page__card">
+        <BookingCard lesson={lesson} allSlots={lesson.availableTimes} />
+      </div>
+      <div className="booking-page__map">
+        {lesson.lat && lesson.lng ? (
+          <DiscoveryMap variant="activities" items={[lesson]} />
+        ) : (
+          <div className="booking-page__map-placeholder">
+            <p>No location available</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -19,7 +19,11 @@ export default function Navigation() {
     <nav
       className="landing__nav"
       style={{
-        backgroundColor: location.pathname !== "/" ? "#f6f6f6" : "transparent",
+        backgroundColor: ["/", "/register", "/login"].includes(
+          location.pathname,
+        )
+          ? "transparent"
+          : "#f6f6f6",
       }}
     >
       <a className="landing__logo" href="/">
@@ -54,6 +58,10 @@ export default function Navigation() {
           <>
             <button className="landing__nav-icon-btn" onClick={logout}>
               <span className="user-welcome">Hej, {user.firstName}!</span>
+              <div className="navigation__profile">
+                <Icon src={SigninIcon} />
+                My Profile
+              </div>
               <div>
                 <Icon src={ExitIcon} height={25} width={25} /> Sign out{" "}
               </div>

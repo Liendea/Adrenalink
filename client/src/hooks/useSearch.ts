@@ -29,7 +29,8 @@ export function useSearch() {
           params.set("lat", String(coords.lat));
           params.set("lng", String(coords.lng));
         }
-      } else {
+      } else if (activeItem.label && activeItem.label !== "Where?") {
+        // Skicka bara country om användaren faktiskt valt något
         params.set("country", activeItem.label);
       }
 
