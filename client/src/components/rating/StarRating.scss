@@ -1,0 +1,34 @@
+.star-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  &__stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  &__star {
+    font-size: 16px;
+    color: #d1d5db; // grå
+
+    &--filled {
+      color: #f59e0b; // gul
+    }
+
+    &--interactive {
+      cursor: pointer;
+      transition: transform 0.1s ease;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__meta {
+    font-size: 13px;
+    opacity: 0.6;
+  }
+}

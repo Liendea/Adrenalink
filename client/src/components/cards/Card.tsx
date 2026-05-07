@@ -1,5 +1,5 @@
 import image from "@/assets/image.png";
-import type { Lesson } from "@/types/types";
+import type { Lesson, School } from "@/types/types";
 import Icon from "@/components/Icon";
 import Location from "@/assets/icons/Location.svg";
 import Clock from "@/assets/icons/Clock.svg";
@@ -8,28 +8,35 @@ import FavoriteButton from "../buttons/FavoriteButton";
 import { useState } from "react";
 import "./Card.scss";
 import { Link } from "react-router-dom";
+import StarRating from "../rating/StarRating";
 
-type CardProps = {
-  lesson: Lesson;
-};
+type CardProps =
+  | { variant: "lesson"; data: Lesson }
+  | { variant: "school"; data: School };
 
-export default function Card({ lesson }: CardProps) {
+export default function Card(props: CardProps) {
   const [favorited, setFavorited] = useState<boolean>(false);
 
   const toggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     setFavorited((prev) => !prev);
   };
+
+  const href =
+    props.variant === "lesson"
+      ? `/booking/${props.data.id}`
+      : `/schools/${props.data.id}`;
+
   return (
-    <Link to={`/booking/${lesson.id}`} className="card">
+    <Link to={href} className="card">
       <div className="card__image-wrap">
         <img
           src={image}
-          alt="lägg till alt text"
+          alt={props.variant === "lesson" ? "Lesson image" : "School image"}
           className="card__image"
           loading="lazy"
         />
-        <img src={image} width={400} height={220} alt="bild text" />{" "}
         <div
           className="card__fav"
           onClick={toggleFavorite}
@@ -37,50 +44,95 @@ export default function Card({ lesson }: CardProps) {
             favorited ? "Ta bort från favoriter" : "Lägg till i favoriter"
           }
         >
-          <FavoriteButton favorited={favorited} />
+          <button
+            className="card__fav"
+            onClick={toggleFavorite}
+            aria-label={
+              favorited ? "Ta bort från favoriter" : "Lägg till i favoriter"
+            }
+          >
+            <FavoriteButton favorited={favorited} />
+          </button>
         </div>
       </div>
 
-      {/* ── Body ── */}
       <div className="card__body">
-        {/* Title row */}
-        <div className="card__title-row">
-          <h2>Surf Lesson Private</h2>
-          <span className="card__badge">
-            <p>{lesson.priceEuro}€</p>
-          </span>
-        </div>
-        {/* Descriptions*/}
-        <div className="card__description">
-          <p>
-            {lesson.description}
-            Lorem ipsum dolor sit amet consectetur. Imperdiet lorem eget nec
-            magna ut.
-          </p>
-        </div>
-        <div className="card__meta desc">
-          <span>Level:</span> <span>{lesson.level}</span>
-        </div>
-
-        <div className="card__meta desc">
-          <span>Eqiptment:</span>{" "}
-          <span>{lesson.equipmentIncluded ? "included" : "Not included"}</span>
-        </div>
-        <hr className="divider" />
-        <div className="card__meta">
-          <Icon src={Location} width={20} height={20} />
-          <span>Location:</span> <span>{lesson.location}</span>
-        </div>
-        <div className="card__meta">
-          <Icon src={Clock} width={20} height={20} />
-          <span>Duration:</span> <span>{lesson.durationHours}h</span>
-        </div>
-        <div className="card__meta">
-          <Icon src={CreditCard} width={20} height={20} />
-          <span>Price per hour:</span>{" "}
-          <span>{`${lesson.priceEuro}/${lesson.durationHours}`}</span>
-        </div>
+        {props.variant === "lesson" && <LessonCardBody lesson={props.data} />}
+        {props.variant === "school" && <SchoolCardBody school={props.data} />}
       </div>
     </Link>
   );
 }
+
+// ─── Lesson body ─────────────────────────────────────────────────────────────
+
+type LessonCardBodyProps = {
+  lesson: Lesson;
+};
+
+const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
+  const pricePerHour = lesson.priceEuro / lesson.durationHours;
+
+  return (
+    <>
+      <div className="card__title-row">
+        <h2>
+          {lesson.lessonType} {lesson.sportType} lesson
+        </h2>
+        <span className="card__badge">
+          <p>{lesson.priceEuro}€</p>
+        </span>
+      </div>
+      <div className="card__description">
+        <p>{lesson.description}</p>
+      </div>
+      <div className="card__meta desc">
+        <span>Level:</span> <span>{lesson.level}</span>
+      </div>
+      <div className="card__meta desc">
+        <span>Equipment:</span>{" "}
+        <span>{lesson.equipmentIncluded ? "Included" : "Not included"}</span>
+      </div>
+      <hr className="divider" />
+      <div className="card__meta">
+        <Icon src={Location} width={20} height={20} />
+        <span>Location:</span> <span>{lesson.location}</span>
+      </div>
+      <div className="card__meta">
+        <Icon src={Clock} width={20} height={20} />
+        <span>Duration:</span> <span>{lesson.durationHours}h</span>
+      </div>
+      <div className="card__meta">
+        <Icon src={CreditCard} width={20} height={20} />
+        <span>Price per hour:</span> <span>{pricePerHour.toFixed(2)}€</span>
+      </div>
+    </>
+  );
+};
+
+// ─── School body ──────────────────────────────────────────────────────────────
+
+type SchoolCardBodyProps = {
+  school: School;
+};
+
+const SchoolCardBody = ({ school }: SchoolCardBodyProps) => {
+  return (
+    <>
+      <div className="card__title-row">
+        <h2>{school.name}</h2>
+        <StarRating average={school.averageRating} count={school.ratingCount} />
+      </div>
+      <div className="card__description">
+        <p className="card__school-description">
+          {school.city}, {school.country}
+        </p>
+      </div>
+      <hr className="divider" />
+      <div className="card__meta">
+        <Icon src={Location} width={20} height={20} />
+        <span>Address:</span> <span>{school.address}</span>
+      </div>
+    </>
+  );
+};

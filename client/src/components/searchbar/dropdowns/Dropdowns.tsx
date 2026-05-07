@@ -11,7 +11,10 @@ export default function Dropdowns({
   return (
     <div className="landing__dropdowns">
       {activeDropdown === "location" && (
-        <LocationDropdown setActiveItem={setActiveItem} />
+        <LocationDropdown
+          setActiveItem={setActiveItem}
+          setActiveDropdown={setActiveDropdown}
+        />
       )}
       {activeDropdown === "calendar" && (
         <Calendar

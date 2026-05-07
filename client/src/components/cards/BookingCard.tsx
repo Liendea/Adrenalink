@@ -10,10 +10,10 @@ import Cta_Btn from "../buttons/Cta_Btn";
 import image from "@/assets/image.png";
 
 // ─── Date picker data ─────────────────────────────────────────────────────────
-interface DayItem {
+type DayItem = {
   short: string;
   num: number;
-}
+};
 
 const DAYS: DayItem[] = [
   { short: "Mo", num: 5 },
@@ -26,10 +26,10 @@ const DAYS: DayItem[] = [
 ];
 
 // ─── Detail row ───────────────────────────────────────────────────────────────
-interface DetailRowProps {
+type DetailRowProps = {
   label: string;
   value: string;
-}
+};
 
 const DetailRow = ({ label, value }: DetailRowProps) => (
   <div className="booking-card__detail-row">
@@ -38,45 +38,51 @@ const DetailRow = ({ label, value }: DetailRowProps) => (
   </div>
 );
 
-// ─── Props (RÄTTAD: Tar emot slot och id som number) ──────────────────────────
+// ─── Props ────────────────────────────────────────────────────────────────────
 type BookingCardProps = {
-  slot: AvailableTimeSlot; // Ändrat från lesson: Lesson
+  slot: AvailableTimeSlot;
+  allSlots?: AvailableTimeSlot[]; // alla slots för samma lektion
   onBook?: (lessonId: number, day: number, slot: AvailableTimeSlot) => void;
   onClose?: () => void;
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export default function BookingCard({
   slot,
+  allSlots = [],
   onBook,
   onClose,
 }: BookingCardProps) {
-  // Bryt ut lektionen för att slippa skriva slot.lesson överallt
   const lesson = slot.lesson;
-
-  const [selectedDay, setSelectedDay] = useState<number>(7);
+  const [selectedDay, setSelectedDay] = useState<number>(
+    new Date(slot.startTime).getDate(),
+  );
   const [selectedSlot, setSelectedSlot] = useState<AvailableTimeSlot | null>(
     slot,
   );
+
+  // Filtrera slots på valt datum
+  const slotsForSelectedDay = allSlots.filter((s) => {
+    const date = new Date(s.startTime);
+    return date.getDate() === selectedDay && !s.isBooked;
+  });
 
   const handleBook = () => {
     if (!selectedSlot || !lesson) return;
     onBook?.(lesson.id, selectedDay, selectedSlot);
   };
 
+  // Nollställ vald slot när dag byts
+  const handleDayChange = (day: number) => {
+    setSelectedDay(day);
+    setSelectedSlot(null);
+  };
+
   if (!lesson) return <div>Laddar lektionsinformation...</div>;
 
-  // Räkna ut pris per timme (Pris / Timmar)
   const pricePerHour =
     lesson.durationHours > 0
       ? (lesson.priceEuro / lesson.durationHours).toFixed(1)
       : lesson.priceEuro;
-
-  // Formatera starttiden för just denna specifika slot (t.ex "14:00")
-  const slotTimeLabel = new Date(slot.startTime).toLocaleTimeString("sv-SE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
   return (
     <div className="booking-card">
@@ -101,18 +107,15 @@ export default function BookingCard({
 
       {/* ── Body ── */}
       <div className="booking-card__body">
-        {/* Title + price */}
         <div className="booking-card__title-row">
           <h2 className="booking-card__title">
-            {lesson.lessonType} - {lesson.sportType}
+            {lesson.lessonType} {lesson.sportType} lesson
           </h2>
           <span className="booking-card__price-badge">${lesson.priceEuro}</span>
         </div>
 
-        {/* Description */}
         <p className="booking-card__description">{lesson.description}</p>
 
-        {/* Details table */}
         <div className="booking-card__details">
           <DetailRow
             label="Duration:"
@@ -126,10 +129,9 @@ export default function BookingCard({
           />
         </div>
 
-        {/* School + location (Hämtas nu via relationen från din backend include) */}
         <div className="booking-card__school">
           <p className="booking-card__school-name">
-            {lesson.school?.name || "Surf School"}
+            {lesson.school?.name || "School"}
           </p>
           <p className="booking-card__school-location">
             <Icon src={LocationIcon} />
@@ -139,7 +141,6 @@ export default function BookingCard({
 
         <hr className="booking-card__divider" />
 
-        {/* ── Booking section ── */}
         <h3 className="booking-card__section-title">Booking</h3>
 
         {/* Date picker */}
@@ -152,12 +153,11 @@ export default function BookingCard({
             >
               <Icon src={ChevronLeft} />
             </button>
-
             {DAYS.map((day) => (
               <button
                 key={day.num}
-                className={`booking-card__day${selectedDay === day.num ? "booking-card__day--active" : ""}`}
-                onClick={() => setSelectedDay(day.num)}
+                className={`booking-card__day${selectedDay === day.num ? " booking-card__day--active" : ""}`}
+                onClick={() => handleDayChange(day.num)}
               >
                 <span className="booking-card__day-short">{day.short}</span>
                 <span className="booking-card__day-num">{day.num}</span>
@@ -166,7 +166,6 @@ export default function BookingCard({
                 )}
               </button>
             ))}
-
             <button className="booking-card__day-nav" aria-label="Nästa vecka">
               <Icon src={ChevronRight} />
             </button>
@@ -176,17 +175,35 @@ export default function BookingCard({
         {/* Time slots */}
         <p className="booking-card__slots-label">Pick a time:</p>
         <div className="booking-card__slots">
-          {/* Eftersom vi är på en specifik slot-id sida, visar vi denna valda slot */}
-          <button
-            className={`booking-card__slot booking-card__slot--active`}
-            onClick={() => setSelectedSlot(slot)}
-          >
-            {slotTimeLabel}
-          </button>
+          {slotsForSelectedDay.length > 0 ? (
+            slotsForSelectedDay.map((s) => {
+              const timeLabel = new Date(s.startTime).toLocaleTimeString(
+                "sv-SE",
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                },
+              );
+              return (
+                <button
+                  key={s.id}
+                  className={`booking-card__slot${selectedSlot?.id === s.id ? " booking-card__slot--active" : ""}`}
+                  onClick={() => setSelectedSlot(s)}
+                >
+                  {timeLabel}
+                </button>
+              );
+            })
+          ) : (
+            <p className="booking-card__no-slots">
+              No available times this day
+            </p>
+          )}
         </div>
 
-        {/* Book CTA */}
-        <Cta_Btn onClick={handleBook}>Book</Cta_Btn>
+        <Cta_Btn onClick={handleBook} disabled={!selectedSlot}>
+          Book
+        </Cta_Btn>
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.explore-nav {
+  display: flex;
+  gap: 32px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+
+  &__tab {
+    background: none;
+    border: none;
+    padding: 12px 0;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    position: relative;
+    font-weight: 400;
+
+    &--active {
+      color: #000;
+      font-weight: 600;
+
+      // Understrykning som i bilden
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #000;
+      }
+    }
+  }
+}

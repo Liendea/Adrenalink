@@ -6,6 +6,66 @@
   box-shadow: var(--shadow-card);
   overflow: hidden;
 
+  .location-dropdown {
+    // Lägg till om de saknas – annars låt befintliga regler vara kvar
+
+    &__search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+
+      input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+        width: 100%;
+        color: inherit;
+
+        &::placeholder {
+          opacity: 0.45;
+        }
+      }
+    }
+
+    &__divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+      margin: 4px 0;
+    }
+
+    &__section-label {
+      font-size: 11px;
+      opacity: 0.5;
+      padding: 4px 16px 2px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    &__flag {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    // Nya färgklasser (om de saknas)
+    &__icon {
+      &--amber {
+        background: #fef3c7;
+      }
+      &--coral {
+        background: #fee2d5;
+      }
+      &--purple {
+        background: #ede9fe;
+      }
+      &--gray {
+        background: #f3f4f6;
+      }
+    }
+  }
+
   &__item {
     display: flex;
     align-items: center;

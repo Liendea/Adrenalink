@@ -1,65 +1,26 @@
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import Icon from "../Icon";
 import Dropdowns from "./dropdowns/Dropdowns";
-import { useState } from "react";
+import { useSearch } from "@/hooks/useSearch";
 import "./Searchbar.scss";
-import { useNavigate } from "react-router-dom";
-
-type ActiveDropdown = "location" | "calendar" | null;
-
-export type DateRange = {
-  startDate: Date | null;
-  endDate: Date | null;
-};
-
-export type SelectedItem = {
-  label: string;
-  sub: string;
-};
 
 export default function Searchbar() {
-  const navigate = useNavigate();
-
-  const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null);
-  const [activeItem, setActiveItem] = useState<SelectedItem>({
-    label: "Where?",
-    sub: "Find destinations",
-  });
-
-  const [selectedDates, setSelectedDates] = useState<DateRange>({
-    startDate: null,
-    endDate: null,
-  });
-  const toggle = (name: ActiveDropdown) =>
-    setActiveDropdown((prev) => (prev === name ? null : name));
-
-  const handleSearch = () => {
-    setActiveDropdown(null); // Stäng eventuella öppna dropdowns
-
-    navigate("/explore", {
-      state: {
-        activeItem,
-        selectedDates: {
-          // Vi konverterar datumen till ISO-strängar så att de säkert överlever navigeringen
-          startDate: selectedDates.startDate
-            ? selectedDates.startDate.toISOString()
-            : null,
-          endDate: selectedDates.endDate
-            ? selectedDates.endDate.toISOString()
-            : null,
-        },
-      },
-    });
-  };
+  const {
+    activeDropdown,
+    setActiveDropdown,
+    activeItem,
+    setActiveItem,
+    selectedDates,
+    setSelectedDates,
+    toggle,
+    handleSearch,
+  } = useSearch();
 
   return (
-    <div className="landing__search-bar">
+    <div className="search-bar">
       {/* WHERE */}
       <div className="search-field-wrapper">
-        <div
-          className="landing__search-field"
-          onClick={() => toggle("location")}
-        >
+        <div className="search-field" onClick={() => toggle("location")}>
           <label>{activeItem.label}</label>
           <span>{activeItem.sub}</span>
         </div>
@@ -74,31 +35,16 @@ export default function Searchbar() {
           </div>
         )}
       </div>
+
       {/* WHEN */}
       <div className="search-field-wrapper">
-        <div
-          className="landing__search-field"
-          onClick={() => toggle("calendar")}
-        >
-          {selectedDates && selectedDates.startDate ? (
-            <>
-              <label>When?</label>
-              <span>
-                {selectedDates.startDate.toLocaleDateString("sv-SE", {
-                  day: "numeric",
-                  month: "short",
-                })}
-                {selectedDates.endDate &&
-                  selectedDates.endDate !== selectedDates.startDate &&
-                  ` - ${selectedDates.endDate.toLocaleDateString("sv-SE", { day: "numeric", month: "short" })}`}
-              </span>
-            </>
-          ) : (
-            <>
-              <label>When?</label>
-              <span>Choose dates</span>
-            </>
-          )}
+        <div className="search-field" onClick={() => toggle("calendar")}>
+          <label>When?</label>
+          <span>
+            {selectedDates.startDate
+              ? `${selectedDates.startDate.toLocaleDateString("sv-SE", { day: "numeric", month: "short" })} ${selectedDates.endDate ? "- " + selectedDates.endDate.toLocaleDateString("sv-SE", { day: "numeric", month: "short" }) : ""}`
+              : "Choose dates"}
+          </span>
         </div>
         {activeDropdown === "calendar" && (
           <div className="dropdown__anchor">
@@ -112,7 +58,7 @@ export default function Searchbar() {
         )}
       </div>
 
-      <button className="landing__search-btn" onClick={handleSearch}>
+      <button className="search-btn" onClick={handleSearch}>
         <Icon src={SearchIcon} />
         Search
       </button>

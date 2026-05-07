@@ -33,6 +33,9 @@ body,
 #root {
   height: 100%;
   font-family: var(--font-body);
+}
+
+main {
   background-color: var(--off-white);
-  padding-top: 4rem;
+  border: 1px solid red;
 }

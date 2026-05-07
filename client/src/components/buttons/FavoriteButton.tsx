@@ -10,9 +10,9 @@ export default function FavoriteButton({ favorited }: FavoriteButtonProps) {
   return (
     <>
       {favorited ? (
-        <Icon src={FavoriteIcon_Active} width={40} height={40} />
+        <Icon src={FavoriteIcon_Active} width={50} height={50} />
       ) : (
-        <Icon src={FavoriteIcon} width={40} height={40} />
+        <Icon src={FavoriteIcon} width={50} height={50} />
       )}
     </>
   );

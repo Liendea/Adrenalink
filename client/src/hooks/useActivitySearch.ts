@@ -2,7 +2,7 @@ import type { AvailableTimeSlot } from "@/types/types";
 import { useState, useEffect } from "react";
 
 interface SearchParams {
-  activeItem?: { label: string } | null;
+  activeItem?: { label: string; type?: "nearby" | "destination" } | null;
   selectedDates?: { startDate: string | null; endDate: string | null } | null;
 }
 
@@ -14,8 +14,8 @@ export default function useActivitySearch({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. Bryt ut värdena som enkla strängar/primitiver
   const locationLabel = activeItem?.label;
+  const locationType = activeItem?.type;
   const startDate = selectedDates?.startDate;
   const endDate = selectedDates?.endDate;
 
@@ -27,25 +27,24 @@ export default function useActivitySearch({
       try {
         const queryParams = new URLSearchParams();
 
-        // 2. Använd de utbrutna strängarna här inne
         if (locationLabel && locationLabel !== "Where?") {
-          queryParams.append("location", locationLabel);
+          if (locationType === "nearby") {
+            // Nearby hanteras av backend separat (geolocation-logik senare)
+            queryParams.append("location", "Nearby");
+          } else {
+            // "Spain", "Portugal" etc – filtrerar på school.country i backend
+            queryParams.append("country", locationLabel);
+          }
         }
 
-        if (startDate) {
-          queryParams.append("startDate", startDate);
-        }
-        if (endDate) {
-          queryParams.append("endDate", endDate);
-        }
+        if (startDate) queryParams.append("startDate", startDate);
+        if (endDate) queryParams.append("endDate", endDate);
 
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/explore?${queryParams.toString()}`,
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch activities");
-        }
+        if (!response.ok) throw new Error("Failed to fetch activities");
 
         const data = await response.json();
         setActivities(data.availableSlots || []);
@@ -63,7 +62,7 @@ export default function useActivitySearch({
     };
 
     fetchFilteredActivities();
-  }, [locationLabel, startDate, endDate]); // 3. Nu är alla beroenden primitiva värden!
+  }, [locationLabel, locationType, startDate, endDate]);
 
   return { activities, loading, error };
 }

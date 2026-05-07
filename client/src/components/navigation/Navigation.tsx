@@ -16,8 +16,13 @@ export default function Navigation() {
   const { isAuthenticated, logout, user } = useAuth();
 
   return (
-    <nav className="landing__nav">
-      <a className="landing__logo" href="#">
+    <nav
+      className="landing__nav"
+      style={{
+        backgroundColor: location.pathname !== "/" ? "#f6f6f6" : "transparent",
+      }}
+    >
+      <a className="landing__logo" href="/">
         <Icon
           src={location.pathname !== "/" ? AdrenalinkLogo_Dark : AdrenalinkLogo}
           width={200}

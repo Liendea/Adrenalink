@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ----- Schema för användare ----- // 
+// ----- ANVÄNDARE ----- // 
 
 model User {
   id           String   @id @default(uuid())
@@ -37,6 +37,9 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+// Rating 
+  ratings   Rating[] 
+
   @@map("users")
 }
 
@@ -44,4 +47,79 @@ enum Role {
   STUDENT
   INSTRUCTOR
   ADMIN
+}
+
+
+
+// ─── SKOLOR ──────────────────────────────────────────────────────────────────
+model School {
+  id        Int       @id @default(autoincrement())
+  name      String
+  country   String
+  city      String
+  address   String
+  createdAt DateTime  @default(now())
+  lat  Float?
+lng  Float?
+
+  // Relationer
+  lessons   Lesson[]
+   ratings   Rating[] 
+
+
+  @@map("schools") // Mappar modellen till en tabell med små bokstäver i databasen
+}
+
+// ─── RATING  ──────────────────────────────────────────────────────────────────
+model Rating {
+  id        Int      @id @default(autoincrement())
+  schoolId  Int      @map("school_id")
+  userId    String   @map("user_id")
+  score     Int      // 1-5
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([schoolId, userId]) // en röst per användare och skola
+  @@map("ratings")
+}
+
+
+
+// ─── LEKTIONER ───────────────────────────────────────────────────────────────
+model Lesson {
+  id                Int             @id @default(autoincrement())
+  schoolId          Int             @map("school_id")
+  lessonType        String          @map("lesson_type") // 'group' eller 'private'
+  sportType         String          @map("sport_type")  // 'surf', 'windsurf', 'kitesurf'
+  description       String          @db.Text
+  level             String          // 'beginner', 'intermediate', 'advanced'
+  durationHours     Float           @map("duration_hours")
+  priceEuro         Float           @map("price_euro")
+  location          String          // Stranden/vattnet
+  equipmentIncluded Boolean         @default(true) @map("equipment_included")
+  lat  Float?
+lng  Float?
+
+  // Relationer
+  school            School          @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  availableTimes    AvailableTime[]
+
+  @@map("lessons")
+}
+
+
+// ─── LEDIGA TIDER ────────────────────────────────────────────────────────────
+model AvailableTime {
+  id        Int      @id @default(autoincrement())
+  lessonId  Int      @map("lesson_id")
+  startTime DateTime @map("start_time")
+  isBooked  Boolean  @default(false) @map("is_booked")
+
+  // Relationer
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@map("available_times")
 }

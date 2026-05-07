@@ -2,11 +2,12 @@
 // Detaljvy / bokningskort som visas när användaren klickar på ett listkortet.
 
 .booking-card {
+  margin-top: 10rem;
   background: var(--white);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(15, 17, 23, 0.1);
-  max-width: 480px; // Mobilbredd – på desktop centrera i modal/panel
+  max-width: 580px; // Mobilbredd – på desktop centrera i modal/panel
   width: 100%;
 
   // ── Image ────────────────────────────────────────────────────────────────────

@@ -4,10 +4,11 @@ import type { ReactNode } from "react";
 type Cta_BtnProps = {
   onClick: () => void;
   children: ReactNode;
+  disabled: boolean;
 };
-export default function Cta_Btn({ onClick, children }: Cta_BtnProps) {
+export default function Cta_Btn({ onClick, children, disabled }: Cta_BtnProps) {
   return (
-    <button className="cta" onClick={onClick}>
+    <button className="cta" onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

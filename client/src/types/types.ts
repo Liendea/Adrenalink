@@ -4,6 +4,10 @@ export type School = {
   country: string;
   city: string;
   address: string;
+  createdAt: string;
+  lessons: Lesson[];
+  averageRating: number;
+  ratingCount: number;
 };
 
 export type Lesson = {
@@ -32,4 +36,19 @@ export type AvailableTimeSlot = {
 export type SearchParams = {
   activeItem?: { label: string } | null;
   selectedDates?: { startDate: string | null; endDate: string | null } | null;
+};
+
+// SEARCH BAR TYPES
+
+export type ActiveDropdown = "location" | "calendar" | null;
+
+export type DateRange = {
+  startDate: Date | null;
+  endDate: Date | null;
+};
+
+export type SelectedItem = {
+  label: string;
+  sub: string;
+  type?: "nearby" | "destination";
 };

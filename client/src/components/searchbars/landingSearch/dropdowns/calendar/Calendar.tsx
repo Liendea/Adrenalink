@@ -2,7 +2,7 @@ import { useState } from "react";
 import ChevronLeft from "@/assets/icons/ChevronLeft.svg";
 import ChevronRight from "@/assets/icons/ChevronRight.svg";
 import "./Calendar.scss";
-import type { DateRange } from "@/components/searchbars/landingSearch/Searchbar";
+import type { DateRange } from "@/types/types";
 import Icon from "@/components/Icon";
 
 // Importera konstanter och funktioner från vår nya hjälpfil
