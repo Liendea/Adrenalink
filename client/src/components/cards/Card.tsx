@@ -98,9 +98,9 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
         <Icon src={CreditCard} width={20} height={20} />
         <span>Price per hour:</span> <span>{pricePerHour.toFixed(2)}€</span>
       </div>
-      <div className="card__badge">
+      <span className="card__badge">
         <p>{lesson.priceEuro}€</p>
-      </div>
+      </span>
     </div>
   );
 };
@@ -118,15 +118,20 @@ const SchoolCardBody = ({ school }: SchoolCardBodyProps) => {
         <h2>{school.name}</h2>
       </div>
       <div className="card__description">
-        <p className="card__school-description">
+        <p className="card__school-location">
           {school.city}, {school.country}
         </p>
+        <p className="card__school-description">
+          Add description Lorem Ipsum jfofäowe oqnefoöengowegw oneobgbäwogn
+          jefej eibfejo efbfeb{" "}
+        </p>
       </div>
-      <hr className="divider" />
       <div className="card__meta">
         <Icon src={Location} width={20} height={20} />
         <span>Address:</span> <span>{school.address}</span>
       </div>
+      <hr className="divider" />
+
       <StarRating average={school.averageRating} count={school.ratingCount} />
     </>
   );

@@ -2,9 +2,20 @@
 
 .explore {
   width: 100%;
-  max-width: 1600px; // Öka denna lite så 3 kort får plats snyggt
   margin: 0 auto;
-  padding: 8rem 2rem;
+
+  padding: 10rem 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(16, 79, 128);
+
+  &__title {
+    text-align: left;
+
+    margin-block: 2rem;
+    margin-right: auto;
+  }
 
   &__split {
     display: flex;
@@ -12,6 +23,9 @@
 
     @include tablet {
       flex-direction: column-reverse;
+    }
+
+    @include mobile {
     }
   }
 
@@ -23,19 +37,18 @@
       width: 100%;
     }
 
-    // Här stylar vi diven som renderas av renderCards()
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); // 3 kolumner
+      grid-template-columns: repeat(5, 1fr);
       gap: 1.5rem;
       width: 100%;
 
       @include tablet {
-        grid-template-columns: repeat(4, 1fr); // 2 kolumner på tablet
+        grid-template-columns: repeat(4, 1fr);
       }
 
       @include mobile {
-        grid-template-columns: 1fr; // 1 kolumn på mobil
+        grid-template-columns: 1fr 1fr;
       }
 
       // Varje wrapper-div runt Card

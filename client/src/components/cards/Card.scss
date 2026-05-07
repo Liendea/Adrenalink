@@ -31,7 +31,7 @@
     border: none;
     height: 1px;
     background-color: var(--gray-light);
-    margin: 4px 0;
+    margin-block: 16px;
   }
   // ── Image area ──────────────────────────────────────────────────────────────
 
@@ -99,21 +99,17 @@
   // rice badge
   &__badge {
     background: var(--main-blue);
-    backdrop-filter: blur(6px);
-    color: #fff;
-    font-size: 24px;
+    color: var(--off-white);
+    font-size: 1.5rem;
     font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
     padding: 10px 20px;
-    border-radius: 50px;
-    pointer-events: none;
+    border-radius: var(--radius-md);
     width: 100px;
     margin-left: auto;
-
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1rem;
   }
 
   // ── Meta chips ───────────────────────────────────────────────────────────────
@@ -123,8 +119,8 @@
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    margin-top: auto;
-    padding-top: 4px;
+    margin-top: 8px;
+
     text-transform: capitalize;
   }
 
@@ -134,7 +130,13 @@
   }
 }
 
+.card__school-location {
+  font-weight: 500;
+  opacity: 0.7;
+}
+
 .card__school-description {
   font-weight: 500;
   opacity: 0.7;
+  margin-top: 1rem;
 }
