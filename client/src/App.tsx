@@ -8,9 +8,11 @@ import Login from "./pages/login/Login";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
 import BookingPage from "./pages/booking/BookingPage";
 import ExplorePage from "./pages/explore/ExplorePage";
-import Navigation from "./components/navigation/Navigation";
+
 import SchoolDetailPage from "./pages/school/SchoolDetailPage";
 import RentalDetailPage from "./pages/rental/RentalDetailPage";
+
+import Navigation from "./components/navigation/Navigation";
 
 function App() {
   return (

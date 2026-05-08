@@ -2,9 +2,6 @@
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a126cb5f-b7f7-4b6b-9aab-416f9e32215c" />
 
-
-
-
 A full-stack web application for discovering and booking extremesports lessons — surfing, snowboarding, climbing, windsurfing, and kitesurfing etc. Users can search for lessons by location and date, explore schools on an interactive map, view available time slots, create bookings and rate their experiences.
 
 > **Academic & Industry Context:** This project serves as the final examination project for a backend web development course, while simultaneously being a real-world client product currently under active development.
