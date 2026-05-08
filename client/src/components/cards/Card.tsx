@@ -5,7 +5,7 @@ import Location from "@/assets/icons/Location.svg";
 import Clock from "@/assets/icons/Clock.svg";
 import CreditCard from "@/assets/icons/CreditCard.svg";
 import FavoriteButton from "../buttons/FavoriteButton";
-
+import house from "@/assets/icons/house_outlined.svg";
 import "./Card.scss";
 import { Link } from "react-router-dom";
 import StarRating from "../rating/StarRating";
@@ -98,6 +98,12 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
         <Icon src={CreditCard} width={20} height={20} />
         <span>Price per hour:</span> <span>{pricePerHour.toFixed(2)}€</span>
       </div>
+      {lesson.school?.name && (
+        <div className="card__meta">
+          <Icon src={house} width={20} height={20} />
+          <span>School:</span> <span>{lesson.school.name}</span>
+        </div>
+      )}
       <span className="card__badge">
         <p>{lesson.priceEuro}€</p>
       </span>

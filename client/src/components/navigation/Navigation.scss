@@ -1,4 +1,6 @@
-.landing__nav {
+.navigation {
+  position: fixed;
+  top: 0;
   width: 100%;
   z-index: 10;
   display: flex;
@@ -8,7 +10,7 @@
   background-color: transparent;
   border-bottom: 1px solid lightgray;
 
-  .landing__nav-actions {
+  &__actions {
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -16,7 +18,7 @@
     gap: 12px;
   }
 
-  .landing__nav-cta {
+  &__cta {
     background: rgba(15, 25, 50, 0.6);
     color: var(--off-white);
     border: none;
@@ -25,7 +27,6 @@
     font-family: var(--font-body);
     font-size: 0.95rem;
     font-weight: 500;
-
     cursor: pointer;
     transition:
       transform 0.2s,
@@ -38,7 +39,7 @@
     }
   }
 
-  .landing__nav-icon-btn {
+  &__icon-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,10 +62,6 @@
       padding-right: 2rem;
       width: auto;
 
-      .user-welcome {
-        color: var(--off-white);
-        font-size: 1rem;
-      }
       div {
         display: flex;
         flex-direction: column;
@@ -72,8 +69,28 @@
         justify-content: center;
       }
     }
+
     &:hover {
       background: rgba(30, 45, 80, 0.75);
     }
+  }
+
+  &__welcome {
+    color: var(--off-white);
+    font-size: 1rem;
+  }
+
+  &__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__exit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }

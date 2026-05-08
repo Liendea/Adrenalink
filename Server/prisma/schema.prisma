@@ -13,7 +13,7 @@ datasource db {
 // ----- ANVÄNDARE ----- // 
 
 model User {
-  id           String   @id @default(uuid())
+   id Int @id @default(autoincrement())
   email        String   @unique
   password     String
   
@@ -39,6 +39,8 @@ model User {
 
 // Rating 
   ratings   Rating[] 
+
+  profileImage String? @db.LongText @map("profile_image")
 
   @@map("users")
 }
@@ -74,7 +76,7 @@ lng  Float?
 model Rating {
   id        Int      @id @default(autoincrement())
   schoolId  Int      @map("school_id")
-  userId    String   @map("user_id")
+  userId Int @map("user_id") 
   score     Int      // 1-5
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

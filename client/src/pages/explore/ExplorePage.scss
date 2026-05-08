@@ -2,8 +2,7 @@
 
 .explore {
   width: 100%;
-  margin: 0 auto;
-  padding: 2rem 10rem;
+  padding: 10rem 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,19 +35,27 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      // 1. Grundutseende (t.ex. desktop under 2000px)
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
       width: 100%;
 
-      @include tablet {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
+      // 2. Mobil (0 - 767px)
       @include mobile {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      // Varje wrapper-div runt Card
+      // 3. Tablet och uppåt (768px+)
+      @include tablet {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      // 4. Större skärmar (2000px+)
+      // Denna måste ligga SIST för att vinna över tablet-regeln
+      @include xl-screens {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
       & > div {
         width: 100%;
         display: flex;

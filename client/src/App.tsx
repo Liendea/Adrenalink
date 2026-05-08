@@ -13,6 +13,11 @@ import SchoolDetailPage from "./pages/school/SchoolDetailPage";
 import RentalDetailPage from "./pages/rental/RentalDetailPage";
 
 import Navigation from "./components/navigation/Navigation";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import UserProfile from "./pages/userProfile/UserProfile";
+import EditProfile from "./pages/userProfile/EditProfile";
+import MyFavorites from "./pages/userProfile/MyFavorites";
+import MyBookings from "./pages/userProfile/MyBookings";
 
 function App() {
   return (
@@ -35,6 +40,49 @@ function App() {
 
           {/* 3. Infosidan för ett uthyrningsställe */}
           <Route path="/rentals/:rentalId" element={<RentalDetailPage />} />
+
+          {/* 4. Profil sida */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/edit"
+            element={
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/favorites"
+            element={
+              <ProtectedRoute>
+                <MyFavorites />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/bookings"
+            element={
+              <ProtectedRoute>
+                <MyBookings />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
     </>
