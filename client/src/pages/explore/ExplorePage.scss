@@ -2,10 +2,35 @@
 
 .explore {
   width: 100%;
-  padding: 10rem 10rem;
+  padding: 10rem 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  // 4. laptop skärmar (1024px+)
+  @include mobile {
+    padding: 10rem 1rem;
+  }
+
+  // 4. laptop skärmar (1024px+)
+  @include tablet {
+    padding: 10rem 2rem;
+  }
+
+  //desktop-width: 1024px;
+  @include desktop {
+    padding: 10rem 2rem;
+  }
+
+  //large-screens-width: 1700px;
+  @include large-screens {
+    padding: 10rem 2rem;
+  }
+
+  //xl-screens-width: 2000px;
+  @include xl-screens {
+    padding: 10rem 5rem;
+  }
 
   &__title {
     text-align: left;
@@ -14,20 +39,49 @@
   }
 
   &__split {
+    width: 100%;
     display: flex;
+    flex-direction: row;
     gap: 2rem;
 
+    //mobile-width: <768px
+    @include mobile {
+      flex-direction: column-reverse;
+    }
+
+    //tablet-width: 768px;
     @include tablet {
       flex-direction: column-reverse;
     }
 
-    @include mobile {
+    //desktop-width: 1024px;
+    @include desktop {
+      flex-direction: column-reverse;
+    }
+
+    //medium-screens-width: 1300px;
+    @include medium-screens {
+      flex-direction: column-reverse;
+    }
+
+    //large-screens-width: 1700px;
+    @include large-screens {
+      flex-direction: row;
+    }
+
+    //xl-screens-width: 2000px;
+    @include xl-screens {
+      flex-direction: row;
+    }
+
+    //xxl-screens-width: 2300px;
+    @include xxl-screens {
+      flex-direction: row;
     }
   }
 
   &__cards {
-    flex: 1; // Tar upp resterande plats (ca 60%)
-    min-width: 0;
+    flex: 2;
 
     @include tablet {
       width: 100%;
@@ -35,25 +89,44 @@
 
     .grid {
       display: grid;
-      // 1. Grundutseende (t.ex. desktop under 2000px)
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       width: 100%;
 
       // 2. Mobil (0 - 767px)
       @include mobile {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
       }
 
       // 3. Tablet och uppåt (768px+)
       @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      //desktop-width: 1024px;
+
+      @include desktop {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      //medium-screens-width: 1300px;
+      @include medium-screens {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      //large-screens-width: 1700px;
+      @include large-screens {
         grid-template-columns: repeat(3, 1fr);
       }
 
       // 4. Större skärmar (2000px+)
-      // Denna måste ligga SIST för att vinna över tablet-regeln
       @include xl-screens {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      // 4. Större skärmar (2200px+)
+      @include xxl-screens {
+        grid-template-columns: repeat(4, 1fr);
       }
 
       & > div {
@@ -64,18 +137,14 @@
   }
 
   &__map {
-    width: 40%;
-    height: calc(100vh - 200px);
     position: sticky;
+    flex: 1;
     top: 100px;
-    border-radius: 16px;
-    overflow: hidden;
+    height: calc(100vh - 200px);
 
-    @include tablet {
-      width: 100%;
-      height: 400px;
-      position: relative;
-      top: 0;
+    //mobile-width: <768px
+    @include mobile {
+      display: none;
     }
   }
 }

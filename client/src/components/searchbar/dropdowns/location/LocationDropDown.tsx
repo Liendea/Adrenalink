@@ -3,10 +3,12 @@ import LocationIcon from "@/assets/icons/locationIcon.svg";
 import "./LocationDropDown.scss";
 import type { SelectedItem } from "@/types/types";
 import { useState } from "react";
+import useLocationAutocomplete from "@/hooks/useAutoComplete";
+import type { ActiveDropdown } from "@/types/types";
 
 type LocationDropDownProps = {
   setActiveItem: (item: SelectedItem) => void;
-  setActiveDropdown: () => void;
+  setActiveDropdown: (name: ActiveDropdown) => void;
 };
 
 type Destination = {
@@ -53,8 +55,9 @@ export default function LocationDropdown({
   setActiveDropdown,
 }: LocationDropDownProps) {
   const [query, setQuery] = useState("");
+  const { suggestions, loading } = useLocationAutocomplete(query);
 
-  const filtered = DESTINATIONS.filter((d) =>
+  const filteredDestinations = DESTINATIONS.filter((d) =>
     d.label.toLowerCase().includes(query.toLowerCase()),
   );
 
@@ -64,10 +67,14 @@ export default function LocationDropdown({
   };
 
   const handleNearby = () => {
+    setActiveItem({ label: "Nearby", sub: "Use my location", type: "nearby" });
+  };
+
+  const handleSuggestion = (suggestion: { label: string; country: string }) => {
     setActiveItem({
-      label: "Nearby",
-      sub: "Use my location",
-      type: "nearby",
+      label: suggestion.label,
+      sub: suggestion.country,
+      type: "destination",
     });
   };
 
@@ -93,6 +100,7 @@ export default function LocationDropdown({
           onKeyDown={(e) => e.key === "Enter" && handleFreetext()}
           autoFocus
         />
+        {loading && <span className="location-dropdown__spinner">...</span>}
       </div>
 
       <div className="location-dropdown__divider" />
@@ -108,14 +116,37 @@ export default function LocationDropdown({
         </div>
       </div>
 
-      {/* Populära destinationer */}
-      {filtered.length > 0 && (
+      {/* Autocomplete-förslag från Nominatim */}
+      {query.length >= 2 && suggestions.length > 0 && (
+        <>
+          <div className="location-dropdown__divider" />
+          <p className="location-dropdown__section-label">Suggestions</p>
+          {suggestions.map((s) => (
+            <div
+              key={s.placeId}
+              className="location-dropdown__item"
+              onClick={() => handleSuggestion(s)}
+            >
+              <div className="location-dropdown__icon location-dropdown__icon--gray">
+                <span className="location-dropdown__flag">📍</span>
+              </div>
+              <div className="location-dropdown__text">
+                <strong>{s.label}</strong>
+                <span>{s.country}</span>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
+
+      {/* Populära destinationer – visas när ingen fritext */}
+      {query.length < 2 && filteredDestinations.length > 0 && (
         <>
           <div className="location-dropdown__divider" />
           <p className="location-dropdown__section-label">
             Popular destinations
           </p>
-          {filtered.map((dest) => (
+          {filteredDestinations.map((dest) => (
             <div
               className="location-dropdown__item"
               key={dest.label}
@@ -133,19 +164,6 @@ export default function LocationDropdown({
             </div>
           ))}
         </>
-      )}
-
-      {/* Fritext-alternativ om inget matchar */}
-      {query.trim() && filtered.length === 0 && (
-        <div className="location-dropdown__item" onClick={handleFreetext}>
-          <div className="location-dropdown__icon location-dropdown__icon--gray">
-            <span className="location-dropdown__flag">🔍</span>
-          </div>
-          <div className="location-dropdown__text">
-            <strong>Search "{query}"</strong>
-            <span>Find lessons in {query}</span>
-          </div>
-        </div>
       )}
     </div>
   );

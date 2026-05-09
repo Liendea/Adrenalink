@@ -45,7 +45,16 @@ export default function useActivitySearch({
         if (!response.ok) throw new Error("Failed to fetch activities");
 
         const data = await response.json();
-        setActivities(data.availableSlots || []);
+
+        // Gruppera slots per lektion – behåll alla slots men visa bara en rad per lektion
+        const slotsByLesson = new Map<number, AvailableTimeSlot>();
+        (data.availableSlots || []).forEach((slot: AvailableTimeSlot) => {
+          if (!slotsByLesson.has(slot.lesson.id)) {
+            slotsByLesson.set(slot.lesson.id, slot);
+          }
+        });
+
+        setActivities(Array.from(slotsByLesson.values()));
       } catch (err: unknown) {
         if (err instanceof Error) {
           console.error("Error loading activities:", err.message);

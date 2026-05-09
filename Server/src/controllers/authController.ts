@@ -118,7 +118,7 @@ export const login = async (req: Request, res: Response) => {
 export const updateProfileImage = async (req: Request, res: Response) => {
   try {
     const { userId, imageBase64 } = req.body as {
-      userId: string;
+      userId: number;
       imageBase64: string;
     };
 

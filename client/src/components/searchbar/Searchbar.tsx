@@ -3,6 +3,8 @@ import Icon from "../Icon";
 import Dropdowns from "./dropdowns/Dropdowns";
 import { useSearch } from "@/hooks/useSearch";
 import "./Searchbar.scss";
+import { useRef, useCallback } from "react";
+import useClickOutside from "@/hooks/useClickOutside";
 
 export default function Searchbar() {
   const {
@@ -16,8 +18,16 @@ export default function Searchbar() {
     handleSearch,
   } = useSearch();
 
+  const searchbarRef = useRef<HTMLDivElement>(null);
+
+  const closeDropdown = useCallback(() => {
+    setActiveDropdown(null);
+  }, [setActiveDropdown]);
+
+  useClickOutside(searchbarRef, closeDropdown);
+
   return (
-    <div className="search-bar">
+    <div className="search-bar" ref={searchbarRef}>
       {/* WHERE */}
       <div className="search-field-wrapper">
         <div className="search-field" onClick={() => toggle("location")}>
