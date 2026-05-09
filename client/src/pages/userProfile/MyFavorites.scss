@@ -1,0 +1,32 @@
+.my-favorites {
+  padding: 10rem;
+
+  &__section {
+    width: 100%;
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-rows: auto;
+      gap: 3rem;
+
+      margin-block: 2rem;
+    }
+  }
+
+  h1 {
+    margin-block: 2rem;
+  }
+
+  &__back {
+    padding: 1rem;
+    background-color: var(--off-white);
+    border-radius: var(--radius-md);
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

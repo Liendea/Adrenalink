@@ -18,6 +18,11 @@
     filter: brightness(0.72);
     z-index: 0;
     animation: zoomIn 18s ease-out forwards;
+    pointer-events: none;
+  }
+
+  &__overlay {
+    pointer-events: none;
   }
 
   @keyframes zoomIn {

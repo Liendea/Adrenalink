@@ -39,6 +39,7 @@ model User {
 
 // Rating 
   ratings   Rating[] 
+    favorites Favorite[]
 
   profileImage String? @db.LongText @map("profile_image")
 
@@ -67,6 +68,7 @@ lng  Float?
   // Relationer
   lessons   Lesson[]
    ratings   Rating[] 
+     favorites Favorite[]
 
 
   @@map("schools") // Mappar modellen till en tabell med små bokstäver i databasen
@@ -108,6 +110,7 @@ lng  Float?
   // Relationer
   school            School          @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   availableTimes    AvailableTime[]
+    favorites Favorite[]
 
   @@map("lessons")
 }
@@ -125,3 +128,24 @@ model AvailableTime {
 
   @@map("available_times")
 }
+
+
+// ─── FAVORITES  ──────────────────────────────────────────────────────────────────
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  lessonId  Int?     @map("lesson_id")
+  schoolId  Int?     @map("school_id")
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson    Lesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  // En användare kan bara favoritmarkera samma lektion/skola en gång
+  @@unique([userId, lessonId])
+  @@unique([userId, schoolId])
+  @@map("favorites")
+}
+

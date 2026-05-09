@@ -1,0 +1,129 @@
+// Footer.scss
+.footer {
+  background: var(--gray-light);
+  color: var(--dark-blue);
+  padding: 6rem 3rem;
+  margin-top: auto;
+
+  @media (max-width: 768px) {
+    padding: 48px 1.5rem 24px;
+  }
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (max-width: 1024px) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__tagline {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--dark-blue);
+    max-width: 320px;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  &__social {
+    font-size: 0.85rem;
+    background-color: var(--main-blue);
+    color: var(--dark-blue);
+    text-decoration: none;
+    border: none;
+    border-radius: 50px;
+    padding: 6px 14px;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  &__col-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dark-blue);
+    margin-bottom: 16px;
+  }
+
+  &__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    a {
+      color: var(--dark-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 28px;
+    font-size: 0.8rem;
+    color: var(--dark-blue);
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+
+  &__legal {
+    display: flex;
+    gap: 24px;
+
+    a {
+      color: var(--dark-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}

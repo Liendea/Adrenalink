@@ -9,6 +9,7 @@ import exploreRoutes from "./routes/exploreRoutes.js";
 import slotRoutes from "./routes/slotRoutes.js";
 import schoolRoutes from "./routes/schoolRoutes.js";
 import ratingRoutes from "./routes/ratingRoutes.js";
+import favoriteRoutes from "./routes/favoriteRoutes.js";
 
 const app: Application = express();
 
@@ -29,6 +30,8 @@ app.use("/api/explore", exploreRoutes);
 app.use("/api/slots", slotRoutes);
 app.use("/api/schools", schoolRoutes);
 app.use("/api/ratings", ratingRoutes);
+
+app.use("/api/favorites", favoriteRoutes);
 
 // En enkel test-route
 app.get("/", (req: Request, res: Response) => {

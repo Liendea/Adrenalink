@@ -5,6 +5,7 @@
   height: 100%;
   max-height: calc(100vh - 200px);
   text-transform: capitalize;
+  z-index: 1000;
 
   // map
   .maplibregl-map {

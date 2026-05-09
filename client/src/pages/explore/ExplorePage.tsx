@@ -12,6 +12,7 @@ type ExploreTab = "activities" | "schools" | "rentals";
 export default function ExplorePage() {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<ExploreTab>("activities");
+  const [mapVisible, setMapVisible] = useState(false);
 
   const rawCountry = searchParams.get("country");
   const countryParam = rawCountry === "Where?" ? null : rawCountry;
@@ -105,11 +106,29 @@ export default function ExplorePage() {
 
   return (
     <section className="explore">
+   
+      <button
+        className="explore__map-toggle"
+        onClick={() => setMapVisible(true)}
+      >
+        Show map
+      </button>
       <ExploreNav activeTab={activeTab} onTabChange={setActiveTab} />
       <h2 className="explore__title">{resultCount} results found</h2>
-
       <div className="explore__split">
-        <div className="explore__map">{renderMap()}</div>
+        <div
+          className={`explore__map ${mapVisible ? "explore__map--visible" : ""}`}
+        >
+          {mapVisible && (
+            <button
+              className="explore__map-close"
+              onClick={() => setMapVisible(false)}
+            >
+              ‹ List view
+            </button>
+          )}
+          {renderMap()}
+        </div>
         <div className="explore__cards">{renderCards()}</div>
       </div>
     </section>

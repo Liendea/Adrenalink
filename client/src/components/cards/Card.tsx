@@ -57,11 +57,10 @@ const getSchoolImage = (schoolName: string): string => {
 export default function Card(props: CardProps) {
   const { isFavorited, toggleFavorite } = useFavorites();
   const id = props.data.id;
-
   const handleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleFavorite(id);
+    toggleFavorite(id, props.variant === "lesson" ? "lesson" : "school");
   };
 
   //vid klick navigera till kort Id

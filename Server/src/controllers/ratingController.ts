@@ -40,7 +40,7 @@ export const getSchoolRating = async (req: Request, res: Response) => {
 export const upsertSchoolRating = async (req: Request, res: Response) => {
   try {
     const schoolIdInt = parseInt(String(req.params.schoolId));
-    const { userId, score } = req.body as { userId: string; score: number };
+    const { userId, score } = req.body as { userId: number; score: number };
 
     if (!userId) {
       res.status(401).json({ message: "Not authenticated" });
@@ -64,7 +64,7 @@ export const upsertSchoolRating = async (req: Request, res: Response) => {
     const rating = await prisma.rating.upsert({
       where,
       update: { score },
-      create: { schoolId: schoolIdInt, userId, score },
+      create: { schoolId: schoolIdInt, userId: Number(userId), score },
     });
 
     const result = await prisma.rating.aggregate({

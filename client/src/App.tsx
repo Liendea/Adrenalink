@@ -18,6 +18,7 @@ import UserProfile from "./pages/userProfile/UserProfile";
 import EditProfile from "./pages/userProfile/EditProfile";
 import MyFavorites from "./pages/userProfile/MyFavorites";
 import MyBookings from "./pages/userProfile/MyBookings";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -85,6 +86,7 @@ function App() {
           />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }
