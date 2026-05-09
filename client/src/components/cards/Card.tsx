@@ -1,4 +1,3 @@
-import image from "@/assets/image.png";
 import type { Lesson, School } from "@/types/types";
 import Icon from "@/components/Icon";
 import Location from "@/assets/icons/Location.svg";
@@ -10,10 +9,50 @@ import "./Card.scss";
 import { Link } from "react-router-dom";
 import StarRating from "../rating/StarRating";
 import { useFavorites } from "@/hooks/useFavorites";
+import climbImg from "@/assets/climbing.png";
+import snowboardImg from "@/assets/snowboard.png";
+import kiteImg from "@/assets/kite-surf.png";
+import surfImg from "@/assets/image.png";
+import windImg from "@/assets/wind-surf.png";
+import wakeImg from "@/assets/wakeboard.png";
+import snowSchoolImg from "@/assets/snowboard-school.png";
+import kiteSchoolImg from "@/assets/kite-school.png";
+import climbSchoolImg from "@/assets/climb-school.png";
+import surfSchoolImg from "@/assets/surf-school.png";
 
 type CardProps =
   | { variant: "lesson"; data: Lesson }
   | { variant: "school"; data: School };
+
+const sportImageMap: Record<string, string> = {
+  surf: surfImg,
+  kitesurf: kiteImg,
+  climbing: climbImg,
+  snowboard: snowboardImg,
+  windsurf: windImg,
+  wakeboard: wakeImg, // byt ut mot rätt bild när du har en
+};
+
+const schoolImageMap: Record<string, string> = {
+  surfSchool: surfSchoolImg,
+  kiteSchool: kiteSchoolImg,
+  climbSchool: climbSchoolImg,
+  snowboardSchool: snowSchoolImg,
+  wakeboardSchool: wakeImg,
+};
+
+const getSchoolImage = (schoolName: string): string => {
+  const name = schoolName.toLowerCase();
+
+  if (name.includes("surf")) return schoolImageMap.surfSchool;
+  if (name.includes("kite")) return schoolImageMap.kiteSchool;
+  if (name.includes("climb")) return schoolImageMap.climbSchool;
+  if (name.includes("snow") || name.includes("ski"))
+    return schoolImageMap.snowboardSchool;
+  if (name.includes("wake")) return schoolImageMap.wakeboardSchool;
+
+  return surfImg; // default
+};
 
 export default function Card(props: CardProps) {
   const { isFavorited, toggleFavorite } = useFavorites();
@@ -25,16 +64,27 @@ export default function Card(props: CardProps) {
     toggleFavorite(id);
   };
 
+  //vid klick navigera till kort Id
   const href =
     props.variant === "lesson"
       ? `/booking/${props.data.id}`
       : `/schools/${props.data.id}`;
 
+  const getCardImage = () => {
+    if (props.variant === "lesson") {
+      return sportImageMap[props.data.sportType] ?? surfImg;
+    }
+    if (props.variant === "school") {
+      return getSchoolImage(props.data.name);
+    }
+    return surfImg;
+  };
+
   return (
     <Link to={href} className="card">
       <div className="card__image-wrap">
         <img
-          src={image}
+          src={getCardImage()}
           alt={props.variant === "lesson" ? "Lesson image" : "School image"}
           className="card__image"
           loading="lazy"
@@ -74,6 +124,9 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
         <h2>
           {lesson.lessonType} {lesson.sportType} lesson
         </h2>
+        <span className="card__badge">
+          <p>{lesson.priceEuro}€</p>
+        </span>
       </div>
       <div className="card__description">
         <p>{lesson.description}</p>
@@ -104,9 +157,6 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
           <span>School:</span> <span>{lesson.school.name}</span>
         </div>
       )}
-      <span className="card__badge">
-        <p>{lesson.priceEuro}€</p>
-      </span>
     </div>
   );
 };

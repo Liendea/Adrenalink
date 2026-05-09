@@ -109,9 +109,8 @@ export default function ExplorePage() {
       <h2 className="explore__title">{resultCount} results found</h2>
 
       <div className="explore__split">
-        <div className="explore__cards">{renderCards()}</div>
-
         <div className="explore__map">{renderMap()}</div>
+        <div className="explore__cards">{renderCards()}</div>
       </div>
     </section>
   );

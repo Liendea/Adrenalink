@@ -46,37 +46,27 @@
 
     //mobile-width: <768px
     @include mobile {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
 
     //tablet-width: 768px;
     @include tablet {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
 
     //desktop-width: 1024px;
     @include desktop {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
 
     //medium-screens-width: 1300px;
     @include medium-screens {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
 
     //large-screens-width: 1700px;
     @include large-screens {
-      flex-direction: row;
-    }
-
-    //xl-screens-width: 2000px;
-    @include xl-screens {
-      flex-direction: row;
-    }
-
-    //xxl-screens-width: 2300px;
-    @include xxl-screens {
-      flex-direction: row;
+      flex-direction: row-reverse;
     }
   }
 
@@ -142,7 +132,6 @@
     top: 100px;
     height: calc(100vh - 200px);
 
-    //mobile-width: <768px
     @include mobile {
       display: none;
     }

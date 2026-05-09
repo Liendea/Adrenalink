@@ -23,6 +23,9 @@ export default function Navigation() {
         )
           ? "transparent"
           : "#f6f6f6",
+        borderBottom: ["/", "/register", "/login"].includes(location.pathname)
+          ? "none"
+          : "1px solid lightgray",
       }}
     >
       <a className="navigation__logo" href="/">
