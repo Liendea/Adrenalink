@@ -1,23 +1,69 @@
+@use "@/styles/breakpoints" as *;
+
 .navigation {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 40px;
-  background-color: transparent;
+  padding: 2rem;
 
-  &__actions {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+  justify-content: center;
+
+  &__group1 {
     display: flex;
     align-items: center;
-    flex-direction: row;
     justify-content: space-between;
-    gap: 12px;
   }
 
-  &__cta {
+  // LOGO
+  &__logo {
+    &--small {
+      display: none;
+      height: 100%;
+      @include mobile {
+        display: flex;
+        align-items: center;
+      }
+      @include tablet {
+        display: flex;
+        align-items: center;
+      }
+      @include desktop {
+        display: none;
+      }
+    }
+
+    &--large {
+      @include mobile {
+        display: none;
+      }
+      @include tablet {
+        display: none;
+      }
+      @include desktop {
+        display: block;
+      }
+    }
+  }
+
+  // Alla action knappar (create profile, logga in, more + min profil och logga ut
+  &__actions {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-left: 3rem;
+    cursor: pointer;
+  }
+
+  // Create account knapp
+  &__register {
     background: rgba(15, 25, 50, 0.6);
     color: var(--off-white);
     border: none;
@@ -38,35 +84,32 @@
     }
   }
 
+  // Hälsning + namn + min profil ikon + logga ut
   &__icon-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 3px;
     background: rgba(15, 25, 50, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
-    padding: 10px 16px;
+    border-radius: var(--radius-lg);
+    padding: 0.8rem 1rem;
     color: var(--off-white);
     cursor: pointer;
     transition: background 0.2s;
     font-size: 0.65rem;
+    min-height: 50px;
+    max-height: 60px;
 
+    min-width: 80px;
     &:first-of-type {
+      display: flex;
       flex-direction: row;
-      gap: 2rem;
       align-items: center;
       justify-content: center;
-      padding-left: 2rem;
-      padding-right: 2rem;
+      gap: 3rem;
       width: auto;
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
     }
 
     &:hover {
@@ -74,11 +117,24 @@
     }
   }
 
+  // hälsning + namn
   &__welcome {
     color: var(--off-white);
     font-size: 1rem;
+    display: block;
+
+    @include mobile {
+      display: none;
+    }
+    @include tablet {
+      display: none;
+    }
+    @include desktop {
+      display: block;
+    }
   }
 
+  // Min profil + ikon
   &__profile {
     display: flex;
     flex-direction: column;
@@ -86,10 +142,64 @@
     justify-content: center;
   }
 
+  // logga ut
   &__exit {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  // Navigation serachbar
+  .navigation__searchbar2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(300px, 50%, 800px); // min, preferred, max
+    display: block;
+
+    margin-left: 3rem;
+
+    @include mobile {
+      display: none;
+    }
+
+    @include tablet {
+      display: none;
+    }
+
+    @include desktop {
+      display: none;
+    }
+
+    @include medium-screens {
+      display: flex;
+    }
+  }
+  .navigation__searchbar {
+    width: 100%;
+    display: none;
+
+    @include mobile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @include tablet {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @include desktop {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @include medium-screens {
+      display: none;
+    }
   }
 }
