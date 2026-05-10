@@ -33,18 +33,23 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: #111827;
-    color: white;
+    background: var(--dark-blue);
+    color: var(--off-white);
     border: none;
     font-size: 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
   }
 
   &__input {
     display: none;
   }
+}
+
+.profile-image-upload:hover {
+  box-shadow: var(--shadow-card);
+  color: var(--gray-light);
+  border-radius: 50%;
 }

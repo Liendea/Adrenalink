@@ -34,6 +34,11 @@
         align-items: center;
       }
       @include desktop {
+        display: flex;
+        align-items: center;
+      }
+
+      @include medium-screens {
         display: none;
       }
     }
@@ -46,7 +51,10 @@
         display: none;
       }
       @include desktop {
-        display: block;
+        display: none;
+      }
+      @include medium-screens {
+        display: flex;
       }
     }
   }
@@ -130,6 +138,9 @@
       display: none;
     }
     @include desktop {
+      display: none;
+    }
+    @include medium-screens {
       display: block;
     }
   }
@@ -169,7 +180,7 @@
     }
 
     @include desktop {
-      display: none;
+      display: flex;
     }
 
     @include medium-screens {
@@ -193,9 +204,7 @@
     }
 
     @include desktop {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: none;
     }
 
     @include medium-screens {

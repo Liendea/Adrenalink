@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import "./UserProfile.scss";
 import ProfileImageUpload from "@/components/profileImage/ProfileImageUpload";
+import settingsIcon from "@/assets/icons/settingsIcon.svg";
+import Icon from "@/components/Icon";
 
 export default function UserProfile() {
   const { user } = useAuth();
@@ -22,7 +24,7 @@ export default function UserProfile() {
           className="profile__edit-btn"
           onClick={() => navigate("/profile/edit")}
         >
-          ⚙ Edit
+          <Icon src={settingsIcon} width={15} height={15} /> Edit
         </button>
       </div>
 

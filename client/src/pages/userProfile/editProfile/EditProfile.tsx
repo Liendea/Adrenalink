@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import "./EditProfile.scss";
+import Icon from "@/components/Icon";
+import chevronLeft from "@/assets/icons/ChevronLeft.svg";
+import CountryInput from "@/components/inputs/CountryInput";
+import { PHONE_CODES } from "@/utils/CountryPhoneCodes";
+import useEditProfile from "@/hooks/useEditProfile";
 
 type ProfileForm = {
   firstName: string;
@@ -19,6 +24,7 @@ type ProfileForm = {
 export default function EditProfile() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { saveProfile, loading, error } = useEditProfile();
 
   const [form, setForm] = useState<ProfileForm>({
     firstName: user?.firstName ?? "",
@@ -39,8 +45,8 @@ export default function EditProfile() {
     };
 
   const handleSave = async () => {
-    // TODO: PUT /api/users/:id med form-datan
-    navigate("/profile");
+    await saveProfile(form);
+    if (!error) navigate("/profile");
   };
 
   return (
@@ -50,23 +56,9 @@ export default function EditProfile() {
           className="edit-profile__back"
           onClick={() => navigate("/profile")}
         >
-          ‹ Back
+          <Icon src={chevronLeft} /> Back
         </button>
         <h1>Edit Profile</h1>
-      </div>
-
-      {/* Avatar */}
-      <div className="edit-profile__avatar-row">
-        <div className="edit-profile__avatar">
-          <span>
-            {user?.firstName[0]}
-            {user?.lastName[0]}
-          </span>
-          <button className="edit-profile__avatar-add">+</button>
-        </div>
-        <span className="edit-profile__fullname">
-          {user?.firstName} {user?.lastName}
-        </span>
       </div>
 
       {/* Personal info */}
@@ -108,7 +100,10 @@ export default function EditProfile() {
         </div>
         <div className="edit-profile__field">
           <label>Country</label>
-          <input value={form.country} onChange={handleChange("country")} />
+          <CountryInput
+            value={form.country}
+            onChange={(val) => setForm((prev) => ({ ...prev, country: val }))}
+          />
         </div>
       </section>
 
@@ -118,10 +113,19 @@ export default function EditProfile() {
         <div className="edit-profile__field-row">
           <div className="edit-profile__field">
             <label>Country code</label>
-            <input
+            <select
               value={form.phoneCode}
-              onChange={handleChange("phoneCode")}
-            />
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, phoneCode: e.target.value }))
+              }
+              className="edit-profile__select"
+            >
+              {PHONE_CODES.map((p) => (
+                <option key={p.code} value={p.code}>
+                  {p.code} {p.country}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="edit-profile__field">
             <label>Phone number</label>
@@ -137,8 +141,14 @@ export default function EditProfile() {
         </div>
       </section>
 
-      <button className="edit-profile__save" onClick={handleSave}>
-        Save changes
+      {error && <p className="edit-profile__error">{error}</p>}
+
+      <button
+        className="edit-profile__save"
+        onClick={handleSave}
+        disabled={loading}
+      >
+        {loading ? "Saving..." : "Save changes"}
       </button>
     </div>
   );

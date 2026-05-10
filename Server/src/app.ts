@@ -18,8 +18,8 @@ const app: Application = express();
 app.use(
   cors({
     origin: "http://localhost:5173", // Tillåt bara din frontend
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Tillåt cookies/headers om det behövs senare
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true, // Tillåt cookies/headers
   }),
 );
 app.use(express.json()); // Gör att backend kan ta emot JSON i req.body

@@ -15,9 +15,9 @@ import RentalDetailPage from "./pages/rental/RentalDetailPage";
 import Navigation from "./components/navigation/Navigation";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import UserProfile from "./pages/userProfile/UserProfile";
-import EditProfile from "./pages/userProfile/EditProfile";
-import MyFavorites from "./pages/userProfile/MyFavorites";
-import MyBookings from "./pages/userProfile/MyBookings";
+import EditProfile from "./pages/userProfile/editProfile/EditProfile";
+import MyFavorites from "./pages/userProfile/myFavorites/MyFavorites";
+import MyBookings from "./pages/userProfile/myBookings/MyBookings";
 import Footer from "./components/footer/Footer";
 
 function App() {

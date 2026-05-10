@@ -115,6 +115,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+// ----- ÄNDRA PROFIL BILD ----- //
 export const updateProfileImage = async (req: Request, res: Response) => {
   try {
     const { userId, imageBase64 } = req.body as {
@@ -150,6 +151,74 @@ export const updateProfileImage = async (req: Request, res: Response) => {
     res.json({ user: updatedUser });
   } catch (error) {
     console.error("Fel i updateProfileImage:", error);
+    res.status(500).json({ message: "Serverfel." });
+  }
+};
+
+// ----- UPPDATERA PROFIL ----- //
+
+export const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user.id;
+
+    const {
+      firstName,
+      lastName,
+      passportNo,
+      address,
+      zipCode,
+      city,
+      country,
+      phoneCode,
+      phoneNumber,
+      email,
+    } = req.body as {
+      firstName: string;
+      lastName: string;
+      passportNo: string;
+      address: string;
+      zipCode: string;
+      city: string;
+      country: string;
+      phoneCode: string;
+      phoneNumber: string;
+      email: string;
+    };
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        firstName,
+        lastName,
+        passportNo,
+        address,
+        zipCode,
+        city,
+        country,
+        phoneCode,
+        phoneNumber,
+        email,
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        passportNo: true,
+        address: true,
+        zipCode: true,
+        city: true,
+        country: true,
+        phoneCode: true,
+        phoneNumber: true,
+        role: true,
+        profileImage: true,
+      },
+    });
+
+    res.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Fel i updateProfile:", error);
     res.status(500).json({ message: "Serverfel." });
   }
 };
