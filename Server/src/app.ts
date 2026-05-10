@@ -30,8 +30,8 @@ app.use("/api/explore", exploreRoutes);
 app.use("/api/slots", slotRoutes);
 app.use("/api/schools", schoolRoutes);
 app.use("/api/ratings", ratingRoutes);
-
 app.use("/api/favorites", favoriteRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // En enkel test-route
 app.get("/", (req: Request, res: Response) => {
