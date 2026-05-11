@@ -86,7 +86,7 @@ export default function Navigation() {
               >
                 {/* Hälsning + namn  */}
                 <span className="navigation__welcome">
-                  Hello, {user.firstName}!
+                  Hello, {user?.firstName}!
                 </span>
                 {/* ----------------------------- */}
 

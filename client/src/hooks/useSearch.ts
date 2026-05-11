@@ -6,10 +6,13 @@ import type { ActiveDropdown, SelectedItem, DateRange } from "@/types/types";
 export function useSearch() {
   const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null);
-  const [activeItem, setActiveItem] = useState<SelectedItem>({
+
+  // State som tillåter SelectedItem eller null
+  const [activeItem, setActiveItem] = useState<SelectedItem | null>({
     label: "Where?",
     sub: "Find destinations",
   });
+
   const [selectedDates, setSelectedDates] = useState<DateRange>({
     startDate: null,
     endDate: null,
@@ -21,23 +24,32 @@ export function useSearch() {
   const handleSearch = () => {
     setActiveDropdown(null);
 
+    // 1. EARLY RETURN - Detta säkrar activeItem för resten av funktionen
+    if (!activeItem) return;
+
+    // Vi skapar en referens som TS garanterat vet inte är null inuti closures
+    const currentItem = activeItem;
+
     const buildParams = (coords?: { lat: number; lng: number }) => {
       const params = new URLSearchParams();
-      if (activeItem.type === "nearby") {
+
+      if (currentItem.type === "nearby") {
         params.set("location", "Nearby");
         if (coords) {
           params.set("lat", String(coords.lat));
           params.set("lng", String(coords.lng));
         }
-      } else if (activeItem.label && activeItem.label !== "Where?") {
-        // Skicka bara country om användaren faktiskt valt något
-        params.set("country", activeItem.label);
+      } else if (currentItem.label && currentItem.label !== "Where?") {
+        params.set("country", currentItem.label);
       }
 
-      if (selectedDates.startDate)
+      // .toISOString() kräver att det är ett Date-objekt, så vi checkar noga
+      if (selectedDates.startDate instanceof Date) {
         params.set("startDate", selectedDates.startDate.toISOString());
-      if (selectedDates.endDate)
+      }
+      if (selectedDates.endDate instanceof Date) {
         params.set("endDate", selectedDates.endDate.toISOString());
+      }
 
       return params;
     };
@@ -46,12 +58,17 @@ export function useSearch() {
       navigate(`/explore?${buildParams(coords).toString()}`);
     };
 
-    if (activeItem.type === "nearby") {
-      navigator.geolocation.getCurrentPosition(
-        (pos) =>
-          doNavigate({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-        () => doNavigate(),
-      );
+    // 2. GEOLOCATION LOGIK
+    if (currentItem.type === "nearby") {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) =>
+            doNavigate({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+          () => doNavigate(), // Fallback om användaren nekar GPS
+        );
+      } else {
+        doNavigate(); // Fallback om webbläsaren saknar stöd
+      }
     } else {
       doNavigate();
     }

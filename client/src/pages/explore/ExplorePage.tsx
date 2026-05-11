@@ -6,6 +6,7 @@ import ExploreNav from "@/components/navigation/tabNav/ExploreNav";
 import Card from "@/components/cards/Card";
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./ExplorePage.scss";
+import type { Lesson } from "@/types/types";
 
 type ExploreTab = "activities" | "schools" | "rentals";
 
@@ -55,11 +56,14 @@ export default function ExplorePage() {
 
       return (
         <div className="grid">
-          {activities.map((item) => (
-            <div key={item.id}>
-              <Card variant="lesson" data={item.lesson} />
-            </div>
-          ))}
+          {activities.map((item) =>
+            // Rendera bara om lesson faktiskt finns
+            item.lesson ? (
+              <div key={item.id}>
+                <Card variant="lesson" data={item.lesson} />
+              </div>
+            ) : null,
+          )}
         </div>
       );
     }
@@ -87,15 +91,23 @@ export default function ExplorePage() {
 
   const renderMap = () => {
     if (activeTab === "activities") {
-      // Deduplicera – samma lektion kan förekomma flera gånger via olika slots
-      const lessonsMap = new Map(
-        activities.map((slot) => [slot.lesson.id, slot.lesson]),
-      );
+      // 1. Skapa en array med bara existerande lektioner (Type Guard)
+      const validLessons = activities
+        .map((slot) => slot.lesson)
+        .filter(
+          (lesson): lesson is Lesson => lesson !== undefined && lesson !== null,
+        );
+
+      // 2. Deduplicera med Map baserat på garanterat existerande objekt
+      const lessonsMap = new Map(validLessons.map((l) => [l.id, l]));
       const lessons = Array.from(lessonsMap.values());
+
       return <DiscoveryMap variant="activities" items={lessons} />;
     }
+
     if (activeTab === "schools") {
-      return <DiscoveryMap variant="schools" items={schools} />;
+      // Säkerställ att items alltid är en array, även om schools skulle vara null
+      return <DiscoveryMap variant="schools" items={schools ?? []} />;
     }
 
     return (

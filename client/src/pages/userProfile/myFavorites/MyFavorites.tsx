@@ -34,9 +34,13 @@ export default function MyFavorites() {
             <section className="my-favorites__section">
               <h2>Lessons</h2>
               <div className="grid">
-                {lessonFavorites.map((f) => (
-                  <Card key={f.id} variant="lesson" data={f.lesson} />
-                ))}
+                {lessonFavorites.map(
+                  (f) =>
+                    // kollar att f.lesson inte är undefined/null
+                    f.lesson && (
+                      <Card key={f.id} variant="lesson" data={f.lesson} />
+                    ),
+                )}
               </div>
             </section>
           )}
@@ -45,9 +49,13 @@ export default function MyFavorites() {
             <section className="my-favorites__section">
               <h2>Schools</h2>
               <div className="grid">
-                {schoolFavorites.map((f) => (
-                  <Card key={f.id} variant="school" data={f.school} />
-                ))}
+                {schoolFavorites.map(
+                  (f) =>
+                    // kollar att f.school inte är undefined/null
+                    f.school && (
+                      <Card key={f.id} variant="school" data={f.school} />
+                    ),
+                )}
               </div>
             </section>
           )}

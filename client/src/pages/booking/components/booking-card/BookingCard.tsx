@@ -44,7 +44,7 @@ export default function BookingCard({
 
         <h3 className="booking-card__section-title">Booking</h3>
         <DatePicker
-          selectedDay={selectedDay}
+          selectedDay={selectedDay ?? 0}
           onDayChange={(d) => {
             setSelectedDay(d);
             setSelectedSlot(null);
@@ -59,7 +59,11 @@ export default function BookingCard({
         />
 
         <Cta_Btn
-          onClick={() => onBook?.(lesson.id, selectedDay, selectedSlot!)}
+          onClick={() => {
+            if (selectedDay !== undefined) {
+              onBook?.(lesson.id, selectedDay, selectedSlot!);
+            }
+          }}
           disabled={!selectedSlot}
         >
           Book

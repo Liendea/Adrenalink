@@ -33,11 +33,20 @@ const fetchActivities = async (
 
   const data = await response.json();
 
-  // Deduplicera – en rad per lektion
+  // --- SENIOR FIX: DEDUPLICERING ---
   const slotsByLesson = new Map<number, AvailableTimeSlot>();
-  (data.availableSlots || []).forEach((slot: AvailableTimeSlot) => {
-    if (!slotsByLesson.has(slot.lesson.id)) {
-      slotsByLesson.set(slot.lesson.id, slot);
+
+  // Vi säkerställer att det är en array och loopar säkert
+  const rawSlots: AvailableTimeSlot[] = data.availableSlots || [];
+
+  rawSlots.forEach((slot) => {
+    // Genom att kolla att både lesson och id finns här, "smalnar" vi av typen
+    if (slot.lesson && slot.lesson.id) {
+      const lessonId = slot.lesson.id; // Nu vet TS att detta är en 'number'
+
+      if (!slotsByLesson.has(lessonId)) {
+        slotsByLesson.set(lessonId, slot);
+      }
     }
   });
 
@@ -57,10 +66,11 @@ export default function useActivitySearch({
     queryKey: ["activities", locationLabel, locationType, startDate, endDate],
     queryFn: () =>
       fetchActivities(locationLabel, locationType, startDate, endDate),
-    staleTime: 1000 * 60 * 2, // cache i 2 min
+    staleTime: 1000 * 60 * 2,
   });
 
   return {
+    // Returnerar alltid en array, även om data är undefined
     activities: data ?? [],
     loading: isLoading,
     error: error instanceof Error ? error.message : null,
