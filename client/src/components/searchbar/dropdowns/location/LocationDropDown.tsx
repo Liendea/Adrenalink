@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import LocationIcon from "@/assets/icons/locationIcon.svg";
+import LocationIcon from "@/assets/icons/LocationIcon.svg";
 import "./LocationDropDown.scss";
 import type { SelectedItem } from "@/types/types";
 import { useState } from "react";

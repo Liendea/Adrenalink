@@ -6,7 +6,7 @@ import surfImg from "@/assets/image.png";
 import kiteImg from "@/assets/kite-surf.png";
 import climbImg from "@/assets/climbing.png";
 import snowboardImg from "@/assets/snowboard.png";
-import "./Card_small.scss";
+import "./Card_Small.scss";
 
 type Card_SmallProps = {
   lesson: Lesson;
