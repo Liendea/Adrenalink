@@ -17,7 +17,7 @@ const app: Application = express();
 // 1. Konfigurera CORS
 app.use(
   cors({
-    origin: ["https://adrenalink-eight.vercel.app/", "http://localhost:5173"], // Tillåt bara din frontend och vercel domänenen
+    origin: ["https://adrenalink-webb.vercel.app/", "http://localhost:5173"], // Tillåt bara din frontend och vercel domänenen
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true, // Tillåt cookies/headers
   }),
