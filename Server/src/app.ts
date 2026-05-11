@@ -17,7 +17,10 @@ const app: Application = express();
 // 1. Konfigurera CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // Tillåt bara din frontend
+    origin: [
+      "https://adrenalink-git-main-liendeas-projects.vercel.app/",
+      "http://localhost:5173",
+    ], // Tillåt bara din frontend och vercel domänenen
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true, // Tillåt cookies/headers
   }),
