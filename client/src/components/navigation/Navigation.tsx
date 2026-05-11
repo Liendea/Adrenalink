@@ -3,7 +3,7 @@ import AdrenalinkLogo from "@/assets/icons/AdrenalinkLogo.svg";
 import AdrenalinkLogo_Dark from "@/assets/icons/AdrenalinkLogo_dark.svg";
 import SigninIcon from "@/assets/icons/SigninIcon.svg";
 import ExitIcon from "@/assets/icons/ExitIcon.svg";
-import MoreIcon from "@/assets/icons/moreIcon.svg";
+import MoreIcon from "@/assets/icons/MoreIcon.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import "./Navigation.scss";
