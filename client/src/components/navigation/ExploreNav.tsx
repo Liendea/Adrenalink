@@ -1,4 +1,4 @@
-import "./ExploreNav.scss";
+import Tabs from "@/components/navigation/Tabs";
 
 type ExploreTab = "activities" | "schools" | "rentals";
 
@@ -7,27 +7,15 @@ type ExploreNavProps = {
   onTabChange: (tab: ExploreTab) => void;
 };
 
+const TABS = [
+  { key: "activities" as const, label: "Activities" },
+  { key: "schools" as const, label: "Schools" },
+  { key: "rentals" as const, label: "Rentals" },
+];
+
 export default function ExploreNav({
   activeTab,
   onTabChange,
 }: ExploreNavProps) {
-  const tabs: { key: ExploreTab; label: string }[] = [
-    { key: "activities", label: "Activities" },
-    { key: "schools", label: "Schools" },
-    { key: "rentals", label: "Rentals" },
-  ];
-
-  return (
-    <nav className="explore-nav">
-      {tabs.map((tab) => (
-        <button
-          key={tab.key}
-          className={`explore-nav__tab ${activeTab === tab.key ? "explore-nav__tab--active" : ""}`}
-          onClick={() => onTabChange(tab.key)}
-        >
-          {tab.label}
-        </button>
-      ))}
-    </nav>
-  );
+  return <Tabs tabs={TABS} activeTab={activeTab} onTabChange={onTabChange} />;
 }

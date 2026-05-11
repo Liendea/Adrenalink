@@ -7,13 +7,14 @@ import StarRating from "@/components/rating/StarRating";
 import "./SchoolDetailPage.scss";
 import Icon from "@/components/Icon";
 import chevronLeft from "@/assets/icons/ChevronLeft.svg";
+import Tabs from "@/components/navigation/Tabs";
 
 type SchoolTab = "about" | "classes" | "requests";
 
-const TABS: { key: SchoolTab; label: string }[] = [
-  { key: "about", label: "About" },
-  { key: "classes", label: "Classes" },
-  { key: "requests", label: "Requests" },
+const TABS = [
+  { key: "about" as const, label: "About" },
+  { key: "classes" as const, label: "Classes" },
+  { key: "requests" as const, label: "Requests" },
 ];
 
 export default function SchoolDetailPage() {
@@ -68,17 +69,11 @@ export default function SchoolDetailPage() {
       </div>
 
       {/* Tabs */}
-      <nav className="school-detail__tabs">
-        {TABS.map((tab) => (
-          <button
-            key={tab.key}
-            className={`school-detail__tab ${activeTab === tab.key ? "school-detail__tab--active" : ""}`}
-            onClick={() => setActiveTab(tab.key)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </nav>
+      <Tabs
+        tabs={TABS}
+        activeTab={activeTab}
+        onTabChange={(tab) => setActiveTab(tab)}
+      />
 
       {/* Content */}
       <div className="school-detail__content">

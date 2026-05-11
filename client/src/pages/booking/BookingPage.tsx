@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { LessonWithSlots } from "@/types/types";
-import BookingCard from "@/components/cards/booking-card/BookingCard";
+import BookingCard from "@/pages/booking/components/booking-card/BookingCard";
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./BookingPage.scss";
 

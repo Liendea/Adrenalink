@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import "./EditProfile.scss";
 import Icon from "@/components/Icon";
 import chevronLeft from "@/assets/icons/ChevronLeft.svg";
-import CountryInput from "@/components/inputs/CountryInput";
+import CountryInput from "@/pages/userProfile/components/inputs/CountryInput";
 import { PHONE_CODES } from "@/utils/CountryPhoneCodes";
 import useEditProfile from "@/hooks/useEditProfile";
 

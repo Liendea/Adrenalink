@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import type { AvailableTimeSlot, LessonWithSlots } from "@/types/types";
 import "./BookingCard.scss";
-import Cta_Btn from "../../buttons/Cta_Btn";
+import Cta_Btn from "../../../../components/buttons/Cta_Btn";
 import image from "@/assets/image.png";
 import { DatePicker } from "./DatePicker";
 import { BookingDetails } from "./BookingDetails";
