@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 type Suggestion = {
   placeId: string;
@@ -6,60 +7,48 @@ type Suggestion = {
   country: string;
 };
 
+const fetchSuggestions = async (query: string): Promise<Suggestion[]> => {
+  const encoded = encodeURIComponent(query);
+  const url = `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=5&addressdetails=1`;
+
+  const res = await fetch(url, {
+    headers: { "Accept-Language": "en" },
+  });
+
+  const data = await res.json();
+
+  return data.map(
+    (item: {
+      place_id: number;
+      display_name: string;
+      address: { country?: string };
+    }) => ({
+      placeId: String(item.place_id),
+      label: item.display_name.split(",").slice(0, 2).join(",").trim(),
+      country: item.address?.country ?? "",
+    }),
+  );
+};
+
 export default function useLocationAutocomplete(query: string) {
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
 
+  // Debounce – uppdatera debouncedQuery 350ms efter att query slutat ändras
   useEffect(() => {
-    if (query.length < 2) {
-      const timer = setTimeout(() => setSuggestions([]), 0);
-      return () => clearTimeout(timer);
-    }
-
-    const controller = new AbortController();
-
-    const fetchSuggestions = async () => {
-      setLoading(true);
-      try {
-        const encoded = encodeURIComponent(query);
-        const url = `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=5&addressdetails=1`;
-
-        const res = await fetch(url, {
-          signal: controller.signal,
-          headers: { "Accept-Language": "en" },
-        });
-
-        const data = await res.json();
-
-        const mapped: Suggestion[] = data.map(
-          (item: {
-            place_id: number;
-            display_name: string;
-            address: { country?: string };
-          }) => ({
-            placeId: String(item.place_id),
-            label: item.display_name.split(",").slice(0, 2).join(",").trim(),
-            country: item.address?.country ?? "",
-          }),
-        );
-
-        setSuggestions(mapped);
-      } catch (err) {
-        if ((err as Error).name !== "AbortError") {
-          console.error("Autocomplete error:", err);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const timer = setTimeout(fetchSuggestions, 350);
-
-    return () => {
-      clearTimeout(timer);
-      controller.abort();
-    };
+    const timer = setTimeout(() => setDebouncedQuery(query), 350);
+    return () => clearTimeout(timer);
   }, [query]);
 
-  return { suggestions, loading };
+  const { data, isFetching } = useQuery({
+    queryKey: ["autocomplete", debouncedQuery],
+    queryFn: () => fetchSuggestions(debouncedQuery),
+    enabled: debouncedQuery.length >= 2,
+    staleTime: 1000 * 60 * 5, // cache i 5 min – samma sökning hämtas inte om
+    placeholderData: [],
+  });
+
+  return {
+    suggestions: data ?? [],
+    loading: isFetching,
+  };
 }

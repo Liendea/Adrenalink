@@ -1,51 +1,36 @@
-import { useState, useEffect } from "react";
-import type { School } from "@/types/types"; // anpassa till din School-typ
+import { useQuery } from "@tanstack/react-query";
+import type { School } from "@/types/types";
 
 type UseSchoolSearchParams = {
   country: string | null;
-  enabled: boolean; // hämtar bara när true
+  enabled: boolean;
 };
 
 export default function useSchoolSearch({
   country,
   enabled,
 }: UseSchoolSearchParams) {
-  const [schools, setSchools] = useState<School[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["schools", country],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (country) params.set("country", country);
 
-  useEffect(() => {
-    if (!enabled) return;
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/schools?${params.toString()}`,
+      );
 
-    const fetchSchools = async () => {
-      setLoading(true);
-      setError(null);
+      if (!res.ok) throw new Error("Failed to fetch schools");
 
-      try {
-        const params = new URLSearchParams();
-        if (country) params.set("country", country);
+      const data = await res.json();
+      return (data.schools ?? []) as School[];
+    },
+    enabled, // kör bara när enabled är true
+  });
 
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/schools?${params.toString()}`,
-        );
-
-        if (!response.ok) throw new Error("Failed to fetch schools");
-
-        const data = await response.json();
-        setSchools(data.schools || []);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Something went wrong");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSchools();
-  }, [country, enabled]);
-
-  return { schools, loading, error };
+  return {
+    schools: data ?? [],
+    loading: isLoading,
+    error: error instanceof Error ? error.message : null,
+  };
 }

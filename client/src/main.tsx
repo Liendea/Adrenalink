@@ -6,14 +6,20 @@ import "./styles/global.scss";
 import { AuthProvider } from "./context/authProvider";
 import { FavoritesProvider } from "./context/favoriteProvider";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <FavoritesProvider>
-          <App />
-        </FavoritesProvider>
+        <AuthProvider>
+          <FavoritesProvider>
+            <App />
+          </FavoritesProvider>
+        </AuthProvider>
       </BrowserRouter>
-    </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
 );
