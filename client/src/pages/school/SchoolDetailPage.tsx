@@ -7,7 +7,8 @@ import StarRating from "@/components/rating/StarRating";
 import "./SchoolDetailPage.scss";
 import Icon from "@/components/Icon";
 import chevronLeft from "@/assets/icons/ChevronLeft.svg";
-import Tabs from "@/components/navigation/Tabs";
+import Tabs from "@/components/navigation/tabs/Tabs";
+import { useLocation } from "react-router-dom";
 
 type SchoolTab = "about" | "classes" | "requests";
 
@@ -23,16 +24,27 @@ export default function SchoolDetailPage() {
   const [activeTab, setActiveTab] = useState<SchoolTab>("about");
   const { school, loading, error } = useSchoolById(schoolId);
 
+  const location = useLocation();
+  const returnTo =
+    (location.state as { returnTo?: string })?.returnTo ??
+    "/explore?tab=schools";
+
   if (loading) return <div className="school-detail__loading">Loading...</div>;
   if (error || !school)
     return <div className="school-detail__error">School not found.</div>;
 
+  console.log("location.state:", location.state);
+  console.log("returnTo:", returnTo);
+
   return (
     <div className="school-detail">
-      <button className="school-detail__back" onClick={() => navigate(-1)}>
-        <Icon src={chevronLeft} />
-        Back
+      <button
+        className="school-detail__back"
+        onClick={() => navigate(returnTo)}
+      >
+        <Icon src={chevronLeft} /> Back
       </button>
+
       {/* Header */}
 
       <div className="school-detail__header">

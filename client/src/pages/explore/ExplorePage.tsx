@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import useActivitySearch from "@/hooks/useActivitySearch";
 import useSchoolSearch from "@/hooks/useSchoolSearch";
-import ExploreNav from "@/components/navigation/ExploreNav";
+import ExploreNav from "@/components/navigation/tabNav/ExploreNav";
 import Card from "@/components/cards/Card";
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./ExplorePage.scss";
@@ -10,14 +10,22 @@ import "./ExplorePage.scss";
 type ExploreTab = "activities" | "schools" | "rentals";
 
 export default function ExplorePage() {
-  const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<ExploreTab>("activities");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = (searchParams.get("tab") as ExploreTab) ?? "activities";
+
   const [mapVisible, setMapVisible] = useState(false);
 
   const rawCountry = searchParams.get("country");
   const countryParam = rawCountry === "Where?" ? null : rawCountry;
   const startDate = searchParams.get("startDate");
   const endDate = searchParams.get("endDate");
+
+  const handleTabChange = (tab: ExploreTab) => {
+    setSearchParams((prev) => {
+      prev.set("tab", tab);
+      return prev;
+    });
+  };
 
   const {
     activities,
@@ -106,14 +114,13 @@ export default function ExplorePage() {
 
   return (
     <section className="explore">
-   
       <button
         className="explore__map-toggle"
         onClick={() => setMapVisible(true)}
       >
         Show map
       </button>
-      <ExploreNav activeTab={activeTab} onTabChange={setActiveTab} />
+      <ExploreNav activeTab={activeTab} onTabChange={handleTabChange} />
       <h2 className="explore__title">{resultCount} results found</h2>
       <div className="explore__split">
         <div

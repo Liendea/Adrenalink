@@ -19,6 +19,7 @@ import snowSchoolImg from "@/assets/snowboard-school.png";
 import kiteSchoolImg from "@/assets/kite-school.png";
 import climbSchoolImg from "@/assets/climb-school.png";
 import surfSchoolImg from "@/assets/surf-school.png";
+import { useSearchParams } from "react-router-dom";
 
 type CardProps =
   | { variant: "lesson"; data: Lesson }
@@ -63,6 +64,9 @@ export default function Card(props: CardProps) {
     toggleFavorite(id, props.variant === "lesson" ? "lesson" : "school");
   };
 
+  const [searchParams] = useSearchParams();
+  console.log("Card searchParams:", searchParams.toString());
+
   //vid klick navigera till kort Id
   const href =
     props.variant === "lesson"
@@ -80,7 +84,11 @@ export default function Card(props: CardProps) {
   };
 
   return (
-    <Link to={href} className="card">
+    <Link
+      to={href}
+      state={{ returnTo: `/explore?${searchParams.toString()}` }}
+      className="card"
+    >
       <div className="card__image-wrap">
         <img
           src={getCardImage()}
