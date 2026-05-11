@@ -11,7 +11,7 @@ import {
   WEEKDAYS,
   getCalendarCells,
   getDayClass,
-} from "@/utils/CalendarUtils";
+} from "@/components/searchbar/dropdowns/calendar/utils/CalendarUtils";
 
 type CalendarProps = {
   onClose: () => void;

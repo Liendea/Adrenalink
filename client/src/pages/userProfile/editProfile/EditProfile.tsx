@@ -5,7 +5,7 @@ import "./EditProfile.scss";
 import Icon from "@/components/Icon";
 import chevronLeft from "@/assets/icons/ChevronLeft.svg";
 import CountryInput from "@/pages/userProfile/components/inputs/CountryInput";
-import { PHONE_CODES } from "@/utils/CountryPhoneCodes";
+import { PHONE_CODES } from "@/pages/userProfile/editProfile/utils/CountryPhoneCodes";
 import useEditProfile from "@/hooks/useEditProfile";
 
 type ProfileForm = {

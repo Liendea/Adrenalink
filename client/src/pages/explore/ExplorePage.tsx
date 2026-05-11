@@ -114,26 +114,20 @@ export default function ExplorePage() {
 
   return (
     <section className="explore">
-      <button
-        className="explore__map-toggle"
-        onClick={() => setMapVisible(true)}
-      >
-        Show map
-      </button>
       <ExploreNav activeTab={activeTab} onTabChange={handleTabChange} />
       <h2 className="explore__title">{resultCount} results found</h2>
       <div className="explore__split">
+        {/* Toggle-knapp – utanför kartan */}
+        <button
+          className="explore__map-toggle"
+          onClick={() => setMapVisible((prev) => !prev)}
+        >
+          {mapVisible ? "‹ List view" : "Show map"}
+        </button>
+
         <div
           className={`explore__map ${mapVisible ? "explore__map--visible" : ""}`}
         >
-          {mapVisible && (
-            <button
-              className="explore__map-close"
-              onClick={() => setMapVisible(false)}
-            >
-              ‹ List view
-            </button>
-          )}
           {renderMap()}
         </div>
         <div className="explore__cards">{renderCards()}</div>

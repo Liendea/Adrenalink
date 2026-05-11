@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useSchoolById from "@/hooks/useSchoolByID";
-import AboutTab from "./tabs/AboutTab";
-import ClassesTab from "./tabs/ClassesTab";
+import AboutTab from "../../pages/school/tabs/AboutTab";
+import ClassesTab from "../../pages/school/tabs/ClassesTab";
 import StarRating from "@/components/rating/StarRating";
 import "./SchoolDetailPage.scss";
 import Icon from "@/components/Icon";

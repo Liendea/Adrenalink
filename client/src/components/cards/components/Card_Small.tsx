@@ -8,7 +8,7 @@ import climbImg from "@/assets/climbing.png";
 import snowboardImg from "@/assets/snowboard.png";
 import "./LessonListItem.scss";
 
-type LessonListItemProps = {
+type Card_SmallProps = {
   lesson: Lesson;
 };
 
@@ -21,7 +21,7 @@ const sportImageMap: Record<string, string> = {
   wakeboard: surfImg,
 };
 
-export default function LessonListItem({ lesson }: LessonListItemProps) {
+export default function Card_Small({ lesson }: Card_SmallProps) {
   const navigate = useNavigate();
   const { isFavorited, toggleFavorite } = useFavorites();
 

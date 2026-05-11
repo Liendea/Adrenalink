@@ -9,7 +9,7 @@ import Login from "./pages/login/Login";
 import BookingPage from "./pages/booking/BookingPage";
 import ExplorePage from "./pages/explore/ExplorePage";
 
-import SchoolDetailPage from "./pages/school/SchoolDetailPage";
+import SchoolDetailPage from "@/pages/school/SchoolDetailPage";
 import RentalDetailPage from "./pages/rental/RentalDetailPage";
 
 import Navigation from "./components/navigation/Navigation";
