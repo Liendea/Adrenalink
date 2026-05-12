@@ -1,96 +1,43 @@
 import type { Request, Response } from "express";
-import { prisma } from "../config/db.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import * as authService from "../services/authService.js";
 
-// ----- REGISTTRERA ----- //
+// POST /api/auth/register
 export const register = async (req: Request, res: Response) => {
   try {
-    const {
-      email,
-      password,
-      firstName,
-      lastName,
-      passportNo,
-      address,
-      zipCode,
-      city,
-      country,
-      phoneCode,
-      phoneNumber,
-    } = req.body;
+    const { email, passportNo } = req.body;
 
-    // Kolla om användaren redan finns (via email eller passnummer)
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        OR: [{ email: email }, { passportNo: passportNo }],
-      },
-    });
-
+    // Kolla om email eller passnummer redan används
+    const existingUser = await authService.findExistingUser(email, passportNo);
     if (existingUser) {
       return res.status(400).json({
         message: "Användare med denna email eller passnummer finns redan.",
       });
     }
 
-    // Hasha lösenordet
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Spara i databasen via Prisma
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName,
-        passportNo,
-        address,
-        zipCode,
-        city,
-        country,
-        phoneCode,
-        phoneNumber,
-      },
-    });
-
-    res.status(201).json({
-      message: "Användare skapad!",
-      userId: newUser.id,
-    });
+    // Skapa användaren — hashning sker i service-lagret
+    const newUser = await authService.createUser(req.body);
+    res.status(201).json({ message: "Användare skapad!", userId: newUser.id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Serverfel vid registrering." });
   }
 };
 
-// ----- LOGIN ----- //
+// POST /api/auth/login
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    // Hitta användaren
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
-
+    // Verifiera email och lösenord — returnerar null om fel
+    const user = await authService.verifyUserCredentials(email, password);
     if (!user) {
       return res.status(401).json({ message: "Fel e-post eller lösenord" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    // Skapa JWT-token för sessionen
+    const token = authService.createToken(user.id, user.role);
 
-    if (!isMatch) {
-      return res.status(401).json({ message: "Fel e-post eller lösenord" });
-    }
-
-    // Skapa JWT-Token
-    const token = jwt.sign(
-      { userId: user.id, role: user.role },
-      process.env.JWT_SECRET || "fallback_secrert",
-      { expiresIn: "1d" }, // token gäller 24h
-    );
-
-    // Skicka svar (skicka inte med lösenordet tillbaka!)
+    // Skicka svar — lösenordet skickas aldrig tillbaka
     res.json({
       message: "Inloggning lyckades",
       token,
@@ -115,7 +62,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-// ----- ÄNDRA PROFIL BILD ----- //
+// PATCH /api/auth/profile-image
 export const updateProfileImage = async (req: Request, res: Response) => {
   try {
     const { userId, imageBase64 } = req.body as {
@@ -123,31 +70,17 @@ export const updateProfileImage = async (req: Request, res: Response) => {
       imageBase64: string;
     };
 
+    // Validering — båda fälten krävs
     if (!userId || !imageBase64) {
       res.status(400).json({ message: "userId och imageBase64 krävs." });
       return;
     }
 
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { profileImage: imageBase64 },
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        passportNo: true,
-        address: true,
-        zipCode: true,
-        city: true,
-        country: true,
-        phoneCode: true,
-        phoneNumber: true,
-        role: true,
-        profileImage: true,
-      },
-    });
-
+    // Uppdatera bilden via service-lagret
+    const updatedUser = await authService.updateUserProfileImage(
+      userId,
+      imageBase64,
+    );
     res.json({ user: updatedUser });
   } catch (error) {
     console.error("Fel i updateProfileImage:", error);
@@ -155,67 +88,14 @@ export const updateProfileImage = async (req: Request, res: Response) => {
   }
 };
 
-// ----- UPPDATERA PROFIL ----- //
-
+// PATCH /api/auth/profile
 export const updateProfile = async (req: Request, res: Response) => {
   try {
+    // userId hämtas från JWT-token via auth-middleware
     const userId = req.user.id;
 
-    const {
-      firstName,
-      lastName,
-      passportNo,
-      address,
-      zipCode,
-      city,
-      country,
-      phoneCode,
-      phoneNumber,
-      email,
-    } = req.body as {
-      firstName: string;
-      lastName: string;
-      passportNo: string;
-      address: string;
-      zipCode: string;
-      city: string;
-      country: string;
-      phoneCode: string;
-      phoneNumber: string;
-      email: string;
-    };
-
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: {
-        firstName,
-        lastName,
-        passportNo,
-        address,
-        zipCode,
-        city,
-        country,
-        phoneCode,
-        phoneNumber,
-        email,
-      },
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        passportNo: true,
-        address: true,
-        zipCode: true,
-        city: true,
-        country: true,
-        phoneCode: true,
-        phoneNumber: true,
-        role: true,
-        profileImage: true,
-      },
-    });
-
+    // Uppdatera profilen via service-lagret
+    const updatedUser = await authService.updateUserProfile(userId, req.body);
     res.json({ user: updatedUser });
   } catch (error) {
     console.error("Fel i updateProfile:", error);
