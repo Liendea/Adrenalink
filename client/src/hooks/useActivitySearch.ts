@@ -33,14 +33,13 @@ const fetchActivities = async (
 
   const data = await response.json();
 
-  // --- SENIOR FIX: DEDUPLICERING ---
   const slotsByLesson = new Map<number, AvailableTimeSlot>();
 
-  // Vi säkerställer att det är en array och loopar säkert
+  // säkerställer att det är en array och loopar säkert
   const rawSlots: AvailableTimeSlot[] = data.availableSlots || [];
 
   rawSlots.forEach((slot) => {
-    // Genom att kolla att både lesson och id finns här, "smalnar" vi av typen
+    // Genom att kolla att både lesson och id finns här, "smalnas"  typen av
     if (slot.lesson && slot.lesson.id) {
       const lessonId = slot.lesson.id; // Nu vet TS att detta är en 'number'
 

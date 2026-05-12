@@ -1,0 +1,77 @@
+// ─── BookingCard ──────────────────────────────────────────────────────────────
+.booking-card {
+  &__body {
+    padding: 20px 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  // ── Title row ────────────────────────────────────────────────────────────────
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-transform: capitalize;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark-blue);
+    letter-spacing: -0.4px;
+    line-height: 1.15;
+  }
+
+  &__price-badge {
+    flex-shrink: 0;
+    background: var(--main-blue);
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+  }
+  // ── Description ──────────────────────────────────────────────────────────────
+
+  &__description {
+    font-size: 13.5px;
+    color: var(--dark-blue);
+    line-height: 1.65;
+    margin-block: 1rem;
+  }
+
+  // ── Details table ─────────────────────────────────────────────────────────────
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--gray-light);
+    border-bottom: 1px solid var(--gray-light);
+    text-transform: capitalize;
+  }
+
+  &__detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 13.5px;
+
+    & + & {
+      border-top: 1px solid var(--gray-light);
+    }
+  }
+
+  &__detail-label {
+    color: var(--dark-blue);
+    font-weight: 400;
+  }
+
+  &__detail-value {
+    color: var(--dark-blue);
+    font-weight: 500;
+  }
+}

@@ -2,30 +2,98 @@
 
 .booking-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  border: 1px solid rgb(64, 0, 255);
   width: 100%;
-  padding: 10rem;
+  padding: 15rem 10rem;
   gap: 4rem;
 
-  &__card {
-    border: 1px solid red;
-    display: flex;
-    justify-content: center;
-    width: 50%;
-    flex: 1;
+  @include mobile {
+    padding: 15rem 1rem;
+  }
+  @include tablet {
+    padding: 15rem 5rem;
   }
 
+  @include desktop {
+    padding: 15rem 10rem;
+  }
+
+  &__fav {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(6px);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-light);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      background: #fff;
+      color: #ef4444;
+      transform: scale(1.06);
+    }
+
+    &--active {
+      color: #ef4444;
+      background: #fff;
+    }
+  }
+
+  // ── School ───────────────────────────────────────────────────────────────────
+  &__school {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__school-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark-blue);
+  }
+
+  &__school-location {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+    font-size: 1rem;
+    color: varvar(--dark-blue);
+  }
+
+  .wrapper {
+    display: flex;
+    gap: 10rem;
+    border: 1px solid red;
+    flex-wrap: wrap;
+
+    & > div {
+      flex: 1;
+    }
+  }
+
+  // Karta
   &__map {
     flex: 1;
     position: sticky;
     top: 24px;
     height: 100%;
-    min-height: 1000px;
+
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid red;
   }
 
   &__map-placeholder {

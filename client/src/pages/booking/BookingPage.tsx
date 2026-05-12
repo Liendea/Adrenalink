@@ -1,9 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { LessonWithSlots } from "@/types/types";
-import BookingCard from "@/pages/booking/components/booking-card/BookingCard";
+import LessonDetails from "@/pages/booking/components/lessonDetails/LessonDetails";
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./BookingPage.scss";
+import { SchoolInfo } from "./components/SchoolInfo";
+import Booking from "./components/booking/Booking";
+import FavoriteButton from "@/components/buttons/FavoriteButton";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function BookingPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -14,7 +18,7 @@ export default function BookingPage() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/slots/lesson/${lessonId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/lesson/${lessonId}`,
         );
         if (!res.ok) {
           console.error("Fetch misslyckades:", res.status);
@@ -35,10 +39,30 @@ export default function BookingPage() {
   if (loading) return <div>Laddar bokningssida...</div>;
   if (!lesson) return <div>Kunde inte hitta lektionen.</div>;
 
+  const { isFavorited, toggleFavorite } = useFavorites();
+  const id = Number(lessonId);
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(id, "lesson");
+  };
+
   return (
     <div className="booking-page">
-      <div className="booking-page__card">
-        <BookingCard lesson={lesson} allSlots={lesson.availableTimes} />
+      <button
+        className="card__fav"
+        onClick={handleFavorite}
+        aria-label={
+          isFavorited(id) ? "Ta bort från favoriter" : "Lägg till i favoriter"
+        }
+      >
+        <FavoriteButton favorited={isFavorited(id)} />
+      </button>
+
+      <SchoolInfo name={lesson.school?.name} location={lesson.location} />
+      <div className="wrapper">
+        <LessonDetails lesson={lesson} />
+        <Booking lesson={lesson} allSlots={lesson.availableTimes} />
       </div>
       <div className="booking-page__map">
         {lesson.lat && lesson.lng ? (

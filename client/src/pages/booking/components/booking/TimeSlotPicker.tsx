@@ -9,26 +9,28 @@ interface TimeSlotPickerProps {
   onSelect: (slot: AvailableTimeSlot) => void;
 }
 
-export const TimeSlotPicker = ({
+export default function TimeSlotPicker({
   slots,
   selectedSlotId,
   onSelect,
-}: TimeSlotPickerProps) => {
+}: TimeSlotPickerProps) {
   if (slots.length === 0) {
     return (
-      <div className="booking-card__NA">
+      <div className="booking__section__NA">
         <Icon src={Sad_Smiley} width={80} height={80} />
-        <p className="booking-card__no-slots">No available times this day</p>
+        <p className="booking__section__no-slots">
+          No available times this day
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="booking-card__slots">
+    <div className="booking__section__slots">
       {slots.map((s) => (
         <button
           key={s.id}
-          className={`booking-card__slot${selectedSlotId === s.id ? " booking-card__slot--active" : ""}`}
+          className={`booking__section__slot${selectedSlotId === s.id ? " booking__section__slot--active" : ""}`}
           onClick={() => onSelect(s)}
         >
           {new Date(s.startTime).toLocaleTimeString("sv-SE", {
@@ -39,4 +41,4 @@ export const TimeSlotPicker = ({
       ))}
     </div>
   );
-};
+}

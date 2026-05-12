@@ -19,26 +19,23 @@ interface DatePickerProps {
 }
 
 export const DatePicker = ({ selectedDay, onDayChange }: DatePickerProps) => (
-  <div className="booking-card__datepicker">
-    <p className="booking-card__month">November</p>
-    <div className="booking-card__days">
-      <button className="booking-card__day-nav">
+  <div className="booking__section__datepicker">
+    <p className="booking__section__month">November</p>
+    <div className="booking__section__days">
+      <button className="booking__section__day-nav">
         <Icon src={ChevronLeft} />
       </button>
       {DAYS.map((day) => (
         <button
           key={day.num}
-          className={`booking-card__day${selectedDay === day.num ? " booking-card__day--active" : ""}`}
+          className={`booking__section__day${selectedDay === day.num ? " booking__section__day--active" : ""}`}
           onClick={() => onDayChange(day.num)}
         >
-          <span className="booking-card__day-short">{day.short}</span>
-          <span className="booking-card__day-num">{day.num}</span>
-          {selectedDay === day.num && (
-            <span className="booking-card__day-dot" />
-          )}
+          <span className="booking__section__day-short">{day.short}</span>
+          <span className="booking__section__day-num">{day.num}</span>
         </button>
       ))}
-      <button className="booking-card__day-nav">
+      <button className="booking__section__day-nav">
         <Icon src={ChevronRight} />
       </button>
     </div>
