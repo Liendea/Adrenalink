@@ -1,3 +1,5 @@
+@use "@/styles/breakpoints" as *;
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -13,6 +15,10 @@
   z-index: 100;
   cursor: pointer;
 
+  @include mobile {
+    padding: 3px 3px 3px 24px;
+  }
+
   &:hover {
     box-shadow: var(--shadow-card);
   }
@@ -20,6 +26,7 @@
   .search-field-wrapper {
     position: relative;
     flex: 1;
+
     cursor: pointer;
 
     .search-field {
@@ -51,6 +58,18 @@
     &:last-of-type {
       margin-left: 20px;
     }
+
+    .location-label {
+      @include mobile {
+        display: block;
+      }
+    }
+
+    .location-sub {
+      @include mobile {
+        display: none;
+      }
+    }
   }
 
   .search-btn {
@@ -74,6 +93,10 @@
     &:hover {
       background: var(--dark-blue);
       transform: scale(1.03);
+    }
+
+    @include mobile {
+      padding: 10px 20px;
     }
   }
 

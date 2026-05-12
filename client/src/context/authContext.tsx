@@ -1,20 +1,5 @@
 import { createContext } from "react";
-
-export type User = {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  passportNo: string;
-  address: string;
-  zipCode: string;
-  city: string;
-  country: string;
-  phoneCode: string;
-  phoneNumber: string;
-  role: string;
-  profileImage: string | null;
-};
+import type { User } from "@/types/types";
 
 export type AuthContextType = {
   user: User | null;

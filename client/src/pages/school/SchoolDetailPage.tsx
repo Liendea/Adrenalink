@@ -7,7 +7,7 @@ import StarRating from "@/components/rating/StarRating";
 import "./SchoolDetailPage.scss";
 import Icon from "@/components/Icon";
 import chevronLeft from "@/assets/icons/ChevronLeft.svg";
-import Tabs from "@/components/navigation/tabs/Tabs";
+import Tabs from "@/components/navigation/tabNav/tabs/Tabs";
 import { useLocation } from "react-router-dom";
 
 type SchoolTab = "about" | "classes" | "requests";

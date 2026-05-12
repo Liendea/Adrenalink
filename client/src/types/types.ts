@@ -1,3 +1,19 @@
+export type User = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  passportNo: string;
+  address: string;
+  zipCode: string;
+  city: string;
+  country: string;
+  phoneCode: string;
+  phoneNumber: string;
+  role: string;
+  profileImage: string | null;
+};
+
 export type School = {
   id: number;
   name: string;

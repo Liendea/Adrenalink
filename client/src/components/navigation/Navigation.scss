@@ -12,6 +12,10 @@
   gap: 1rem;
   justify-content: center;
 
+  @include mobile {
+    padding: 1rem;
+  }
+
   &__group1 {
     display: flex;
     align-items: center;
@@ -58,7 +62,7 @@
   }
 
   // Alla action knappar (create profile, logga in, more + min profil och logga ut
-  &__actions {
+  .navigation__actions {
     width: auto;
     display: flex;
     align-items: center;
@@ -66,27 +70,42 @@
     gap: 1rem;
     margin-left: 3rem;
     cursor: pointer;
-  }
+    overflow: hidden;
+    height: 60px;
 
-  // Create account knapp
-  &__register {
-    background: rgba(15, 25, 50, 0.6);
-    color: var(--off-white);
-    border: none;
-    border-radius: 50px;
-    padding: 20px 20px;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
+    margin-left: 0 2rem;
 
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      background: var(--main-blue);
+    @include mobile {
+      max-height: 50px;
+    }
+
+    // Create account knapp
+    &__register {
+      background: rgba(15, 25, 50, 0.6);
+      color: var(--off-white);
+      border: none;
+      border-radius: 50px;
+      padding: 20px 20px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      cursor: pointer;
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+
+      &:hover {
+        box-shadow: 0 6px 20px var(--main-blue);
+        background: var(--main-blue);
+      }
+
+      @include mobile {
+        font-size: 0.9rem;
+      }
     }
   }
 
@@ -107,8 +126,13 @@
     font-size: 0.65rem;
     min-height: 50px;
     max-height: 60px;
-
     min-width: 80px;
+
+    @include mobile {
+      padding: 0;
+      min-width: 60px;
+    }
+
     &:first-of-type {
       display: flex;
       flex-direction: row;

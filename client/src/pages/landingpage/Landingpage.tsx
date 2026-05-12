@@ -1,11 +1,6 @@
 import "./Landingpage.scss";
 import Searchbar from "@/components/searchbar/Searchbar";
-
-// ─── Icons ────────────────────────────────────────────────────────────────────
-
 import Hero from "@/pages/landingpage/components/hero/Hero";
-
-// ─── Landing Page ─────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
   return (

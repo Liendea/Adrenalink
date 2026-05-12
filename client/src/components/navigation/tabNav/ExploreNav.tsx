@@ -1,4 +1,4 @@
-import Tabs from "@/components/navigation/tabs/Tabs";
+import Tabs from "@/components/navigation/tabNav/tabs/Tabs";
 
 type ExploreTab = "activities" | "schools" | "rentals";
 

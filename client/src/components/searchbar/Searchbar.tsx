@@ -31,8 +31,8 @@ export default function Searchbar() {
       {/* WHERE */}
       <div className="search-field-wrapper">
         <div className="search-field" onClick={() => toggle("location")}>
-          <label>{activeItem?.label}</label>
-          <span>{activeItem?.sub}</span>
+          <label className="location-label">{activeItem?.label}</label>
+          <span className="location-sub">{activeItem?.sub}</span>
         </div>
         {activeDropdown === "location" && (
           <div className="dropdown__anchor">
