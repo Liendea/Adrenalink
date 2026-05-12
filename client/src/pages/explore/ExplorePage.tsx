@@ -102,12 +102,24 @@ export default function ExplorePage() {
       const lessonsMap = new Map(validLessons.map((l) => [l.id, l]));
       const lessons = Array.from(lessonsMap.values());
 
-      return <DiscoveryMap variant="activities" items={lessons} />;
+      return (
+        <DiscoveryMap
+          variant="activities"
+          items={lessons}
+          country={countryParam ?? undefined}
+        />
+      );
     }
 
     if (activeTab === "schools") {
       // Säkerställ att items alltid är en array, även om schools skulle vara null
-      return <DiscoveryMap variant="schools" items={schools ?? []} />;
+      return (
+        <DiscoveryMap
+          variant="schools"
+          items={schools ?? []}
+          country={countryParam ?? undefined}
+        />
+      );
     }
 
     return (
