@@ -1,6 +1,14 @@
 // BookingDetails.tsx
 
-import type { LessonWithSlots } from "@/types/types";
+import type { AvailableTimeSlot, LessonWithSlots } from "@/types/types";
+import "./LessonDetails.scss";
+
+type LessonDetailsProps = {
+  lesson: LessonWithSlots;
+
+  onBook?: (lessonId: number, day: number, slot: AvailableTimeSlot) => void;
+  onClose?: () => void;
+};
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
   <div className="booking-card__detail-row">
@@ -9,7 +17,7 @@ const DetailRow = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-export const BookingDetails = ({ lesson }: { lesson: LessonWithSlots }) => {
+export default function LessonDetails({ lesson }: LessonDetailsProps) {
   const pricePerHour =
     lesson.durationHours > 0
       ? (lesson.priceEuro / lesson.durationHours).toFixed(1)
@@ -35,4 +43,4 @@ export const BookingDetails = ({ lesson }: { lesson: LessonWithSlots }) => {
       </div>
     </div>
   );
-};
+}
