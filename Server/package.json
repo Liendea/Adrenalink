@@ -4,7 +4,7 @@
   "description": "Slutprojekt backendkurs",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "nodemon --exec tsx src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -25,7 +25,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.7.0",
     "nodemon": "^3.1.14",
     "prisma": "^5.22.0",
     "tsx": "^4.21.0",

@@ -19,6 +19,18 @@ const geocodeAddress = async (address: string) => {
   }
 };
 
+const geocodeWithFallback = async (
+  address: string,
+  fallback: { lat: number; lng: number },
+) => {
+  const result = await geocodeAddress(address);
+  if (result) return result;
+  console.warn(
+    `⚠️  Geocoding misslyckades för: "${address}" — använder fallback`,
+  );
+  return fallback;
+};
+
 async function main() {
   await prisma.availableTime.deleteMany({});
   await prisma.lesson.deleteMany({});
@@ -27,7 +39,10 @@ async function main() {
   console.log("Gamla data rensad. Påbörjar seeding...");
 
   // ── PORTUGAL: Ericeira ──
-  const c1 = await geocodeAddress("Rua dos Surfistas 12, Ericeira, Portugal");
+  const c1 = await geocodeWithFallback(
+    "Rua dos Surfistas 12, Ericeira, Portugal",
+    { lat: 38.9627, lng: -9.4179 },
+  );
   await sleep(1100);
   const schoolPortugal1 = await prisma.school.create({
     data: {
@@ -35,14 +50,20 @@ async function main() {
       country: "Portugal",
       city: "Ericeira",
       address: "Rua dos Surfistas 12",
-      lat: c1?.lat ?? null,
-      lng: c1?.lng ?? null,
+      lat: c1.lat,
+      lng: c1.lng,
     },
   });
 
-  const cL1 = await geocodeAddress("Foz do Lizandro, Ericeira, Portugal");
+  const cL1 = await geocodeWithFallback("Foz do Lizandro, Ericeira, Portugal", {
+    lat: 38.9743,
+    lng: -9.4198,
+  });
   await sleep(1100);
-  const cL2 = await geocodeAddress("Ribeira d'Ilhas, Ericeira, Portugal");
+  const cL2 = await geocodeWithFallback("Ribeira d'Ilhas, Ericeira, Portugal", {
+    lat: 38.9887,
+    lng: -9.4199,
+  });
   await sleep(1100);
 
   const p1L1 = await prisma.lesson.create({
@@ -57,10 +78,11 @@ async function main() {
       priceEuro: 55.0,
       location: "Foz do Lizandro",
       equipmentIncluded: true,
-      lat: cL1?.lat ?? null,
-      lng: cL1?.lng ?? null,
+      lat: cL1.lat,
+      lng: cL1.lng,
     },
   });
+
   const p1L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolPortugal1.id,
@@ -73,13 +95,16 @@ async function main() {
       priceEuro: 110.0,
       location: "Ribeira d'Ilhas",
       equipmentIncluded: false,
-      lat: cL2?.lat ?? null,
-      lng: cL2?.lng ?? null,
+      lat: cL2.lat,
+      lng: cL2.lng,
     },
   });
 
   // ── PORTUGAL: Peniche ──
-  const c2 = await geocodeAddress("Avenida do Mar 8, Peniche, Portugal");
+  const c2 = await geocodeWithFallback("Avenida do Mar 8, Peniche, Portugal", {
+    lat: 39.3558,
+    lng: -9.3807,
+  });
   await sleep(1100);
   const schoolPortugal2 = await prisma.school.create({
     data: {
@@ -87,14 +112,20 @@ async function main() {
       country: "Portugal",
       city: "Peniche",
       address: "Avenida do Mar 8",
-      lat: c2?.lat ?? null,
-      lng: c2?.lng ?? null,
+      lat: c2.lat,
+      lng: c2.lng,
     },
   });
 
-  const cL3 = await geocodeAddress("Baleal Beach, Peniche, Portugal");
+  const cL3 = await geocodeWithFallback("Baleal Beach, Peniche, Portugal", {
+    lat: 39.3771,
+    lng: -9.3488,
+  });
   await sleep(1100);
-  const cL4 = await geocodeAddress("Lagoa de Óbidos, Peniche, Portugal");
+  const cL4 = await geocodeWithFallback("Lagoa de Óbidos, Peniche, Portugal", {
+    lat: 39.4022,
+    lng: -9.2311,
+  });
   await sleep(1100);
 
   const p2L1 = await prisma.lesson.create({
@@ -109,10 +140,11 @@ async function main() {
       priceEuro: 120.0,
       location: "Baleal Beach",
       equipmentIncluded: true,
-      lat: cL3?.lat ?? null,
-      lng: cL3?.lng ?? null,
+      lat: cL3.lat,
+      lng: cL3.lng,
     },
   });
+
   const p2L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolPortugal2.id,
@@ -125,14 +157,15 @@ async function main() {
       priceEuro: 85.0,
       location: "Lagoa de Óbidos",
       equipmentIncluded: true,
-      lat: cL4?.lat ?? null,
-      lng: cL4?.lng ?? null,
+      lat: cL4.lat,
+      lng: cL4.lng,
     },
   });
 
   // ── SPANIEN: Fuerteventura ──
-  const c3 = await geocodeAddress(
+  const c3 = await geocodeWithFallback(
     "Calle del Mar 45, Corralejo, Fuerteventura, Spain",
+    { lat: 28.7285, lng: -13.8671 },
   );
   await sleep(1100);
   const schoolSpain1 = await prisma.school.create({
@@ -141,16 +174,20 @@ async function main() {
       country: "Spain",
       city: "Corralejo",
       address: "Calle del Mar 45",
-      lat: c3?.lat ?? null,
-      lng: c3?.lng ?? null,
+      lat: c3.lat,
+      lng: c3.lng,
     },
   });
 
-  const cL5 = await geocodeAddress(
+  const cL5 = await geocodeWithFallback(
     "Flag Beach, Corralejo, Fuerteventura, Spain",
+    { lat: 28.7458, lng: -13.8638 },
   );
   await sleep(1100);
-  const cL6 = await geocodeAddress("Playa de Sotavento, Fuerteventura, Spain");
+  const cL6 = await geocodeWithFallback(
+    "Playa de Sotavento, Fuerteventura, Spain",
+    { lat: 28.1744, lng: -14.2197 },
+  );
   await sleep(1100);
 
   const s1L1 = await prisma.lesson.create({
@@ -165,10 +202,11 @@ async function main() {
       priceEuro: 130.0,
       location: "Flag Beach",
       equipmentIncluded: true,
-      lat: cL5?.lat ?? null,
-      lng: cL5?.lng ?? null,
+      lat: cL5.lat,
+      lng: cL5.lng,
     },
   });
+
   const s1L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolSpain1.id,
@@ -181,13 +219,16 @@ async function main() {
       priceEuro: 140.0,
       location: "Playa de Sotavento",
       equipmentIncluded: false,
-      lat: cL6?.lat ?? null,
-      lng: cL6?.lng ?? null,
+      lat: cL6.lat,
+      lng: cL6.lng,
     },
   });
 
   // ── SPANIEN: Barcelona ──
-  const c4 = await geocodeAddress("Passeig Marítim 22, Barcelona, Spain");
+  const c4 = await geocodeWithFallback("Passeig Marítim 22, Barcelona, Spain", {
+    lat: 41.3792,
+    lng: 2.1925,
+  });
   await sleep(1100);
   const schoolSpain2 = await prisma.school.create({
     data: {
@@ -195,14 +236,20 @@ async function main() {
       country: "Spain",
       city: "Barcelona",
       address: "Passeig Marítim 22",
-      lat: c4?.lat ?? null,
-      lng: c4?.lng ?? null,
+      lat: c4.lat,
+      lng: c4.lng,
     },
   });
 
-  const cL7 = await geocodeAddress("Barceloneta Beach, Barcelona, Spain");
+  const cL7 = await geocodeWithFallback("Barceloneta Beach, Barcelona, Spain", {
+    lat: 41.3763,
+    lng: 2.1924,
+  });
   await sleep(1100);
-  const cL8 = await geocodeAddress("Badalona Marina, Barcelona, Spain");
+  const cL8 = await geocodeWithFallback("Badalona Marina, Barcelona, Spain", {
+    lat: 41.4469,
+    lng: 2.2474,
+  });
   await sleep(1100);
 
   const s2L1 = await prisma.lesson.create({
@@ -217,10 +264,11 @@ async function main() {
       priceEuro: 65.0,
       location: "Barceloneta Beach",
       equipmentIncluded: true,
-      lat: cL7?.lat ?? null,
-      lng: cL7?.lng ?? null,
+      lat: cL7.lat,
+      lng: cL7.lng,
     },
   });
+
   const s2L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolSpain2.id,
@@ -233,13 +281,16 @@ async function main() {
       priceEuro: 95.0,
       location: "Badalona Marina",
       equipmentIncluded: true,
-      lat: cL8?.lat ?? null,
-      lng: cL8?.lng ?? null,
+      lat: cL8.lat,
+      lng: cL8.lng,
     },
   });
 
   // ── FRANKRIKE: Biarritz ──
-  const c5 = await geocodeAddress("Avenue de la Plage 5, Biarritz, France");
+  const c5 = await geocodeWithFallback(
+    "Avenue de la Plage 5, Biarritz, France",
+    { lat: 43.4832, lng: -1.5586 },
+  );
   await sleep(1100);
   const schoolFrance1 = await prisma.school.create({
     data: {
@@ -247,15 +298,19 @@ async function main() {
       country: "France",
       city: "Biarritz",
       address: "Avenue de la Plage 5",
-      lat: c5?.lat ?? null,
-      lng: c5?.lng ?? null,
+      lat: c5.lat,
+      lng: c5.lng,
     },
   });
 
-  const cL9 = await geocodeAddress("Grande Plage, Biarritz, France");
+  const cL9 = await geocodeWithFallback("Grande Plage, Biarritz, France", {
+    lat: 43.4833,
+    lng: -1.5591,
+  });
   await sleep(1100);
-  const cL10 = await geocodeAddress(
+  const cL10 = await geocodeWithFallback(
     "Plage de la Côte des Basques, Biarritz, France",
+    { lat: 43.4748, lng: -1.5637 },
   );
   await sleep(1100);
 
@@ -271,10 +326,11 @@ async function main() {
       priceEuro: 75.0,
       location: "Grande Plage",
       equipmentIncluded: true,
-      lat: cL9?.lat ?? null,
-      lng: cL9?.lng ?? null,
+      lat: cL9.lat,
+      lng: cL9.lng,
     },
   });
+
   const f1L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolFrance1.id,
@@ -287,13 +343,16 @@ async function main() {
       priceEuro: 90.0,
       location: "Plage de la Côte des Basques",
       equipmentIncluded: true,
-      lat: cL10?.lat ?? null,
-      lng: cL10?.lng ?? null,
+      lat: cL10.lat,
+      lng: cL10.lng,
     },
   });
 
   // ── FRANKRIKE: Chamonix ──
-  const c6 = await geocodeAddress("Rue du Mont-Blanc 3, Chamonix, France");
+  const c6 = await geocodeWithFallback(
+    "Rue du Mont-Blanc 3, Chamonix, France",
+    { lat: 45.9237, lng: 6.8694 },
+  );
   await sleep(1100);
   const schoolFrance2 = await prisma.school.create({
     data: {
@@ -301,14 +360,20 @@ async function main() {
       country: "France",
       city: "Chamonix",
       address: "Rue du Mont-Blanc 3",
-      lat: c6?.lat ?? null,
-      lng: c6?.lng ?? null,
+      lat: c6.lat,
+      lng: c6.lng,
     },
   });
 
-  const cL11 = await geocodeAddress("Les Grands Montets, Chamonix, France");
+  const cL11 = await geocodeWithFallback(
+    "Les Grands Montets, Chamonix, France",
+    { lat: 45.9931, lng: 6.9175 },
+  );
   await sleep(1100);
-  const cL12 = await geocodeAddress("Brévent, Chamonix, France");
+  const cL12 = await geocodeWithFallback("Brévent, Chamonix, France", {
+    lat: 45.9344,
+    lng: 6.8427,
+  });
   await sleep(1100);
 
   const f2L1 = await prisma.lesson.create({
@@ -323,10 +388,11 @@ async function main() {
       priceEuro: 85.0,
       location: "Les Grands Montets",
       equipmentIncluded: true,
-      lat: cL11?.lat ?? null,
-      lng: cL11?.lng ?? null,
+      lat: cL11.lat,
+      lng: cL11.lng,
     },
   });
+
   const f2L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolFrance2.id,
@@ -339,13 +405,16 @@ async function main() {
       priceEuro: 220.0,
       location: "Brévent",
       equipmentIncluded: false,
-      lat: cL12?.lat ?? null,
-      lng: cL12?.lng ?? null,
+      lat: cL12.lat,
+      lng: cL12.lng,
     },
   });
 
   // ── SVERIGE: Lomma ──
-  const c7 = await geocodeAddress("Strandvägen 3, Lomma, Sweden");
+  const c7 = await geocodeWithFallback("Strandvägen 3, Lomma, Sweden", {
+    lat: 55.6715,
+    lng: 13.0593,
+  });
   await sleep(1100);
   const schoolSweden1 = await prisma.school.create({
     data: {
@@ -353,12 +422,15 @@ async function main() {
       country: "Sweden",
       city: "Lomma",
       address: "Strandvägen 3",
-      lat: c7?.lat ?? null,
-      lng: c7?.lng ?? null,
+      lat: c7.lat,
+      lng: c7.lng,
     },
   });
 
-  const cL13 = await geocodeAddress("Lomma Beach, Lomma, Sweden");
+  const cL13 = await geocodeWithFallback("Lomma Beach, Lomma, Sweden", {
+    lat: 55.6702,
+    lng: 13.0521,
+  });
   await sleep(1100);
 
   const sw1L1 = await prisma.lesson.create({
@@ -373,10 +445,11 @@ async function main() {
       priceEuro: 75.0,
       location: "Lomma Beach",
       equipmentIncluded: true,
-      lat: cL13?.lat ?? null,
-      lng: cL13?.lng ?? null,
+      lat: cL13.lat,
+      lng: cL13.lng,
     },
   });
+
   const sw1L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolSweden1.id,
@@ -389,13 +462,16 @@ async function main() {
       priceEuro: 110.0,
       location: "Lomma Beach",
       equipmentIncluded: true,
-      lat: cL13?.lat ?? null,
-      lng: cL13?.lng ?? null,
+      lat: cL13.lat,
+      lng: cL13.lng,
     },
   });
 
   // ── SVERIGE: Åre ──
-  const c8 = await geocodeAddress("Byvägen 12, Åre, Sweden");
+  const c8 = await geocodeWithFallback("Byvägen 12, Åre, Sweden", {
+    lat: 63.3988,
+    lng: 13.0815,
+  });
   await sleep(1100);
   const schoolSweden2 = await prisma.school.create({
     data: {
@@ -403,12 +479,15 @@ async function main() {
       country: "Sweden",
       city: "Åre",
       address: "Byvägen 12",
-      lat: c8?.lat ?? null,
-      lng: c8?.lng ?? null,
+      lat: c8.lat,
+      lng: c8.lng,
     },
   });
 
-  const cL14 = await geocodeAddress("Åreskutan, Åre, Sweden");
+  const cL14 = await geocodeWithFallback("Åreskutan, Åre, Sweden", {
+    lat: 63.4014,
+    lng: 13.0792,
+  });
   await sleep(1100);
 
   const sw2L1 = await prisma.lesson.create({
@@ -423,10 +502,11 @@ async function main() {
       priceEuro: 95.0,
       location: "Åreskutan",
       equipmentIncluded: true,
-      lat: cL14?.lat ?? null,
-      lng: cL14?.lng ?? null,
+      lat: cL14.lat,
+      lng: cL14.lng,
     },
   });
+
   const sw2L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolSweden2.id,
@@ -439,13 +519,16 @@ async function main() {
       priceEuro: 130.0,
       location: "Åreskutan",
       equipmentIncluded: false,
-      lat: cL14?.lat ?? null,
-      lng: cL14?.lng ?? null,
+      lat: cL14.lat,
+      lng: cL14.lng,
     },
   });
 
   // ── SVERIGE: Stockholm ──
-  const c9 = await geocodeAddress("Strandvägen 1, Stockholm, Sweden");
+  const c9 = await geocodeWithFallback("Strandvägen 1, Stockholm, Sweden", {
+    lat: 59.3327,
+    lng: 18.0853,
+  });
   await sleep(1100);
   const schoolSweden3 = await prisma.school.create({
     data: {
@@ -453,12 +536,15 @@ async function main() {
       country: "Sweden",
       city: "Stockholm",
       address: "Strandvägen 1",
-      lat: c9?.lat ?? null,
-      lng: c9?.lng ?? null,
+      lat: c9.lat,
+      lng: c9.lng,
     },
   });
 
-  const cL15 = await geocodeAddress("Djurgårdsbrunnsviken, Stockholm, Sweden");
+  const cL15 = await geocodeWithFallback(
+    "Djurgårdsbrunnsviken, Stockholm, Sweden",
+    { lat: 59.3458, lng: 18.1087 },
+  );
   await sleep(1100);
 
   const sw3L1 = await prisma.lesson.create({
@@ -473,10 +559,11 @@ async function main() {
       priceEuro: 70.0,
       location: "Djurgårdsbrunnsviken",
       equipmentIncluded: true,
-      lat: cL15?.lat ?? null,
-      lng: cL15?.lng ?? null,
+      lat: cL15.lat,
+      lng: cL15.lng,
     },
   });
+
   const sw3L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolSweden3.id,
@@ -489,13 +576,16 @@ async function main() {
       priceEuro: 110.0,
       location: "Djurgårdsbrunnsviken",
       equipmentIncluded: false,
-      lat: cL15?.lat ?? null,
-      lng: cL15?.lng ?? null,
+      lat: cL15.lat,
+      lng: cL15.lng,
     },
   });
 
   // ── FRANKRIKE: Fontainebleau ──
-  const c10 = await geocodeAddress("Route des Gorges 7, Fontainebleau, France");
+  const c10 = await geocodeWithFallback(
+    "Route des Gorges 7, Fontainebleau, France",
+    { lat: 48.4044, lng: 2.6773 },
+  );
   await sleep(1100);
   const schoolFrance3 = await prisma.school.create({
     data: {
@@ -503,12 +593,15 @@ async function main() {
       country: "France",
       city: "Fontainebleau",
       address: "Route des Gorges 7",
-      lat: c10?.lat ?? null,
-      lng: c10?.lng ?? null,
+      lat: c10.lat,
+      lng: c10.lng,
     },
   });
 
-  const cL16 = await geocodeAddress("Forêt de Fontainebleau, France");
+  const cL16 = await geocodeWithFallback("Forêt de Fontainebleau, France", {
+    lat: 48.4044,
+    lng: 2.6773,
+  });
   await sleep(1100);
 
   const f3L1 = await prisma.lesson.create({
@@ -523,10 +616,11 @@ async function main() {
       priceEuro: 60.0,
       location: "Forêt de Fontainebleau",
       equipmentIncluded: true,
-      lat: cL16?.lat ?? null,
-      lng: cL16?.lng ?? null,
+      lat: cL16.lat,
+      lng: cL16.lng,
     },
   });
+
   const f3L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolFrance3.id,
@@ -539,13 +633,16 @@ async function main() {
       priceEuro: 95.0,
       location: "Forêt de Fontainebleau",
       equipmentIncluded: true,
-      lat: cL16?.lat ?? null,
-      lng: cL16?.lng ?? null,
+      lat: cL16.lat,
+      lng: cL16.lng,
     },
   });
 
   // ── SPANIEN: Siurana ──
-  const c11 = await geocodeAddress("Siurana, Tarragona, Spain");
+  const c11 = await geocodeWithFallback("Siurana, Tarragona, Spain", {
+    lat: 41.2575,
+    lng: 0.9254,
+  });
   await sleep(1100);
   const schoolSpain3 = await prisma.school.create({
     data: {
@@ -553,12 +650,15 @@ async function main() {
       country: "Spain",
       city: "Siurana",
       address: "Carrer de la Roca 1",
-      lat: c11?.lat ?? null,
-      lng: c11?.lng ?? null,
+      lat: c11.lat,
+      lng: c11.lng,
     },
   });
 
-  const cL17 = await geocodeAddress("Siurana climbing area, Tarragona, Spain");
+  const cL17 = await geocodeWithFallback(
+    "Siurana climbing area, Tarragona, Spain",
+    { lat: 41.2575, lng: 0.9254 },
+  );
   await sleep(1100);
 
   const s3L1 = await prisma.lesson.create({
@@ -573,10 +673,11 @@ async function main() {
       priceEuro: 80.0,
       location: "Siurana climbing area",
       equipmentIncluded: true,
-      lat: cL17?.lat ?? null,
-      lng: cL17?.lng ?? null,
+      lat: cL17.lat,
+      lng: cL17.lng,
     },
   });
+
   const s3L2 = await prisma.lesson.create({
     data: {
       schoolId: schoolSpain3.id,
@@ -589,15 +690,14 @@ async function main() {
       priceEuro: 150.0,
       location: "Siurana climbing area",
       equipmentIncluded: false,
-      lat: cL17?.lat ?? null,
-      lng: cL17?.lng ?? null,
+      lat: cL17.lat,
+      lng: cL17.lng,
     },
   });
 
-  // ── LEDIGA TIDER ──
+  // ── LEDIGA TIDER ── (oförändrad)
   await prisma.availableTime.createMany({
     data: [
-      // Portugal 1 – surf beginner
       {
         lessonId: p1L1.id,
         startTime: new Date("2026-11-04T07:00:00Z"),
@@ -638,7 +738,6 @@ async function main() {
         startTime: new Date("2026-11-06T10:00:00Z"),
         isBooked: false,
       },
-      // Portugal 1 – surf advanced
       {
         lessonId: p1L2.id,
         startTime: new Date("2026-11-05T09:00:00Z"),
@@ -664,7 +763,6 @@ async function main() {
         startTime: new Date("2026-11-07T09:00:00Z"),
         isBooked: false,
       },
-      // Portugal 2 – kitesurf beginner
       {
         lessonId: p2L1.id,
         startTime: new Date("2026-11-06T08:00:00Z"),
@@ -690,7 +788,6 @@ async function main() {
         startTime: new Date("2026-11-08T08:00:00Z"),
         isBooked: false,
       },
-      // Portugal 2 – windsurf intermediate
       {
         lessonId: p2L2.id,
         startTime: new Date("2026-11-08T09:00:00Z"),
@@ -711,7 +808,6 @@ async function main() {
         startTime: new Date("2026-11-09T12:00:00Z"),
         isBooked: false,
       },
-      // Spanien 1 – kitesurf beginner
       {
         lessonId: s1L1.id,
         startTime: new Date("2026-11-04T08:00:00Z"),
@@ -737,7 +833,6 @@ async function main() {
         startTime: new Date("2026-11-06T08:00:00Z"),
         isBooked: false,
       },
-      // Spanien 1 – windsurf advanced
       {
         lessonId: s1L2.id,
         startTime: new Date("2026-11-06T07:00:00Z"),
@@ -758,7 +853,6 @@ async function main() {
         startTime: new Date("2026-11-07T11:00:00Z"),
         isBooked: false,
       },
-      // Spanien 2 – surf beginner
       {
         lessonId: s2L1.id,
         startTime: new Date("2026-11-04T09:00:00Z"),
@@ -784,7 +878,6 @@ async function main() {
         startTime: new Date("2026-11-05T12:00:00Z"),
         isBooked: false,
       },
-      // Spanien 2 – wakeboard beginner
       {
         lessonId: s2L2.id,
         startTime: new Date("2026-11-05T10:00:00Z"),
@@ -810,7 +903,6 @@ async function main() {
         startTime: new Date("2026-11-06T13:00:00Z"),
         isBooked: false,
       },
-      // Spanien 3 – climbing intermediate
       {
         lessonId: s3L1.id,
         startTime: new Date("2026-11-09T07:00:00Z"),
@@ -831,7 +923,6 @@ async function main() {
         startTime: new Date("2026-11-10T11:00:00Z"),
         isBooked: false,
       },
-      // Spanien 3 – climbing advanced
       {
         lessonId: s3L2.id,
         startTime: new Date("2026-11-10T09:00:00Z"),
@@ -852,7 +943,6 @@ async function main() {
         startTime: new Date("2026-11-11T14:00:00Z"),
         isBooked: false,
       },
-      // Frankrike 1 – surf intermediate
       {
         lessonId: f1L1.id,
         startTime: new Date("2026-11-04T07:00:00Z"),
@@ -878,7 +968,6 @@ async function main() {
         startTime: new Date("2026-11-05T10:00:00Z"),
         isBooked: false,
       },
-      // Frankrike 1 – surf private beginner
       {
         lessonId: f1L2.id,
         startTime: new Date("2026-11-06T09:00:00Z"),
@@ -899,7 +988,6 @@ async function main() {
         startTime: new Date("2026-11-07T13:00:00Z"),
         isBooked: false,
       },
-      // Frankrike 2 – snowboard beginner
       {
         lessonId: f2L1.id,
         startTime: new Date("2026-12-01T09:00:00Z"),
@@ -925,7 +1013,6 @@ async function main() {
         startTime: new Date("2026-12-03T09:00:00Z"),
         isBooked: false,
       },
-      // Frankrike 2 – snowboard advanced
       {
         lessonId: f2L2.id,
         startTime: new Date("2026-12-03T09:00:00Z"),
@@ -946,7 +1033,6 @@ async function main() {
         startTime: new Date("2026-12-04T14:00:00Z"),
         isBooked: false,
       },
-      // Frankrike 3 – climbing beginner
       {
         lessonId: f3L1.id,
         startTime: new Date("2026-11-07T08:00:00Z"),
@@ -972,7 +1058,6 @@ async function main() {
         startTime: new Date("2026-11-08T11:00:00Z"),
         isBooked: false,
       },
-      // Frankrike 3 – climbing intermediate
       {
         lessonId: f3L2.id,
         startTime: new Date("2026-11-08T13:00:00Z"),
@@ -988,7 +1073,6 @@ async function main() {
         startTime: new Date("2026-11-09T13:00:00Z"),
         isBooked: false,
       },
-      // Sverige 1 – windsurf intermediate
       {
         lessonId: sw1L1.id,
         startTime: new Date("2026-11-07T09:00:00Z"),
@@ -1014,7 +1098,6 @@ async function main() {
         startTime: new Date("2026-11-08T12:00:00Z"),
         isBooked: false,
       },
-      // Sverige 1 – kitesurf beginner
       {
         lessonId: sw1L2.id,
         startTime: new Date("2026-11-09T09:00:00Z"),
@@ -1035,7 +1118,6 @@ async function main() {
         startTime: new Date("2026-11-10T13:00:00Z"),
         isBooked: false,
       },
-      // Sverige 2 – snowboard beginner
       {
         lessonId: sw2L1.id,
         startTime: new Date("2026-12-05T09:00:00Z"),
@@ -1061,7 +1143,6 @@ async function main() {
         startTime: new Date("2026-12-07T09:00:00Z"),
         isBooked: false,
       },
-      // Sverige 2 – snowboard intermediate
       {
         lessonId: sw2L2.id,
         startTime: new Date("2026-12-06T10:00:00Z"),
@@ -1082,7 +1163,6 @@ async function main() {
         startTime: new Date("2026-12-07T14:00:00Z"),
         isBooked: false,
       },
-      // Sverige 3 – wakeboard beginner
       {
         lessonId: sw3L1.id,
         startTime: new Date("2026-11-10T10:00:00Z"),
@@ -1108,7 +1188,6 @@ async function main() {
         startTime: new Date("2026-11-11T13:00:00Z"),
         isBooked: false,
       },
-      // Sverige 3 – wakeboard advanced
       {
         lessonId: sw3L2.id,
         startTime: new Date("2026-11-11T11:00:00Z"),
@@ -1136,6 +1215,7 @@ async function main() {
     "✓ Database seeded with 11 schools, 22 lessons and multiple time slots per day!",
   );
 }
+
 main()
   .catch((e) => {
     console.error(e);
