@@ -19,6 +19,7 @@ import EditProfile from "./pages/userProfile/editProfile/EditProfile";
 import MyFavorites from "./pages/userProfile/myFavorites/MyFavorites";
 import MyBookings from "./pages/userProfile/myBookings/MyBookings";
 import Footer from "./components/footer/Footer";
+import MainLayout from "./layout/MainLayout";
 
 function App() {
   return (
@@ -26,64 +27,51 @@ function App() {
       <Navigation />
       <main>
         <Routes>
+          {/* Ingen layout – ren sida */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
-          {/* Sök/Utforska-sidan där allt listas från början */}
-          <Route path="/explore" element={<ExplorePage />} />
+          {/* Alla sidor med padding wrappade i MainLayout */}
+          <Route element={<MainLayout />}>
+            <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/booking/:lessonId" element={<BookingPage />} />
+            <Route path="/schools/:schoolId" element={<SchoolDetailPage />} />
+            <Route path="/rentals/:rentalId" element={<RentalDetailPage />} />
 
-          {/* 1. Direkta bokningssidan för en specifik lektion (Lektionskortet) */}
-          <Route path="/booking/:lessonId" element={<BookingPage />} />
-
-          {/* 2. Infosidan för en specifik skola */}
-          <Route path="/schools/:schoolId" element={<SchoolDetailPage />} />
-
-          {/* 3. Infosidan för ett uthyrningsställe */}
-          <Route path="/rentals/:rentalId" element={<RentalDetailPage />} />
-
-          {/* 4. Profil sida */}
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile/edit"
-            element={
-              <ProtectedRoute>
-                <EditProfile />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile/favorites"
-            element={
-              <ProtectedRoute>
-                <MyFavorites />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile/bookings"
-            element={
-              <ProtectedRoute>
-                <MyBookings />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/edit"
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/favorites"
+              element={
+                <ProtectedRoute>
+                  <MyFavorites />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/bookings"
+              element={
+                <ProtectedRoute>
+                  <MyBookings />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
         </Routes>
       </main>
       <Footer />

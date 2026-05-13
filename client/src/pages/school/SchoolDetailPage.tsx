@@ -37,7 +37,7 @@ export default function SchoolDetailPage() {
   console.log("returnTo:", returnTo);
 
   return (
-    <div className="school-detail">
+    <section className="school-detail">
       <button
         className="school-detail__back"
         onClick={() => navigate(returnTo)}
@@ -95,6 +95,6 @@ export default function SchoolDetailPage() {
           <p className="school-detail__coming-soon">Requests coming soon.</p>
         )}
       </div>
-    </div>
+    </section>
   );
 }

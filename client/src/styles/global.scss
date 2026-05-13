@@ -1,3 +1,5 @@
+@use "@/styles/breakpoints" as *;
+
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap");
 
 *,
@@ -37,4 +39,39 @@ body,
 
 main {
   background-color: var(--off-white);
+}
+
+.main-layout {
+  padding-top: 5rem;
+  min-height: 100vh;
+
+  // 4. laptop skärmar (1024px+)
+  @include mobile {
+    padding: 8rem 1rem;
+  }
+
+  // 4. laptop skärmar (1024px+)
+  @include tablet {
+    padding: 10rem 2rem;
+  }
+
+  //desktop-width: 1024px;
+  @include desktop {
+    padding: 5rem 2rem;
+  }
+
+  //desktop-width: 1024px;
+  @include medium-screens {
+    padding: 8rem 2rem;
+  }
+
+  //large-screens-width: 1700px;
+  @include large-screens {
+    padding: 8rem 2rem;
+  }
+
+  //xl-screens-width: 2000px;
+  @include xl-screens {
+    padding: 8rem 5rem;
+  }
 }

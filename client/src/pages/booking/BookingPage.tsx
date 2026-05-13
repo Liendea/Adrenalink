@@ -26,7 +26,7 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="booking-page">
+    <section className="booking-section">
       <div className="booking-page__header-row">
         <SchoolInfo name={lesson.school?.name} location={lesson.location} />
         <button
@@ -52,6 +52,6 @@ export default function BookingPage() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

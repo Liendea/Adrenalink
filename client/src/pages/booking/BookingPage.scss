@@ -5,19 +5,8 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding: 15rem 10rem;
+
   gap: 4rem;
-
-  @include mobile {
-    padding: 15rem 1rem;
-  }
-  @include tablet {
-    padding: 15rem 5rem;
-  }
-
-  @include desktop {
-    padding: 15rem 10rem;
-  }
 
   // Skol Info + favoritebutton
   &__header-row {

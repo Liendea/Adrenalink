@@ -78,11 +78,12 @@ export const verifyUserCredentials = async (
 
 // Skapa JWT-token för inloggad användare
 export const createToken = (userId: number, role: string) => {
-  return jwt.sign(
-    { userId, role },
-    process.env.JWT_SECRET || "fallback_secret",
-    { expiresIn: "1d" },
-  );
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET saknas i miljövariabler.");
+  }
+
+  return jwt.sign({ userId, role }, secret, { expiresIn: "1d" });
 };
 
 // Uppdatera profilbild
