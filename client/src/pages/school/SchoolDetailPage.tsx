@@ -33,9 +33,6 @@ export default function SchoolDetailPage() {
   if (error || !school)
     return <div className="school-detail__error">School not found.</div>;
 
-  console.log("location.state:", location.state);
-  console.log("returnTo:", returnTo);
-
   return (
     <section className="school-detail">
       <button

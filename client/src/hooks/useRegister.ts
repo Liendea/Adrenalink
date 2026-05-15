@@ -41,13 +41,9 @@ export default function useRegister() {
         throw new Error(errorData.message || "Registrering misslyckades");
       }
 
-      const data = await response.json();
-      console.log("Success:", data);
-
-      alert("Konto skapat! Du skickas nu till inloggningen.");
+      alert("Konto skapat! Nu kan du logga in.");
       navigate("/login");
     } catch (error) {
-      // Vi kollar om error är en instans av Error-klassen
       const errorMessage =
         error instanceof Error ? error.message : "Något gick fel.";
 

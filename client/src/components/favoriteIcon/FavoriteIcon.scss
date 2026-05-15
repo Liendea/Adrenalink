@@ -1,0 +1,25 @@
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+
+  z-index: 1000;
+
+  cursor: pointer;
+
+  &__inactive {
+    display: block;
+  }
+
+  &__active {
+    display: none;
+  }
+
+  &:hover &__inactive {
+    display: none;
+  }
+
+  &:hover &__active {
+    display: block;
+  }
+}

@@ -8,9 +8,9 @@ type SchoolInfoProps = {
 };
 
 export const SchoolInfo = ({ name, location }: SchoolInfoProps) => (
-  <div className="booking-page__school">
-    <p className="booking-page__school-name">{name}</p>
-    <p className="booking-page__school-location">
+  <div className="booking-section__school">
+    <p className="booking-section__school-name">{name}</p>
+    <p className="booking-section__school-location">
       <Icon src={LocationIcon} />
       {location}
     </p>

@@ -44,8 +44,6 @@ export default function useEditProfile() {
 
       const data = await res.json();
 
-      console.log("Response från backend:", data);
-
       updateUser(data.user); // uppdatera context + localStorage
       setSuccess(true);
     } catch (err: unknown) {

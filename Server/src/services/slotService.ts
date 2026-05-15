@@ -25,7 +25,6 @@ export const findLessonWithAvailableSlots = async (lessonId: number) => {
     include: {
       school: true,
       availableTimes: {
-        where: { isBooked: false },
         orderBy: { startTime: "asc" },
       },
     },

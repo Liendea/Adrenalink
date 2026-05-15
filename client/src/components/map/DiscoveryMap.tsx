@@ -48,8 +48,6 @@ export default function DiscoveryMap(props: DiscoveryMapProps) {
 
   // Flyg till land när country-prop ändras
   useEffect(() => {
-    console.log("country ändrades till:", props.country); // Debug
-
     if (!props.country || !mapReady.current) return;
 
     geocodeCountry(props.country).then((coords) => {

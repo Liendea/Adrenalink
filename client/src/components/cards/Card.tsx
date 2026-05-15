@@ -3,7 +3,7 @@ import Icon from "@/components/Icon";
 import Location from "@/assets/icons/Location.svg";
 import Clock from "@/assets/icons/Clock.svg";
 import CreditCard from "@/assets/icons/CreditCard.svg";
-import FavoriteButton from "../buttons/FavoriteButton";
+import FavoriteButton from "../favoriteIcon/FavoriteIcon";
 import house from "@/assets/icons/house_outlined.svg";
 import "./Card.scss";
 import { Link } from "react-router-dom";
@@ -65,7 +65,6 @@ export default function Card(props: CardProps) {
   };
 
   const [searchParams] = useSearchParams();
-  console.log("Card searchParams:", searchParams.toString());
 
   //vid klick navigera till kort Id
   const href =

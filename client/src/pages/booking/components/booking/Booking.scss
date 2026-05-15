@@ -1,10 +1,24 @@
 .booking__section {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   align-items: center;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  height: 450px;
 
   // ── Date picker ───────────────────────────────────────────────────────────────
+
+  &__date-time-picker {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 300px;
+
+    gap: 1rem;
+    padding-block: 1rem;
+  }
   &__datepicker {
     display: flex;
     flex-direction: column;
@@ -62,8 +76,8 @@
     transition: background 0.12s;
 
     &:hover {
-      background: var(--main-blue);
-      color: var(--white);
+      background: var(--light-blue);
+      color: black;
     }
 
     &--active {
@@ -87,6 +101,11 @@
     line-height: 1;
   }
 
+  &__day--unavailable {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
   // ── Time slots ────────────────────────────────────────────────────────────────
   &__slots-label {
     font-size: 14px;
@@ -99,9 +118,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-
     width: 100%;
-    margin-block: 2rem;
   }
 
   &__slot {
@@ -135,6 +152,21 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-block: 2rem;
+  }
+
+  &__slot-active {
+    background: var(--main-blue);
+    color: var(--white);
+  }
+
+  &__slot--booked {
+    background: var(--gray-dark);
+    color: var(--light-gray);
+    cursor: not-allowed;
+
+    &:hover {
+      background: var(--gray-dark);
+      color: var(--light-gray);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { Lesson } from "@/types/types";
 import { useFavorites } from "@/hooks/useFavorites";
-import FavoriteButton from "@/components/buttons/FavoriteButton";
+import FavoriteButton from "@/components/favoriteIcon/FavoriteIcon";
 import surfImg from "@/assets/image.png";
 import kiteImg from "@/assets/kite-surf.png";
 import climbImg from "@/assets/climbing.png";
