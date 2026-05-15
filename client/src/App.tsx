@@ -20,8 +20,14 @@ import MyFavorites from "./pages/userProfile/myFavorites/MyFavorites";
 import MyBookings from "./pages/userProfile/myBookings/MyBookings";
 import Footer from "./components/footer/Footer";
 import MainLayout from "./layout/MainLayout";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+  const isInternalPage = !["/", "/login", "/register"].includes(
+    location.pathname,
+  );
+
   return (
     <>
       <Navigation />
@@ -74,7 +80,7 @@ function App() {
           </Route>
         </Routes>
       </main>
-      <Footer />
+      {isInternalPage && <Footer />}
     </>
   );
 }

@@ -27,10 +27,10 @@ export default function BookingPage() {
 
   return (
     <section className="booking-section">
-      <div className="booking-page__header-row">
+      <div className="booking-section__header-row">
         <SchoolInfo name={lesson.school?.name} location={lesson.location} />
         <button
-          className="booking-page__fav"
+          className="booking-section__fav"
           onClick={handleFavorite}
           aria-label={
             isFavorited(id) ? "Ta bort från favoriter" : "Lägg till i favoriter"
@@ -43,11 +43,11 @@ export default function BookingPage() {
         <LessonDetails lesson={lesson} />
         <Booking lesson={lesson} allSlots={lesson.availableTimes} />
       </div>
-      <div className="booking-page__map">
+      <div className="booking-section__map">
         {lesson.lat && lesson.lng ? (
           <DiscoveryMap variant="activities" items={[lesson]} />
         ) : (
-          <div className="booking-page__map-placeholder">
+          <div className="booking-section__map-placeholder">
             <p>No location available</p>
           </div>
         )}

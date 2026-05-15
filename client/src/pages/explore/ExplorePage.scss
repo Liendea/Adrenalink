@@ -2,11 +2,12 @@
 
 .explore {
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+
+  padding-bottom: 5rem;
 
   &__title {
     text-align: left;
@@ -19,37 +20,35 @@
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    height: calc(100vh - 200px); // ← fast höjd på splitten
+    height: auto;
     overflow: hidden;
-    margin-bottom: 5rem;
+    margin-block: 2rem;
 
     @include mobile {
       flex-direction: column;
-      height: auto;
+
       overflow: visible;
     }
 
     @include tablet {
       flex-direction: column;
-      height: auto;
+
       overflow: visible;
     }
 
     @include desktop {
       flex-direction: column;
-      height: auto;
+
       overflow: visible;
     }
 
     @include medium-screens {
       flex-direction: row-reverse;
-      height: calc(100vh - 200px);
       overflow: hidden;
     }
 
     @include large-screens {
       flex-direction: row-reverse;
-      height: calc(100vh - 200px);
       overflow: hidden;
     }
   }
@@ -58,6 +57,8 @@
     flex: 2;
     overflow-y: scroll;
     height: 100%;
+
+    padding-bottom: 5rem;
 
     scrollbar-width: none;
     &::-webkit-scrollbar {

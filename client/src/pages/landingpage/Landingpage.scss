@@ -1,11 +1,12 @@
 .landing {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   align-content: center;
   justify-content: center;
+  border: 1px solid red;
 
   &__bg {
     position: absolute;
@@ -46,8 +47,8 @@
   .hero-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-top: 6rem;
   }
 }
