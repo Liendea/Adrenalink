@@ -1,6 +1,5 @@
 .school-detail {
   max-width: 900px;
-  margin: 0 auto;
 
   &__loading,
   &__error {
@@ -9,41 +8,24 @@
     color: rgba(0, 0, 0, 0.4);
   }
 
-  &__header {
+  &__top-bar {
     display: flex;
     align-items: center;
-    flex-direction: column;
     gap: 16px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
   }
-
-  &__title-wrap {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-
-    width: 100%;
-  }
-
-  &__title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-
   &__actions {
     display: flex;
     gap: 8px;
+
+    padding: 8px;
+    border-radius: var(--radius-lg);
   }
 
   &__action-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #f3f4f6;
+    background: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,53 +34,41 @@
     transition: background 0.2s;
 
     &:hover {
-      background: #e5e7eb;
+      background: var(--gray-light);
     }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__title-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
   }
 
   &__tabs {
+    width: 100%;
     display: flex;
     justify-content: center;
-    gap: 32px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 2rem 0;
-    width: auto;
   }
-
-  &__tab {
-    background: none;
-    border: none;
-    padding: 12px 0;
-    font-size: 15px;
-    color: rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    position: relative;
-    font-weight: 400;
-
-    &:hover {
-      color: var(--gray-dark);
-    }
-
-    &--active {
-      color: #000;
-      font-weight: 600;
-
-      &:hover {
-        color: var(--black);
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: #000;
-      }
-    }
-  }
-
   &__coming-soon {
     color: rgba(0, 0, 0, 0.4);
     padding: 40px 0;

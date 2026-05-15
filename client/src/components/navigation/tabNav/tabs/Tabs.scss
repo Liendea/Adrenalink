@@ -2,6 +2,7 @@
   display: flex;
   gap: 2rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 
   &__tab {
     background: none;
@@ -14,7 +15,7 @@
     font-weight: 400;
 
     &--active {
-      color: #000;
+      color: var(--gdark-blue);
       font-weight: 600;
 
       &::after {
@@ -24,8 +25,11 @@
         left: 0;
         right: 0;
         height: 2px;
-        background: #000;
+        background: var(--dark-blue);
       }
+    }
+    &:hover {
+      color: var(--gdark-blue);
     }
   }
 }

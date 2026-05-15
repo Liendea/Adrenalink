@@ -8,6 +8,10 @@ import "./SchoolDetailPage.scss";
 import Tabs from "@/components/navigation/tabNav/tabs/Tabs";
 import { useLocation } from "react-router-dom";
 import Back_Btn from "@/components/buttons/Back_Btn";
+import Icon from "@/components/Icon";
+import InternetIcon from "@/assets/icons/Internet.svg";
+import MessageIcon from "@/assets/icons/WhatsApp.svg";
+import InstagramIcon from "@/assets/icons/Instagram.svg";
 
 type SchoolTab = "about" | "classes" | "requests";
 
@@ -34,34 +38,38 @@ export default function SchoolDetailPage() {
 
   return (
     <section className="school-detail">
-      <Back_Btn onClick={() => navigate(returnTo)} />
+      <div className="school-detail__top-bar">
+        <Back_Btn onClick={() => navigate(returnTo)} />
 
-      {/* Header */}
-
-      <div className="school-detail__header">
+        {/* Action buttons */}
         <div className="school-detail__actions">
           <a
             href="#"
             className="school-detail__action-btn"
             aria-label="Website"
           >
-            🌐
+            <Icon src={InternetIcon} />
           </a>
           <a
             href="#"
             className="school-detail__action-btn"
             aria-label="Instagram"
           >
-            📷
+            <Icon src={InstagramIcon} />
           </a>
           <a
             href="#"
             className="school-detail__action-btn"
             aria-label="Message"
           >
-            💬
+            <Icon src={MessageIcon} />
           </a>
         </div>
+      </div>
+
+      {/* Header */}
+
+      <div className="school-detail__header">
         <div className="school-detail__title-wrap">
           <h1 className="school-detail__title">{school.name}</h1>
           <StarRating
@@ -72,12 +80,13 @@ export default function SchoolDetailPage() {
       </div>
 
       {/* Tabs */}
-      <Tabs
-        tabs={TABS}
-        activeTab={activeTab}
-        onTabChange={(tab) => setActiveTab(tab)}
-      />
-
+      <div className="school-detail__tabs">
+        <Tabs
+          tabs={TABS}
+          activeTab={activeTab}
+          onTabChange={(tab) => setActiveTab(tab)}
+        />
+      </div>
       {/* Content */}
       <div className="school-detail__content">
         {activeTab === "about" && <AboutTab school={school} />}
