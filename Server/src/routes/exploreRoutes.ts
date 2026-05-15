@@ -5,9 +5,10 @@ import { getSchools } from "../controllers/schoolController.js";
 
 const router = Router();
 
-// GET /api/explore
-router.get("/", getExploreResults);
+// GET /api/explore/lessons
+router.get("/lessons", getExploreResults);
 
-router.get("/", getSchools);
+// GET /api/explore/schools
+router.get("/schools", getSchools);
 
 export default router;

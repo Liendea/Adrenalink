@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import useActivitySearch from "@/hooks/useActivitySearch";
-import useSchoolSearch from "@/hooks/useSchoolSearch";
+
 import ExploreNav from "@/components/navigation/tabNav/ExploreNav";
 import Card from "@/components/cards/Card";
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./ExplorePage.scss";
 import type { Lesson } from "@/types/types";
+import useExploreSearch from "@/hooks/useExploreSearch";
 
 type ExploreTab = "activities" | "schools" | "rentals";
 
 export default function ExplorePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get("tab") as ExploreTab) ?? "activities";
-
   const [mapVisible, setMapVisible] = useState(false);
 
   const rawCountry = searchParams.get("country");
@@ -28,30 +27,16 @@ export default function ExplorePage() {
     });
   };
 
-  const {
-    activities,
-    loading: activitiesLoading,
-    error: activitiesError,
-  } = useActivitySearch({
-    activeItem: countryParam
-      ? { label: countryParam, type: "destination" }
-      : null,
-    selectedDates: { startDate, endDate },
-  });
-
-  const {
-    schools,
-    loading: schoolsLoading,
-    error: schoolsError,
-  } = useSchoolSearch({
+  const { activities, schools, loading, error } = useExploreSearch({
     country: countryParam,
-    enabled: activeTab === "schools",
+    startDate,
+    endDate,
   });
 
   const renderCards = () => {
     if (activeTab === "activities") {
-      if (activitiesLoading) return <p>Laddar aktiviteter...</p>;
-      if (activitiesError) return <p>Ett fel uppstod: {activitiesError}</p>;
+      if (loading) return <p>Laddar aktiviteter...</p>;
+      if (error) return <p>Ett fel uppstod: {error}</p>;
       if (activities.length === 0) return <p>No activities found.</p>;
 
       return (
@@ -69,8 +54,8 @@ export default function ExplorePage() {
     }
 
     if (activeTab === "schools") {
-      if (schoolsLoading) return <p>Laddar skolor...</p>;
-      if (schoolsError) return <p>Ett fel uppstod: {schoolsError}</p>;
+      if (loading) return <p>Laddar skolor...</p>;
+      if (error) return <p>Ett fel uppstod: {error}</p>;
       if (schools.length === 0) return <p>No schools found.</p>;
 
       return (
@@ -91,16 +76,9 @@ export default function ExplorePage() {
 
   const renderMap = () => {
     if (activeTab === "activities") {
-      // 1. Skapa en array med bara existerande lektioner (Type Guard)
-      const validLessons = activities
+      const lessons = activities
         .map((slot) => slot.lesson)
-        .filter(
-          (lesson): lesson is Lesson => lesson !== undefined && lesson !== null,
-        );
-
-      // 2. Deduplicera med Map baserat på garanterat existerande objekt
-      const lessonsMap = new Map(validLessons.map((l) => [l.id, l]));
-      const lessons = Array.from(lessonsMap.values());
+        .filter((lesson): lesson is Lesson => lesson != null);
 
       return (
         <DiscoveryMap
