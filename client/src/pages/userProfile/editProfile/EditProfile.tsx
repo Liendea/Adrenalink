@@ -2,11 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import "./EditProfile.scss";
-import Icon from "@/components/Icon";
-import chevronLeft from "@/assets/icons/ChevronLeft.svg";
 import CountryInput from "@/pages/userProfile/components/inputs/CountryInput";
 import { PHONE_CODES } from "@/pages/userProfile/editProfile/utils/CountryPhoneCodes";
 import useEditProfile from "@/hooks/useEditProfile";
+import Back_Btn from "@/components/buttons/Back_Btn";
 
 type ProfileForm = {
   firstName: string;
@@ -52,12 +51,7 @@ export default function EditProfile() {
   return (
     <div className="edit-profile">
       <div className="edit-profile__header">
-        <button
-          className="edit-profile__back"
-          onClick={() => navigate("/profile")}
-        >
-          <Icon src={chevronLeft} /> Back
-        </button>
+        <Back_Btn onClick={() => navigate("/profile")} />
         <h1>Edit Profile</h1>
       </div>
 

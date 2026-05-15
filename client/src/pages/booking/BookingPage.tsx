@@ -3,10 +3,9 @@ import LessonDetails from "@/pages/booking/components/lessonDetails/LessonDetail
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./BookingPage.scss";
 import Booking from "./components/booking/Booking";
-import chevronLeft from "@/assets/icons/ChevronLeft.svg";
 import { useBookingLesson } from "@/hooks/useBookingLesson";
-import Icon from "@/components/Icon";
 import { useNavigate } from "react-router-dom";
+import Back_Btn from "@/components/buttons/Back_Btn";
 
 export default function BookingPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -17,12 +16,7 @@ export default function BookingPage() {
 
   return (
     <section className="booking-section">
-      <button
-        className="booking-section__back"
-        onClick={() => navigate("/explore")}
-      >
-        <Icon src={chevronLeft} /> Back
-      </button>
+      <Back_Btn onClick={() => navigate("/explore")} />
       <div className="flex-column">
         <div className="flex-row">
           <LessonDetails lesson={lesson} />

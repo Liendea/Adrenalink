@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useFavorites } from "@/hooks/useFavorites";
 import Card from "@/components/cards/Card";
 import "./MyFavorites.scss";
-import Icon from "@/components/Icon";
-import chevronLeft from "@/assets/icons/ChevronLeft.svg";
+
+import Back_Btn from "@/components/buttons/Back_Btn";
 
 export default function MyFavorites() {
   const navigate = useNavigate();
@@ -15,12 +15,8 @@ export default function MyFavorites() {
   return (
     <div className="my-favorites">
       <div className="my-favorites__header">
-        <button
-          className="my-favorites__back"
-          onClick={() => navigate("/profile")}
-        >
-          <Icon src={chevronLeft} /> Back
-        </button>
+        <Back_Btn onClick={() => navigate("/profile")} />
+
         <h1>My Favorites</h1>
       </div>
 

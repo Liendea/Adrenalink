@@ -5,10 +5,9 @@ import AboutTab from "../../pages/school/tabs/AboutTab";
 import ClassesTab from "../../pages/school/tabs/ClassesTab";
 import StarRating from "@/components/rating/StarRating";
 import "./SchoolDetailPage.scss";
-import Icon from "@/components/Icon";
-import chevronLeft from "@/assets/icons/ChevronLeft.svg";
 import Tabs from "@/components/navigation/tabNav/tabs/Tabs";
 import { useLocation } from "react-router-dom";
+import Back_Btn from "@/components/buttons/Back_Btn";
 
 type SchoolTab = "about" | "classes" | "requests";
 
@@ -35,12 +34,7 @@ export default function SchoolDetailPage() {
 
   return (
     <section className="school-detail">
-      <button
-        className="school-detail__back"
-        onClick={() => navigate(returnTo)}
-      >
-        <Icon src={chevronLeft} /> Back
-      </button>
+      <Back_Btn onClick={() => navigate(returnTo)} />
 
       {/* Header */}
 

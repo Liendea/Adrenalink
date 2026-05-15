@@ -35,7 +35,7 @@ body,
 #root {
   min-height: 100vh;
   font-family: var(--font-body);
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
 }
 
 main {
