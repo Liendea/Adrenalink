@@ -3,7 +3,7 @@ import LessonDetails from "@/pages/booking/components/lessonDetails/LessonDetail
 import DiscoveryMap from "@/components/map/DiscoveryMap";
 import "./BookingPage.scss";
 import Booking from "./components/booking/Booking";
-import chevronLeft from "@/assets/icons/chevronLeft.svg";
+import chevronLeft from "@/assets/icons/ChevronLeft.svg";
 import { useBookingLesson } from "@/hooks/useBookingLesson";
 import Icon from "@/components/Icon";
 import { useNavigate } from "react-router-dom";
