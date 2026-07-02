@@ -26,3 +26,11 @@ export async function createBooking(input: CreateBookingInput) {
     return tx.booking.create({ data: input });
   });
 }
+
+export async function getBookingsForUser(userId: number) {
+  return prisma.booking.findMany({
+    where: { userId },
+    include: { lesson: true, slot: true },
+    orderBy: { slot: { startTime: "asc" } },
+  });
+}

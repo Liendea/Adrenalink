@@ -51,8 +51,7 @@ export function BookingPage() {
     submitBooking(
       { lessonId: lesson.id, slotId: selectedSlot!.id, ...formData },
       {
-        onSuccess: (booking) =>
-          navigate(`/booking/${lesson.id}/success`, { state: { booking } }),
+        onSuccess: () => navigate(`/profile/bookings`),
       },
     );
   };

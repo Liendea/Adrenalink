@@ -1,5 +1,8 @@
 import type { Request, Response } from "express";
-import { createBooking } from "@/services/bookingService.js";
+import {
+  createBooking,
+  getBookingsForUser,
+} from "@/services/bookingService.js";
 
 export async function createBookingHandler(req: Request, res: Response) {
   const { lessonId, slotId, name, email, phone, passportNumber } = req.body;
@@ -24,4 +27,9 @@ export async function createBookingHandler(req: Request, res: Response) {
     console.error("Fel i createBookingHandler:", error);
     res.status(500).json({ message: "Serverfel vid bokning." });
   }
+}
+
+export async function getMyBookingsHandler(req: Request, res: Response) {
+  const bookings = await getBookingsForUser(req.user.id);
+  res.json(bookings);
 }

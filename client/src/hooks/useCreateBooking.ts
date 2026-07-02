@@ -11,6 +11,8 @@ const createBooking = async (
   payload: CreateBookingPayload,
 ): Promise<Booking> => {
   const token = localStorage.getItem("token");
+  if (!token) throw new Error("Not authenticated");
+
   const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/bookings`, {
     method: "POST",
     headers: {
@@ -20,10 +22,7 @@ const createBooking = async (
     body: JSON.stringify(payload),
   });
 
-  if (!res.ok) {
-    const data = await res.json().catch(() => null);
-    throw new Error(data?.message ?? "Failed to create booking");
-  }
+  if (!res.ok) throw new Error("Failed to create booking");
   return res.json();
 };
 

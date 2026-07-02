@@ -98,4 +98,6 @@ export type Booking = {
   phone: string;
   passportNumber: string;
   createdAt: string;
+  lesson: Lesson;
+  slot: AvailableTimeSlot;
 };
