@@ -16,7 +16,7 @@ export default function BookingPage() {
 
   return (
     <section className="booking-section">
-      <Back_Btn onClick={() => navigate("/explore")} />
+      <Back_Btn onClick={() => navigate(-1)} />
       <div className="flex-column">
         <div className="flex-row">
           <LessonDetails lesson={lesson} />
