@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { FavoritesContext } from "./favoriteContext";
 import { useAuth } from "@/hooks/useAuth";
-
-type FavoriteEntry = {
-  id: number;
-  lessonId: number | null;
-  schoolId: number | null;
-};
+import type { FavoriteEntry } from "@/types/types";
 
 export const FavoritesProvider = ({
   children,
@@ -46,17 +41,22 @@ export const FavoritesProvider = ({
 
       // Flyttad inuti useCallback
       const existingId =
-        favorites.find((f) => f.lessonId === id || f.schoolId === id)?.id ??
-        null;
+        favorites.find((f) =>
+          type === "lesson" ? f.lessonId === id : f.schoolId === id,
+        )?.id ?? null;
 
       if (existingId) {
-        await fetch(
+        const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/favorites/${existingId}`,
           {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` },
           },
         );
+        if (!res.ok) {
+          console.error("Kunde inte ta bort favorit:", res.status);
+          return;
+        }
         setFavorites((prev) => prev.filter((f) => f.id !== existingId));
       } else {
         const body = type === "lesson" ? { lessonId: id } : { schoolId: id };
@@ -72,14 +72,20 @@ export const FavoritesProvider = ({
           },
         );
         const data = await res.json();
+        if (!res.ok || !data.favorite) {
+          console.error("Kunde inte lägga till favorit:", data.message);
+          return;
+        }
         setFavorites((prev) => [...prev, data.favorite]);
       }
     },
     [favorites],
   );
 
-  const isFavorited = (id: number) =>
-    favorites.some((f) => f.lessonId === id || f.schoolId === id);
+  const isFavorited = (id: number, type: "lesson" | "school") =>
+    favorites.some((f) =>
+      type === "lesson" ? f.lessonId === id : f.schoolId === id,
+    );
 
   return (
     <FavoritesContext.Provider

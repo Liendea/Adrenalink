@@ -11,8 +11,8 @@ export default function BookingPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
   const { data: lesson, isLoading, isError } = useBookingLesson(lessonId);
   const navigate = useNavigate();
-  if (isLoading) return <div>Laddar bokningssida...</div>;
-  if (isError || !lesson) return <div>Kunde inte hitta lektionen.</div>;
+  if (isLoading) return <div>Loading booking page...</div>;
+  if (isError || !lesson) return <div>The lesson could not be found.</div>;
 
   return (
     <section className="booking-section">

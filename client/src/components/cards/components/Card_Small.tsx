@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { Lesson } from "@/types/types";
 import { useFavorites } from "@/hooks/useFavorites";
-import FavoriteButton from "@/components/favoriteIcon/FavoriteIcon";
+import FavoriteButton from "@/components/favoriteIcon/FavoriteButton";
 import surfImg from "@/assets/image.png";
 import kiteImg from "@/assets/kite-surf.png";
 import climbImg from "@/assets/climbing.png";
@@ -45,10 +45,10 @@ export default function Card_Small({ lesson }: Card_SmallProps) {
             className="lesson-list-item__fav"
             onClick={handleFavorite}
             aria-label={
-              isFavorited(lesson.id) ? "Remove favorite" : "Add favorite"
+              isFavorited(lesson.id, "lesson") ? "Remove favorite" : "Add favorite"
             }
           >
-            <FavoriteButton favorited={isFavorited(lesson.id)} />
+            <FavoriteButton favorited={isFavorited(lesson.id, "lesson")} />
           </button>
         </div>
 

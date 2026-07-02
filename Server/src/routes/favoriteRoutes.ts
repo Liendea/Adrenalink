@@ -11,6 +11,6 @@ const router = Router();
 
 router.get("/", authenticateToken, getFavorites);
 router.post("/", authenticateToken, addFavorite);
-router.delete("/:id", validateParamId("id"), removeFavorite);
+router.delete("/:id", authenticateToken, validateParamId("id"), removeFavorite);
 
 export default router;

@@ -3,7 +3,7 @@ import Icon from "@/components/Icon";
 import Location from "@/assets/icons/Location.svg";
 import Clock from "@/assets/icons/Clock.svg";
 import CreditCard from "@/assets/icons/CreditCard.svg";
-import FavoriteButton from "../favoriteIcon/FavoriteIcon";
+import FavoriteButton from "../favoriteIcon/FavoriteButton";
 import house from "@/assets/icons/house_outlined.svg";
 import "./Card.scss";
 import { Link } from "react-router-dom";
@@ -58,6 +58,7 @@ const getSchoolImage = (schoolName: string): string => {
 export default function Card(props: CardProps) {
   const { isFavorited, toggleFavorite } = useFavorites();
   const id = props.data.id;
+
   const handleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -100,10 +101,12 @@ export default function Card(props: CardProps) {
           className="card__fav"
           onClick={handleFavorite}
           aria-label={
-            isFavorited(id) ? "Ta bort från favoriter" : "Lägg till i favoriter"
+            isFavorited(id, props.variant)
+              ? "Ta bort från favoriter"
+              : "Lägg till i favoriter"
           }
         >
-          <FavoriteButton favorited={isFavorited(id)} />
+          <FavoriteButton favorited={isFavorited(id, props.variant)} />
         </button>
       </div>
 

@@ -3,7 +3,7 @@ import type { LessonWithSlots } from "@/types/types";
 
 const fetchLesson = async (lessonId: string): Promise<LessonWithSlots> => {
   const res = await fetch(
-    `${import.meta.env.VITE_API_BASE_URL}/lesson/${lessonId}`,
+    `${import.meta.env.VITE_API_BASE_URL}/lesson/${lessonId}/slots`,
   );
   if (!res.ok) throw new Error("Kunde inte hämta bokningsinfo");
   return res.json();

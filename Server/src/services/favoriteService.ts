@@ -24,6 +24,12 @@ export const createFavorite = async (
       lessonId: lessonId ?? null,
       schoolId: schoolId ?? null,
     },
+    include: {
+      lesson: {
+        include: { school: true },
+      },
+      school: true,
+    },
   });
 };
 

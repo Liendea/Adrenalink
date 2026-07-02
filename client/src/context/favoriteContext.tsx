@@ -1,17 +1,9 @@
 import { createContext } from "react";
-import type { Lesson, School } from "@/types/types";
-
-type FavoriteEntry = {
-  id: number;
-  lessonId: number | null;
-  schoolId: number | null;
-  lesson?: Lesson | null;
-  school?: School | null;
-};
+import type { FavoriteEntry } from "@/types/types";
 
 export type FavoritesContextType = {
   favorites: FavoriteEntry[];
-  isFavorited: (id: number) => boolean;
+  isFavorited: (id: number, type: "lesson" | "school") => boolean;
   toggleFavorite: (id: number, type: "lesson" | "school") => Promise<void>;
 };
 

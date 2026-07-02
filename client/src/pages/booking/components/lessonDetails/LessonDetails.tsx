@@ -5,7 +5,7 @@ import "./LessonDetails.scss";
 import { Link } from "react-router-dom";
 import Icon from "@/components/Icon";
 import LocationIcon from "@/assets/icons/LocationIcon.svg";
-import FavoriteIcon from "@/components/favoriteIcon/FavoriteIcon";
+import FavoriteIcon from "@/components/favoriteIcon/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
 
 type LessonDetailsProps = {
@@ -57,12 +57,12 @@ export default function LessonDetails({ lesson }: LessonDetailsProps) {
           className="lesson-info__fav"
           onClick={handleFavorite}
           aria-label={
-            isFavorited(lesson.id)
+            isFavorited(lesson.id, "lesson")
               ? "Ta bort från favoriter"
               : "Lägg till i favoriter"
           }
         >
-          <FavoriteIcon favorited={isFavorited(lesson.id)} />
+          <FavoriteIcon favorited={isFavorited(lesson.id, "lesson")} />
         </button>
       </div>
 

@@ -75,3 +75,12 @@ export type SelectedItem = {
   sub: string;
   type?: "nearby" | "destination";
 };
+
+// Favorite context types
+export type FavoriteEntry = {
+  id: number;
+  lessonId: number | null;
+  schoolId: number | null;
+  lesson?: Lesson | null;
+  school?: School | null;
+};

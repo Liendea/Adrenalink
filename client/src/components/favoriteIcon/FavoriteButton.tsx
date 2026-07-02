@@ -2,7 +2,7 @@ import Icon from "@/components/Icon";
 import FavoriteIcon from "@/assets/icons/favourite_btn.svg";
 import FavoriteIcon_Active from "@/assets/icons/favourite_btn_active.svg";
 
-import "./FavoriteIcon.scss";
+import "./FavoriteButton.scss";
 
 type FavoriteButtonProps = {
   favorited: boolean;

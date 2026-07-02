@@ -58,7 +58,19 @@ export const findExistingUser = async (email: string, passportNo: string) => {
 export const createUser = async (data: RegisterData) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
   return prisma.user.create({
-    data: { ...data, password: hashedPassword },
+    data: {
+      email: data.email,
+      password: hashedPassword,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      passportNo: data.passportNo,
+      address: data.address,
+      zipCode: data.zipCode,
+      city: data.city,
+      country: data.country,
+      phoneCode: data.phoneCode,
+      phoneNumber: data.phoneNumber,
+    },
   });
 };
 

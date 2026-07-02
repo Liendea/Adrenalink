@@ -1,10 +1,5 @@
 .favorite-button {
-  position: absolute;
-  top: 10px;
-  right: 5px;
-
   z-index: 1000;
-
   cursor: pointer;
 
   &__inactive {
@@ -20,6 +15,14 @@
   }
 
   &:hover &__active {
+    display: block;
+  }
+
+  &--favorited &__inactive {
+    display: none;
+  }
+
+  &--favorited &__active {
     display: block;
   }
 }

@@ -11,4 +11,7 @@ router.get("/lessons", getExploreResults);
 // GET /api/explore/schools
 router.get("/schools", getSchools);
 
+// GET /api/explore/rentals
+// add later
+
 export default router;

@@ -28,6 +28,19 @@
     }
   }
 
+  &__fav {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+  }
+
   .divider {
     border: none;
     height: 1px;
