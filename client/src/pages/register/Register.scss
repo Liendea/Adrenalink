@@ -83,5 +83,32 @@
         background: #2b6cb0;
       }
     }
+
+    .step-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+
+      .back-btn,
+      .next-btn {
+        flex: 1;
+        margin-top: 0;
+      }
+
+      .back-btn {
+        padding: 1rem;
+        background: transparent;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 0.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
   }
 }

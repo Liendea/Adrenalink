@@ -2,7 +2,7 @@ import useRegister from "@/hooks/useRegister";
 import "./Register.scss";
 
 export default function Register() {
-  const { step, formData, handleChange, handleNext, handleSubmit } =
+  const { step, formData, handleChange, handleNext, handleBack, handleSubmit } =
     useRegister();
 
   return (
@@ -93,9 +93,14 @@ export default function Register() {
                 value={formData.passportNo}
               />
             </div>
-            <button className="next-btn" onClick={handleNext}>
-              Next
-            </button>
+            <div className="step-buttons">
+              <button className="back-btn" onClick={handleBack}>
+                Back
+              </button>
+              <button className="next-btn" onClick={handleNext}>
+                Next
+              </button>
+            </div>
           </div>
         )}
 
@@ -141,9 +146,14 @@ export default function Register() {
                 value={formData.country}
               />
             </div>
-            <button className="next-btn" onClick={handleSubmit}>
-              Register
-            </button>
+            <div className="step-buttons">
+              <button className="back-btn" onClick={handleBack}>
+                Back
+              </button>
+              <button className="next-btn" onClick={handleSubmit}>
+                Register
+              </button>
+            </div>
           </div>
         )}
       </div>
