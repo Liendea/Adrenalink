@@ -10,6 +10,7 @@ import lessonRoutes from "./routes/lessonRoutes.js";
 import schoolRoutes from "./routes/schoolRoutes.js";
 import ratingRoutes from "./routes/ratingRoutes.js";
 import favoriteRoutes from "./routes/favoriteRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 
 const app: Application = express();
 
@@ -31,7 +32,7 @@ app.use("/api/lesson", lessonRoutes);
 app.use("/api/schools", schoolRoutes);
 app.use("/api/ratings", ratingRoutes);
 app.use("/api/favorites", favoriteRoutes);
-//app.use("/api/bookings", bookingRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // En enkel test-route
 app.get("/", (req: Request, res: Response) => {

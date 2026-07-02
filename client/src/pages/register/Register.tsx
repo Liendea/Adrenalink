@@ -88,9 +88,9 @@ export default function Register() {
               <label>Passport nr</label>
               <input
                 type="text"
-                name="passportNo"
+                name="passportNumber"
                 onChange={handleChange}
-                value={formData.passportNo}
+                value={formData.passportNumber}
               />
             </div>
             <div className="step-buttons">

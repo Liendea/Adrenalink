@@ -10,7 +10,7 @@ import Back_Btn from "@/components/buttons/Back_Btn";
 type ProfileForm = {
   firstName: string;
   lastName: string;
-  passportNo: string;
+  passportNumber: string;
   address: string;
   zipCode: string;
   city: string;
@@ -28,7 +28,7 @@ export default function EditProfile() {
   const [form, setForm] = useState<ProfileForm>({
     firstName: user?.firstName ?? "",
     lastName: user?.lastName ?? "",
-    passportNo: user?.passportNo ?? "",
+    passportNumber: user?.passportNumber ?? "",
     address: user?.address ?? "",
     zipCode: user?.zipCode ?? "",
     city: user?.city ?? "",
@@ -69,8 +69,8 @@ export default function EditProfile() {
         <div className="edit-profile__field">
           <label>Passport number</label>
           <input
-            value={form.passportNo}
-            onChange={handleChange("passportNo")}
+            value={form.passportNumber}
+            onChange={handleChange("passportNumber")}
           />
         </div>
       </section>

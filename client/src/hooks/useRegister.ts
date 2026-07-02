@@ -12,7 +12,7 @@ export default function useRegister() {
     lastName: "",
     phoneCode: "",
     phoneNumber: "",
-    passportNo: "",
+    passportNumber: "",
     address: "",
     zipCode: "",
     city: "",

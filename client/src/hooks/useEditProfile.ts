@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 type ProfileForm = {
   firstName: string;
   lastName: string;
-  passportNo: string;
+  passportNumber: string;
   address: string;
   zipCode: string;
   city: string;

@@ -40,7 +40,7 @@ export default function UserProfile() {
       <div className="profile__info-card">
         <div className="profile__info-row">
           <span className="profile__info-label">Passport number:</span>
-          <span className="profile__info-value">{user.passportNo}</span>
+          <span className="profile__info-value">{user.passportNumber}</span>
         </div>
         <hr className="profile__divider" />
         <div className="profile__info-row">

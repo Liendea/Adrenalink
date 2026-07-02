@@ -5,7 +5,7 @@ CREATE TABLE `users` (
     `password` VARCHAR(191) NOT NULL,
     `firstName` VARCHAR(191) NOT NULL,
     `lastName` VARCHAR(191) NOT NULL,
-    `passportNo` VARCHAR(191) NOT NULL,
+    `passportNumber` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
     `zipCode` VARCHAR(191) NOT NULL,
     `city` VARCHAR(191) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE `users` (
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `users_email_key`(`email`),
-    UNIQUE INDEX `users_passportNo_key`(`passportNo`),
+    UNIQUE INDEX `users_passportNumber_key`(`passportNumber`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

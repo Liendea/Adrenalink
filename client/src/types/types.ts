@@ -3,7 +3,7 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
-  passportNo: string;
+  passportNumber: string;
   address: string;
   zipCode: string;
   city: string;
@@ -35,7 +35,7 @@ export type Lesson = {
   sportType: string;
   level: string;
   durationHours: number;
-  priceEuro: number;
+  price: number;
   location: string;
   equipmentIncluded: boolean;
   school: School; // Inkluderas via Prismas join
@@ -43,6 +43,9 @@ export type Lesson = {
   description: string;
   lng: number;
   lat: number;
+  instructor?: string;
+  date?: string; // ISO-sträng som representerar datumet för lektionen
+  time?: string; // ISO-sträng som representerar starttiden för lektionen
 };
 
 export type LessonWithSlots = Lesson & {
@@ -83,4 +86,16 @@ export type FavoriteEntry = {
   schoolId: number | null;
   lesson?: Lesson | null;
   school?: School | null;
+};
+
+// Booking
+export type Booking = {
+  lessonId: number;
+  slotId: number;
+  userId: number;
+  name: string;
+  email: string;
+  phone: string;
+  passportNumber: string;
+  createdAt: string;
 };

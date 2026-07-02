@@ -2,23 +2,11 @@ import { useNavigate } from "react-router-dom";
 import type { Lesson } from "@/types/types";
 import { useFavorites } from "@/hooks/useFavorites";
 import FavoriteButton from "@/components/favoriteIcon/FavoriteButton";
-import surfImg from "@/assets/image.png";
-import kiteImg from "@/assets/kite-surf.png";
-import climbImg from "@/assets/climbing.png";
-import snowboardImg from "@/assets/snowboard.png";
+import { getLessonImage } from "@/utils/lessonImage";
 import "./Card_Small.scss";
 
 type Card_SmallProps = {
   lesson: Lesson;
-};
-
-const sportImageMap: Record<string, string> = {
-  surf: surfImg,
-  kitesurf: kiteImg,
-  climbing: climbImg,
-  snowboard: snowboardImg,
-  windsurf: surfImg,
-  wakeboard: surfImg,
 };
 
 export default function Card_Small({ lesson }: Card_SmallProps) {
@@ -32,14 +20,14 @@ export default function Card_Small({ lesson }: Card_SmallProps) {
     toggleFavorite(lesson.id, "lesson");
   };
 
-  const pricePerHour = (lesson.priceEuro / lesson.durationHours).toFixed(0);
+  const pricePerHour = (lesson.price / lesson.durationHours).toFixed(0);
 
   return (
     <section className="lesson-list__section">
       <div className="lesson-list-item">
         <div className="lesson-list-item__image-wrap">
           <img
-            src={sportImageMap[lesson.sportType] ?? surfImg}
+            src={getLessonImage(lesson)}
             alt={lesson.sportType}
             className="lesson-list-item__image"
           />
@@ -47,7 +35,9 @@ export default function Card_Small({ lesson }: Card_SmallProps) {
             className="lesson-list-item__fav"
             onClick={handleFavorite}
             aria-label={
-              isFavorited(lesson.id, "lesson") ? "Remove favorite" : "Add favorite"
+              isFavorited(lesson.id, "lesson")
+                ? "Remove favorite"
+                : "Add favorite"
             }
           >
             <FavoriteButton favorited={isFavorited(lesson.id, "lesson")} />
@@ -59,7 +49,7 @@ export default function Card_Small({ lesson }: Card_SmallProps) {
             <h3>
               {lesson.lessonType} {lesson.sportType} lesson
             </h3>
-            <span className="lesson-list-item__price">${lesson.priceEuro}</span>
+            <span className="lesson-list-item__price">${lesson.price}</span>
           </div>
           <p className="lesson-list-item__description">{lesson.description}</p>
           <div className="lesson-list-item__meta">

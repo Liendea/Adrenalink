@@ -20,7 +20,7 @@ model User {
   // Personuppgifter
   firstName    String
   lastName     String
-  passportNo   String   @unique
+  passportNumber   String   @unique
   
   // Adress
   address      String
@@ -37,9 +37,10 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-// Rating 
-  ratings   Rating[] 
+// Rating
+  ratings   Rating[]
     favorites Favorite[]
+  bookings  Booking[]
 
   profileImage String? @db.LongText @map("profile_image")
 
@@ -111,6 +112,7 @@ lng  Float?
   school            School          @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   availableTimes    AvailableTime[]
     favorites Favorite[]
+  bookings          Booking[]
 
   @@map("lessons")
 }
@@ -125,8 +127,29 @@ model AvailableTime {
 
   // Relationer
   lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  booking   Booking?
 
   @@map("available_times")
+}
+
+
+// ─── BOKNINGAR ───────────────────────────────────────────────────────────────
+model Booking {
+  id             Int      @id @default(autoincrement())
+  userId         Int      @map("user_id")
+  lessonId       Int      @map("lesson_id")
+  slotId         Int      @unique @map("slot_id")
+  name           String
+  email          String
+  phone          String
+  passportNumber String   @map("passport_number")
+  createdAt      DateTime @default(now())
+
+  user   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson        @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  slot   AvailableTime @relation(fields: [slotId], references: [id], onDelete: Cascade)
+
+  @@map("bookings")
 }
 
 

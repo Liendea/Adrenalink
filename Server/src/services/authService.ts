@@ -7,7 +7,7 @@ const USER_SELECT = {
   email: true,
   firstName: true,
   lastName: true,
-  passportNo: true,
+  passportNumber: true,
   address: true,
   zipCode: true,
   city: true,
@@ -23,7 +23,7 @@ type RegisterData = {
   password: string;
   firstName: string;
   lastName: string;
-  passportNo: string;
+  passportNumber: string;
   address: string;
   zipCode: string;
   city: string;
@@ -35,7 +35,7 @@ type RegisterData = {
 type UpdateProfileData = {
   firstName: string;
   lastName: string;
-  passportNo: string;
+  passportNumber: string;
   address: string;
   zipCode: string;
   city: string;
@@ -46,10 +46,13 @@ type UpdateProfileData = {
 };
 
 // Kolla om användare redan finns med samma email eller passnummer
-export const findExistingUser = async (email: string, passportNo: string) => {
+export const findExistingUser = async (
+  email: string,
+  passportNumber: string,
+) => {
   return prisma.user.findFirst({
     where: {
-      OR: [{ email }, { passportNo }],
+      OR: [{ email }, { passportNumber }],
     },
   });
 };
@@ -63,7 +66,7 @@ export const createUser = async (data: RegisterData) => {
       password: hashedPassword,
       firstName: data.firstName,
       lastName: data.lastName,
-      passportNo: data.passportNo,
+      passportNumber: data.passportNumber,
       address: data.address,
       zipCode: data.zipCode,
       city: data.city,

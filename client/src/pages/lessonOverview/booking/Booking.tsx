@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import type { AvailableTimeSlot, LessonWithSlots } from "@/types/types";
 import "./Booking.scss";
@@ -17,6 +18,7 @@ export default function BookingCard({
   allSlots,
   onBook,
 }: BookingProps) {
+  const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<AvailableTimeSlot | null>(
     null,
@@ -69,6 +71,9 @@ export default function BookingCard({
         onClick={() => {
           if (selectedDay && selectedSlot) {
             onBook?.(lesson.id, selectedDay, selectedSlot);
+            navigate(`/booking/${lesson.id}`, {
+              state: { lesson, selectedDay, selectedSlot },
+            });
           }
         }}
         disabled={!selectedSlot}

@@ -9,30 +9,18 @@ import "./Card.scss";
 import { Link } from "react-router-dom";
 import StarRating from "../rating/StarRating";
 import { useFavorites } from "@/hooks/useFavorites";
-import climbImg from "@/assets/climbing.png";
-import snowboardImg from "@/assets/snowboard.png";
-import kiteImg from "@/assets/kite-surf.png";
+import { getLessonImage } from "@/utils/lessonImage";
 import surfImg from "@/assets/image.png";
-import windImg from "@/assets/wind-surf.png";
-import wakeImg from "@/assets/wakeboard.png";
 import snowSchoolImg from "@/assets/snowboard-school.png";
 import kiteSchoolImg from "@/assets/kite-school.png";
 import climbSchoolImg from "@/assets/climb-school.png";
 import surfSchoolImg from "@/assets/surf-school.png";
+import wakeImg from "@/assets/wakeboard.png";
 import { useSearchParams } from "react-router-dom";
 
 type CardProps =
   | { variant: "lesson"; data: Lesson }
   | { variant: "school"; data: School };
-
-const sportImageMap: Record<string, string> = {
-  surf: surfImg,
-  kitesurf: kiteImg,
-  climbing: climbImg,
-  snowboard: snowboardImg,
-  windsurf: windImg,
-  wakeboard: wakeImg, // byt ut mot rätt bild när du har en
-};
 
 const schoolImageMap: Record<string, string> = {
   surfSchool: surfSchoolImg,
@@ -70,12 +58,12 @@ export default function Card(props: CardProps) {
   //vid klick navigera till kort Id
   const href =
     props.variant === "lesson"
-      ? `/booking/${props.data.id}`
+      ? `/lesson/${props.data.id}`
       : `/schools/${props.data.id}`;
 
   const getCardImage = () => {
     if (props.variant === "lesson") {
-      return sportImageMap[props.data.sportType] ?? surfImg;
+      return getLessonImage(props.data);
     }
     if (props.variant === "school") {
       return getSchoolImage(props.data.name);
@@ -125,7 +113,7 @@ type LessonCardBodyProps = {
 };
 
 const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
-  const pricePerHour = lesson.priceEuro / lesson.durationHours;
+  const pricePerHour = lesson.price / lesson.durationHours;
 
   return (
     <div className="card__content">
@@ -134,7 +122,7 @@ const LessonCardBody = ({ lesson }: LessonCardBodyProps) => {
           {lesson.lessonType} {lesson.sportType} lesson
         </h2>
         <span className="card__badge">
-          <p>{lesson.priceEuro}€</p>
+          <p>{lesson.price}€</p>
         </span>
       </div>
       <div className="card__description">

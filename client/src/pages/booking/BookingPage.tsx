@@ -1,37 +1,92 @@
-import { useParams } from "react-router-dom";
-import LessonDetails from "@/pages/booking/components/lessonDetails/LessonDetails";
-import DiscoveryMap from "@/components/map/DiscoveryMap";
+import { useNavigate, useParams, useLocation } from "react-router";
+import { BookingSummaryCard } from "./components/bookingSummaryCard/BookingSummaryCard";
+import {
+  BookingUserForm,
+  type BookingFormData,
+} from "./components/bookingUserForm/BookingUserForm";
+import { useAuth } from "@/hooks/useAuth";
+import { getLessonImage } from "@/utils/lessonImage";
+import type { AvailableTimeSlot, Lesson } from "@/types/types";
 import "./BookingPage.scss";
-import Booking from "./components/booking/Booking";
-import { useBookingLesson } from "@/hooks/useBookingLesson";
-import { useNavigate } from "react-router-dom";
-import Back_Btn from "@/components/buttons/Back_Btn";
+import Icon from "@/components/Icon";
+import Question from "@/assets/icons/Question.svg";
+import { useCreateBooking } from "@/hooks/useCreateBooking";
 
-export default function BookingPage() {
+export function BookingPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
-  const { data: lesson, isLoading, isError } = useBookingLesson(lessonId);
+  const location = useLocation();
   const navigate = useNavigate();
-  if (isLoading) return <div>Loading booking page...</div>;
-  if (isError || !lesson) return <div>The lesson could not be found.</div>;
+  const { user } = useAuth();
+  const { mutate: submitBooking, isPending, error } = useCreateBooking();
+
+  const lesson = location.state?.lesson as Lesson | undefined;
+  if (!lesson) {
+    throw new Error(
+      `No lesson data for lessonId=${lessonId}. Navigate via lesson card, not direct URL.`,
+    );
+  }
+
+  const selectedDay = location.state?.selectedDay as Date | undefined;
+  const selectedSlot = location.state?.selectedSlot as
+    | AvailableTimeSlot
+    | undefined;
+
+  const lessonForSummary = {
+    ...lesson,
+    imageUrl: getLessonImage(lesson),
+    date: selectedDay
+      ? new Date(selectedDay).toLocaleDateString("sv-SE")
+      : lesson.date,
+    time: selectedSlot
+      ? new Date(selectedSlot.startTime).toLocaleTimeString("sv-SE", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : lesson.time,
+  };
+
+  if (!user) return null;
+
+  const handleConfirm = (formData: BookingFormData) => {
+    submitBooking(
+      { lessonId: lesson.id, slotId: selectedSlot!.id, ...formData },
+      {
+        onSuccess: (booking) =>
+          navigate(`/booking/${lesson.id}/success`, { state: { booking } }),
+      },
+    );
+  };
 
   return (
-    <section className="booking-section">
-      <Back_Btn onClick={() => navigate(-1)} />
-      <div className="flex-column">
-        <div className="flex-row">
-          <LessonDetails lesson={lesson} />
-          <Booking lesson={lesson} allSlots={lesson.availableTimes} />
+    <div className="booking-page">
+      <div className="booking-page__form-column">
+        <h1 className="booking-page__title">Confirm Your Booking</h1>
+        <p className="booking-page__subtitle">
+          Please review your booking details before confirming.{" "}
+        </p>
+
+        <div className="booking-page__question-wrapper">
+          <Icon src={Question} className="booking-page__question-icon" />
+          <div className="booking-page__tooltip">
+            The school collects this information to contact you, manage
+            rebookings or cancellations due to weather conditions, and process
+            insurance coverage for your lesson. You can only make a booking if
+            you have provided your personal information. If you have any
+            questions, please contact the school directly.
+          </div>
         </div>
-        <div className="booking-section__map">
-          {lesson.lat && lesson.lng ? (
-            <DiscoveryMap variant="activities" items={[lesson]} />
-          ) : (
-            <div className="booking-section__map-placeholder">
-              <p>No location available</p>
-            </div>
-          )}
-        </div>
+
+        <BookingUserForm
+          profile={user}
+          onConfirm={handleConfirm}
+          submitting={isPending}
+        />
+        {error && <p className="booking-page__error">{error.message}</p>}
       </div>
-    </section>
+
+      <div className="booking-page__summary-column">
+        <BookingSummaryCard lesson={lessonForSummary} />
+      </div>
+    </div>
   );
 }

@@ -218,7 +218,7 @@ Stores registered users with hashed passwords and role-based access.
 | email                           | String | Unique                       |
 | password                        | String | bcrypt hashed                |
 | firstName, lastName             | String |                              |
-| passportNo                      | String | Unique                       |
+| passportNumber                  | String | Unique                       |
 | address, zipCode, city, country | String |                              |
 | phoneCode, phoneNumber          | String |                              |
 | role                            | Enum   | STUDENT / INSTRUCTOR / ADMIN |

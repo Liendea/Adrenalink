@@ -34,8 +34,8 @@ export default function LessonDetails({ lesson }: LessonDetailsProps) {
 
   const pricePerHour =
     lesson.durationHours > 0
-      ? (lesson.priceEuro / lesson.durationHours).toFixed(1)
-      : lesson.priceEuro;
+      ? (lesson.price / lesson.durationHours).toFixed(1)
+      : lesson.price.toFixed(1);
 
   return (
     <div className="lesson-info">
@@ -83,7 +83,7 @@ export default function LessonDetails({ lesson }: LessonDetailsProps) {
           value={lesson.equipmentIncluded ? "Included" : "Not included"}
         />
       </div>
-      <div className="lesson-info__price-badge">${lesson.priceEuro}</div>
+      <div className="lesson-info__price-badge">${lesson.price}</div>
     </div>
   );
 }

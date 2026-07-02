@@ -6,7 +6,7 @@ import Register from "./pages/register/Register";
 import LandingPage from "./pages/landingpage/Landingpage";
 import Login from "./pages/login/Login";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
-import BookingPage from "./pages/booking/BookingPage";
+import { BookingPage } from "./pages/booking/BookingPage";
 import ExplorePage from "./pages/explore/ExplorePage";
 
 import SchoolDetailPage from "@/pages/school/SchoolDetailPage";
@@ -21,6 +21,7 @@ import MyBookings from "./pages/userProfile/myBookings/MyBookings";
 import Footer from "./components/footer/Footer";
 import MainLayout from "./layout/MainLayout";
 import { useLocation } from "react-router-dom";
+import LessonOverviewPage from "./pages/lessonOverview/LessonOverviewPage";
 
 function App() {
   const location = useLocation();
@@ -41,9 +42,18 @@ function App() {
           {/* Alla sidor med padding wrappade i MainLayout */}
           <Route element={<MainLayout />}>
             <Route path="/explore" element={<ExplorePage />} />
-            <Route path="/booking/:lessonId" element={<BookingPage />} />
+            <Route path="/lesson/:lessonId" element={<LessonOverviewPage />} />
             <Route path="/schools/:schoolId" element={<SchoolDetailPage />} />
             <Route path="/rentals/:rentalId" element={<RentalDetailPage />} />
+
+            <Route
+              path="/booking/:lessonId"
+              element={
+                <ProtectedRoute>
+                  <BookingPage />
+                </ProtectedRoute>
+              }
+            />
 
             <Route
               path="/profile"

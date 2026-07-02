@@ -4,10 +4,13 @@ import * as authService from "../services/authService.js";
 // POST /api/auth/register
 export const register = async (req: Request, res: Response) => {
   try {
-    const { email, passportNo } = req.body;
+    const { email, passportNumber } = req.body;
 
     // Kolla om email eller passnummer redan används
-    const existingUser = await authService.findExistingUser(email, passportNo);
+    const existingUser = await authService.findExistingUser(
+      email,
+      passportNumber,
+    );
     if (existingUser) {
       return res.status(400).json({
         message: "Användare med denna email eller passnummer finns redan.",
@@ -46,7 +49,7 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        passportNo: user.passportNo,
+        passportNumber: user.passportNumber,
         address: user.address,
         zipCode: user.zipCode,
         city: user.city,

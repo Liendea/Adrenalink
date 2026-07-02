@@ -1,0 +1,57 @@
+@use "@/styles/breakpoints" as *;
+
+.booking-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 4rem;
+  width: 60%;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .booking__section__slot--booked {
+    opacity: 0.4;
+    cursor: not-allowed;
+    text-decoration: line-through; // valfritt
+  }
+
+  // ── Lesson detail and booking  + map ─────────────────────────────────────────────
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+
+    width: 100%;
+  }
+
+  // ── Lesson detail and booking ─────────────────────────────────────────────
+  .flex-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 6rem;
+    width: 100%;
+  }
+
+  // Karta
+  &__map {
+    width: 100%;
+    height: 300px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  &__map-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #f3f4f6;
+    border-radius: 16px;
+    color: rgba(0, 0, 0, 0.4);
+  }
+}

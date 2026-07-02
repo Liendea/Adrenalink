@@ -1,0 +1,56 @@
+.booking-summary-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &__header {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__image {
+    border-radius: 0.5rem;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  &__lesson-title {
+    margin-top: 1rem;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+
+  &__instructor {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+
+  &__divider {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+}
