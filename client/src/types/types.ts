@@ -90,6 +90,7 @@ export type FavoriteEntry = {
 
 // Booking
 export type Booking = {
+  bookingId: number;
   lessonId: number;
   slotId: number;
   userId: number;

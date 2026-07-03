@@ -28,9 +28,15 @@ export async function createBooking(input: CreateBookingInput) {
 }
 
 export async function getBookingsForUser(userId: number) {
-  return prisma.booking.findMany({
+  const bookings = await prisma.booking.findMany({
     where: { userId },
-    include: { lesson: true, slot: true },
+    include: { lesson: { include: { school: true } }, slot: true },
     orderBy: { slot: { startTime: "asc" } },
   });
+
+  return bookings.map(({ id, lesson, ...booking }) => ({
+    ...booking,
+    bookingId: id,
+    lesson: { ...lesson, price: lesson.priceEuro },
+  }));
 }
