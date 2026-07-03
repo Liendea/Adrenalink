@@ -57,6 +57,7 @@ export const login = async (req: Request, res: Response) => {
         phoneCode: user.phoneCode,
         phoneNumber: user.phoneNumber,
         role: user.role,
+        profileImage: user.profileImage,
       },
     });
   } catch (error) {
