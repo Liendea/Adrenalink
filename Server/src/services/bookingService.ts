@@ -37,6 +37,6 @@ export async function getBookingsForUser(userId: number) {
   return bookings.map(({ id, lesson, ...booking }) => ({
     ...booking,
     bookingId: id,
-    lesson: { ...lesson, price: lesson.priceEuro },
+    lesson: { ...lesson, price: lesson.price },
   }));
 }

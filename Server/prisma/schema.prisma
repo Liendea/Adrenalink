@@ -102,7 +102,7 @@ model Lesson {
   description       String          @db.Text
   level             String          // 'beginner', 'intermediate', 'advanced'
   durationHours     Float           @map("duration_hours")
-  price         Float           @map("price")
+  price             Float           @map("price")
   location          String          // Stranden/vattnet
   equipmentIncluded Boolean         @default(true) @map("equipment_included")
   lat  Float?

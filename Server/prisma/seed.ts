@@ -75,7 +75,7 @@ async function main() {
       description:
         "Learn the fundamentals of surfing in a safe group environment. We cover water safety, paddling technique, and catching your first green waves.",
       durationHours: 3.0,
-      priceEuro: 55.0,
+      price: 55.0,
       location: "Foz do Lizandro",
       equipmentIncluded: true,
       lat: cL1.lat,
@@ -92,7 +92,7 @@ async function main() {
       description:
         "1-on-1 coaching focused on generating speed, clean bottom turns, and reading reef breaks. Includes video analysis.",
       durationHours: 2.0,
-      priceEuro: 110.0,
+      price: 110.0,
       location: "Ribeira d'Ilhas",
       equipmentIncluded: false,
       lat: cL2.lat,
@@ -137,7 +137,7 @@ async function main() {
       description:
         "Master kite control on the beach and body dragging through the water. Perfect Atlantic winds make Peniche ideal for learning.",
       durationHours: 4.0,
-      priceEuro: 120.0,
+      price: 120.0,
       location: "Baleal Beach",
       equipmentIncluded: true,
       lat: cL3.lat,
@@ -154,7 +154,7 @@ async function main() {
       description:
         "Improve your planing technique and harness use in consistent Atlantic winds. Suitable for those with basic windsurf skills.",
       durationHours: 3.0,
-      priceEuro: 85.0,
+      price: 85.0,
       location: "Lagoa de Óbidos",
       equipmentIncluded: true,
       lat: cL4.lat,
@@ -199,7 +199,7 @@ async function main() {
       description:
         "Adrenaline-packed introduction to kitesurfing on one of Europe's best kite beaches. Consistent trade winds guarantee progress.",
       durationHours: 4.0,
-      priceEuro: 130.0,
+      price: 130.0,
       location: "Flag Beach",
       equipmentIncluded: true,
       lat: cL5.lat,
@@ -216,7 +216,7 @@ async function main() {
       description:
         "Advanced windsurf coaching on Sotavento's world-class conditions. Work on freestyle tricks and speed techniques with a certified instructor.",
       durationHours: 2.0,
-      priceEuro: 140.0,
+      price: 140.0,
       location: "Playa de Sotavento",
       equipmentIncluded: false,
       lat: cL6.lat,
@@ -261,7 +261,7 @@ async function main() {
       description:
         "Learn to surf in the Mediterranean sun with Barcelona's skyline as your backdrop. Small groups ensure personal attention.",
       durationHours: 2.5,
-      priceEuro: 65.0,
+      price: 65.0,
       location: "Barceloneta Beach",
       equipmentIncluded: true,
       lat: cL7.lat,
@@ -278,7 +278,7 @@ async function main() {
       description:
         "First time on a wakeboard? Our instructors will have you riding and carving within one session behind our boat in calm marina waters.",
       durationHours: 1.5,
-      priceEuro: 95.0,
+      price: 95.0,
       location: "Badalona Marina",
       equipmentIncluded: true,
       lat: cL8.lat,
@@ -323,7 +323,7 @@ async function main() {
       description:
         "Take your surfing further on the legendary Basque coast. Learn to read powerful Atlantic swells and surf with confidence on overhead waves.",
       durationHours: 3.0,
-      priceEuro: 75.0,
+      price: 75.0,
       location: "Grande Plage",
       equipmentIncluded: true,
       lat: cL9.lat,
@@ -340,7 +340,7 @@ async function main() {
       description:
         "Private surf lesson on the famous Côte des Basques beach, birthplace of European surfing. Your instructor adapts entirely to your pace.",
       durationHours: 2.0,
-      priceEuro: 90.0,
+      price: 90.0,
       location: "Plage de la Côte des Basques",
       equipmentIncluded: true,
       lat: cL10.lat,
@@ -385,7 +385,7 @@ async function main() {
       description:
         "Your first turns on snow in the shadow of Mont Blanc. Learn balance, basic turns and stopping safely on gentle slopes.",
       durationHours: 3.0,
-      priceEuro: 85.0,
+      price: 85.0,
       location: "Les Grands Montets",
       equipmentIncluded: true,
       lat: cL11.lat,
@@ -402,7 +402,7 @@ async function main() {
       description:
         "Advanced freeride coaching on Chamonix's legendary off-piste terrain. Powder technique, avalanche awareness and line selection.",
       durationHours: 4.0,
-      priceEuro: 220.0,
+      price: 220.0,
       location: "Brévent",
       equipmentIncluded: false,
       lat: cL12.lat,
@@ -442,7 +442,7 @@ async function main() {
       description:
         "Perfect your stance and learn to plane in the harness on Öresund's reliable winds. For those who can already sail upwind.",
       durationHours: 2.5,
-      priceEuro: 75.0,
+      price: 75.0,
       location: "Lomma Beach",
       equipmentIncluded: true,
       lat: cL13.lat,
@@ -459,7 +459,7 @@ async function main() {
       description:
         "Learn kitesurfing on the flat waters of Öresund. Ideal for beginners – safe, shallow and with consistent side-shore winds.",
       durationHours: 4.0,
-      priceEuro: 110.0,
+      price: 110.0,
       location: "Lomma Beach",
       equipmentIncluded: true,
       lat: cL13.lat,
@@ -499,7 +499,7 @@ async function main() {
       description:
         "Start your snowboard journey in Scandinavia's premier mountain resort. Fun, safe and with certified instructors who speak both Swedish and English.",
       durationHours: 3.0,
-      priceEuro: 95.0,
+      price: 95.0,
       location: "Åreskutan",
       equipmentIncluded: true,
       lat: cL14.lat,
@@ -516,7 +516,7 @@ async function main() {
       description:
         "Unlock the whole mountain with a private guide. Work on carving technique, jumps in the terrain park and off-piste intro.",
       durationHours: 2.0,
-      priceEuro: 130.0,
+      price: 130.0,
       location: "Åreskutan",
       equipmentIncluded: false,
       lat: cL14.lat,
@@ -556,7 +556,7 @@ async function main() {
       description:
         "Try wakeboarding in Stockholm's beautiful archipelago setting. Our cable park is perfect for first-timers – no boat needed.",
       durationHours: 2.0,
-      priceEuro: 70.0,
+      price: 70.0,
       location: "Djurgårdsbrunnsviken",
       equipmentIncluded: true,
       lat: cL15.lat,
@@ -573,7 +573,7 @@ async function main() {
       description:
         "Advanced wakeboard coaching with a pro rider. Work on inverts, grabs and rail tricks at our fully equipped cable park.",
       durationHours: 1.5,
-      priceEuro: 110.0,
+      price: 110.0,
       location: "Djurgårdsbrunnsviken",
       equipmentIncluded: false,
       lat: cL15.lat,
@@ -613,7 +613,7 @@ async function main() {
       description:
         "Introduction to bouldering in the world-famous Fontainebleau forest. Learn movement techniques on low sandstone boulders with no ropes needed.",
       durationHours: 3.0,
-      priceEuro: 60.0,
+      price: 60.0,
       location: "Forêt de Fontainebleau",
       equipmentIncluded: true,
       lat: cL16.lat,
@@ -630,7 +630,7 @@ async function main() {
       description:
         "Private bouldering session with a certified guide. Focus on technique, footwork and reading problems on Fontainebleau's iconic sandstone.",
       durationHours: 2.5,
-      priceEuro: 95.0,
+      price: 95.0,
       location: "Forêt de Fontainebleau",
       equipmentIncluded: true,
       lat: cL16.lat,
@@ -670,7 +670,7 @@ async function main() {
       description:
         "Sport climbing on Siurana's world-class limestone. Improve your technique on routes graded 6a–7a with stunning views over the Priorat valley.",
       durationHours: 4.0,
-      priceEuro: 80.0,
+      price: 80.0,
       location: "Siurana climbing area",
       equipmentIncluded: true,
       lat: cL17.lat,
@@ -687,7 +687,7 @@ async function main() {
       description:
         "Private coaching on Siurana's hardest lines. Work on project climbing, redpointing strategy and mental performance with an experienced coach.",
       durationHours: 3.0,
-      priceEuro: 150.0,
+      price: 150.0,
       location: "Siurana climbing area",
       equipmentIncluded: false,
       lat: cL17.lat,

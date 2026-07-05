@@ -245,7 +245,7 @@ An individual lesson offering associated with a school.
 | sportType         | String  | surf / windsurf / kitesurf         |
 | level             | String  | beginner / intermediate / advanced |
 | durationHours     | Float   |                                    |
-| priceEuro         | Float   |                                    |
+| price             | Float   |                                    |
 | equipmentIncluded | Boolean |                                    |
 | lat, lng          | Float   | Exact lesson location              |
 
