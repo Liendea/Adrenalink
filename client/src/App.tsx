@@ -13,6 +13,7 @@ import SchoolDetailPage from "@/pages/school/SchoolDetailPage";
 import RentalDetailPage from "./pages/rental/RentalDetailPage";
 
 import Navigation from "./components/navigation/Navigation";
+import AppBanner from "./components/appBanner/AppBanner";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import UserProfile from "./pages/userProfile/UserProfile";
 import EditProfile from "./pages/userProfile/editProfile/EditProfile";
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <>
+      <AppBanner />
       <Navigation />
       <main>
         <Routes>

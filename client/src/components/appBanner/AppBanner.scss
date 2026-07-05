@@ -1,0 +1,63 @@
+@use "@/styles/variables" as *;
+
+.app-banner {
+  display: none;
+
+  @media (max-width: 1024px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    min-height: $app-banner-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.6rem 2.5rem 0.6rem 1rem;
+    background-color: var(--dark-blue);
+    color: var(--off-white);
+    animation: app-banner-slide-down 0.5s ease both;
+  }
+
+  &__text {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  &__links {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  &__link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: underline;
+    color: var(--light-blue);
+  }
+
+  &__close {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--off-white);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+}
+
+@keyframes app-banner-slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

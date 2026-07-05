@@ -51,12 +51,12 @@ main {
 
   // 4. laptop skärmar (1024px+)
   @include mobile {
-    padding: 8rem 1rem;
+    padding: 10rem 1rem;
   }
 
   // 4. laptop skärmar (1024px+)
   @include tablet {
-    padding: 10rem 2rem;
+    padding: 12rem 2rem;
   }
 
   //desktop-width: 1024px;

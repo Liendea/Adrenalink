@@ -1,0 +1,152 @@
+@use "@/styles/breakpoints" as *;
+@use "@/styles/variables" as *;
+
+// Alla action knappar (create profile, logga in, more + min profil och logga ut
+.navigation__actions {
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-left: 3rem;
+  height: 60px;
+  margin-left: 0 2rem;
+
+  @include mobile {
+    max-height: 50px;
+  }
+
+  // Global styling for all buttons in navigation actions
+  .btn {
+    background: rgba(15, 25, 50, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--off-white);
+    border-radius: var(--radius-lg);
+    padding: 0.8rem 1.5rem;
+    transition: background 0.2s;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+    height: 100%;
+    font-family: var(--font-body);
+
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+
+    &:hover {
+      background: rgba(15, 25, 50, 0.498);
+    }
+
+    @include mobile {
+      font-size: 0.65rem;
+    }
+  }
+
+  // Create account knapp
+  &__register {
+    font-size: 0.85rem;
+    color: red;
+
+    @include mobile {
+      font-size: 0.85rem;
+    }
+  }
+
+  // Hälsning + namn + min profil ikon + logga ut
+  &__sign-in {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  // hälsning + namn
+  &__welcome {
+    color: var(--off-white);
+    font-size: 1rem;
+    display: block;
+    margin: 0 0.5rem;
+    text-wrap: nowrap;
+
+    @include mobile {
+      display: none;
+    }
+    @include tablet {
+      display: none;
+    }
+    @include desktop {
+      display: none;
+    }
+    @include medium-screens {
+      display: block;
+    }
+  }
+
+  // "Min profil" + ikon
+  &__my-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    text-wrap: nowrap;
+  }
+
+  // More-knapp + dropdown
+  &__more {
+    position: relative;
+    height: 100%;
+  }
+
+  &__more-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  &__more-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+    background: rgba(15, 25, 50, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 0.4rem;
+    animation: nav-dropdown-fade 0.5s ease both;
+    z-index: 1000;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+      background: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.8rem;
+      color: var(--off-white);
+      font-size: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: rgba(15, 25, 50, 0.498);
+      }
+    }
+  }
+}
