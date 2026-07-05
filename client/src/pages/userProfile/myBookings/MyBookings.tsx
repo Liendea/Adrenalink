@@ -83,8 +83,8 @@ export default function MyBookings() {
             id: booking.bookingId,
             imageUrl: getLessonImage(booking.lesson),
             title: formatLessonTitle(
-              booking.lesson.sportType,
               booking.lesson.lessonType,
+              booking.lesson.sportType,
             ),
             schoolName: booking.lesson.school?.name ?? "",
             schoolId: booking.lesson.school?.id ?? 0,
