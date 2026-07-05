@@ -92,7 +92,7 @@ export default function DiscoveryMap(props: DiscoveryMapProps) {
         >
           <div
             className="map-marker map-marker--activity"
-            onClick={() => navigate(`/booking/${lesson.id}`)}
+            onClick={() => navigate(`/lesson/${lesson.id}`)}
             title={`${lesson.lessonType} ${lesson.sportType}`}
           >
             <Icon src={pin} /> {lesson.sportType} lesson
